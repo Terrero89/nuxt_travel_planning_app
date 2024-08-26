@@ -4,7 +4,9 @@ export const useDestinationStore = defineStore({
     id: "destinations",
 
     state: () => ({
-        destination: "MIAMI",
+        destination: ["MIAMI"],
+        cities: ['cities'],
+        expenses: ['expenses'],
     }),
 
 

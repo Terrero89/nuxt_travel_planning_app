@@ -8,4 +8,7 @@ const store = useDestinationStore()
     {{ store.destination }}
     <div>HOME</div>
 <button class="btn btn-primary">HELLo</button>
+<UButton>Button</UButton>
+
+
 </template>
