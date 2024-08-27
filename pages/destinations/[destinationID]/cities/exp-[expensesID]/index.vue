@@ -2,22 +2,25 @@
 import { useDestinationStore } from "@/store/destination";
 import { storeToRefs } from "pinia";
 const store = useDestinationStore();
-const { cities } = storeToRefs(store);
+const { expenses } = storeToRefs(store);
 const route = useRoute(); //route object
 const destId = route.params.destinationID;
 const cityId = route.params.expensesID;
+
+
 </script>
 
 <template>
   <div>
-    destinationID: {{ destId }}
+    ID: {{ destId }} ID: {{ cityId }}
     <UICard>
-      <div>CITIES BASED ON ID HERE</div>
-      <!-- {{ cities }}  -->
-      <div v-for="d in cities" :key="d.cityId">
-        {{ d.city}}
+      <!-- {{ expenses }} -->
+      <div v-for="d in expenses" :key="d.expensesID">
+        {{ d.expense }}- {{ d.category }}
       </div>
+
       <button class="btn btn-primary">HELLo</button>
+    
       <UButton>Button</UButton>
     </UICard>
   </div>
