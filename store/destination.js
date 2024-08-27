@@ -18,6 +18,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForTrip: 5,
         citiesIncludedOnTrip: 9,
         tripRating: 4.5,
+        tripComments: "Great trip",
         cities:[],
       },
       {
@@ -33,6 +34,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForTrip: 5,
         citiesIncludedOnTrip: 9,
         tripRating: 4.5,
+        tripComments: "Great trip",
         cities:[],
       },
       {
@@ -48,6 +50,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForTrip: 5,
         citiesIncludedOnTrip: 9,
         tripRating: 4.5,
+        tripComments: "Great trip",
         cities:[],
       },
     ],

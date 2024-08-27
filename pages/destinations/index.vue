@@ -12,12 +12,7 @@ const { destination } = storeToRefs(store);
       ALL destinations PAGE
       <div>list of destinations shown</div>
       <!-- {{ destination }} -->
-
-      <div v-for="d in store.destination" :key="d.destinationID">
-        {{ d.destination }}
-      </div>
-      <button class="btn btn-primary">HELLo</button>
-      <UButton>Button</UButton>
-    </UICard>
+     <DestinationList/>
+   </UICard>
   </div>
 </template>
