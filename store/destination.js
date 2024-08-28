@@ -63,7 +63,7 @@ export const useDestinationStore = defineStore({
         from: new Date(2024, 10, 8).toDateString(),
         to: new Date(2024, 10, 10).toDateString(),
         accommodation: 'airbnb', // hotel, hostel, home, apt. 
-        accomodationCost: 150, 
+        accommodationCost: 150, 
         totalCost: 0, // based on the total cost of the trip
         isThisCityVisited: false,
         cityRating: 4.5,
@@ -71,6 +71,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         cities: [],
       },
       {
@@ -89,6 +90,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       {
@@ -107,6 +109,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       {
@@ -125,6 +128,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       {
@@ -143,6 +147,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       {
@@ -161,6 +166,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       {
@@ -179,6 +185,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       
@@ -201,6 +208,7 @@ export const useDestinationStore = defineStore({
         isCompleted: false,
         placerating: 4.9,
         daysRemainingForExpense: 0,
+        
       },
       {
         expenseID: "ex2",

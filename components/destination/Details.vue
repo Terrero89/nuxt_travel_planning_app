@@ -2,7 +2,6 @@
 import { useDestinationStore } from "@/store/destination";
 const store = useDestinationStore();
 import { storeToRefs } from "pinia";
-import { calculateDaysRemaining } from "../../utils/date-conversion";
 
 const { destination } = storeToRefs(store);
 const props = defineProps([
@@ -104,26 +103,21 @@ const props = defineProps([
   flex-direction: column;
   gap: 10px;
 }
-
 .modal-details h2 {
   font-size: 1.2rem;
   margin-bottom: 10px;
 }
-
 .details-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 .detail-label {
   font-weight: bold;
 }
-
 .detail-value {
   flex-grow: 1;
 }
-
 .modal-actions {
   display: flex;
   justify-content: flex-end;
