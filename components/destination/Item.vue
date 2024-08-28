@@ -31,7 +31,7 @@ const isOpen = ref(false);
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
-              <span class="pb-2 title-section ">Transportation </span>
+              <span class="pb-2 title-su">Transportation </span>
               <h2>{{ props.transportType }}</h2>
               <span class="pb-2 title-section ">Duration </span>
               <h2>{{ props.tripDuration }} days</h2>
@@ -62,34 +62,31 @@ const isOpen = ref(false);
             </div>
           </div>
           <div>
-            <UModal v-model="isOpen" prevent-close>
-              <UCard
-                :ui="{
-                  ring: '',
-                  divide: 'divide-y divide-gray-100 dark:divide-gray-800',
-                }"
-              >
-                <template #header>
-                  HEADEr
-                  <div class="flex items-center justify-between">
-                    <h3
-                      class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
-                    >
-                      Modal
-                    </h3>
-                    <UButton
-                      color="indigo"
-                      variant="ghost"
-                      icon="i-heroicons-x-mark-20-solid"
-                      class="-my-1"
-                      @click="isOpen = false"
-                    />
-                  </div>
-                </template>
+            <div>
 
-                <div class="pp">contentt here</div>
-              </UCard>
-            </UModal>
+
+    <UModal v-model="isOpen">
+      <div class="p-4">
+      <DestinationDetails
+      :destinationID="props.destinationID"
+      :destination="props.destination"
+      :transportType="props.transportType"
+      :destinationBudget="props.destinationBudget"
+      :from="props.from"
+      :to="props.to"
+      :tripDuration="props.tripDuration"
+      :date="props.date"
+      :isTripCompleted="props.isTripCompleted"
+      :daysRemainingForTrip="props.daysRemainingForTrip"
+      :citiesIncludedOnTrip="props.citiesIncludedOnTrip"
+      :tripRating="props.tripRating"
+      :tripComments="props.tripComments"
+      
+      
+      />
+      </div>
+    </UModal>
+  </div>
           </div>
           <!-- <div class="section-two">
        
@@ -141,13 +138,14 @@ const isOpen = ref(false);
   font-size: 1rem;
 }
 .destination-item .title-section {
-  color: rgb(88, 87, 87);
-  font-size: 1rem;
+  
+  color: gray;
+  font-size: 0.9rem;
 }
 .destination-item .section h2 {
-  color: gray;
+  color: rgb(43, 41, 41);
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1.01rem;
   margin: 0.2rem 0;
 }
 .destination-item h5 {
