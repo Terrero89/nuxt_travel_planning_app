@@ -87,6 +87,7 @@ const isOpen = ref(false);
                   :cityRating="props.cityRating"
                   :cityComments="props.cityComments"
                 />
+                
               </div>
             </UModal>
           </div>
