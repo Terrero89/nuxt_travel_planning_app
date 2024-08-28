@@ -14,10 +14,11 @@ export const useDestinationStore = defineStore({
         destinationBudget: 1000,
         tripDuration: 10,
         dateAdded: new Date(2024, 7, 7).toDateString(),
-        isTripCompleted: false,
+        isTripCompleted: true,
         daysRemainingForTrip: 5,
         citiesIncludedOnTrip: 9,
         tripRating: 4.5,
+        tripComments: "Great trip",
         cities:[],
       },
       {
@@ -30,9 +31,10 @@ export const useDestinationStore = defineStore({
         tripDuration: 12,
         dateAdded: new Date(2024, 7, 7).toDateString(),
         isTripCompleted: false,
-        daysRemainingForTrip: 5,
-        citiesIncludedOnTrip: 9,
+        daysRemainingForTrip: 122,
+        citiesIncludedOnTrip: 2,
         tripRating: 4.5,
+        tripComments: "Great trip",
         cities:[],
       },
       {
@@ -48,6 +50,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForTrip: 5,
         citiesIncludedOnTrip: 9,
         tripRating: 4.5,
+        tripComments: "Great trip",
         cities:[],
       },
     ],
@@ -60,7 +63,7 @@ export const useDestinationStore = defineStore({
         from: new Date(2024, 10, 8).toDateString(),
         to: new Date(2024, 10, 10).toDateString(),
         accommodation: 'airbnb', // hotel, hostel, home, apt. 
-        accomodationCost: 150, 
+        accommodationCost: 150, 
         totalCost: 0, // based on the total cost of the trip
         isThisCityVisited: false,
         cityRating: 4.5,
@@ -68,6 +71,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         cities: [],
       },
       {
@@ -86,6 +90,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       {
@@ -98,12 +103,13 @@ export const useDestinationStore = defineStore({
         accommodation: 'airbnb', // hotel, hostel, home, apt. 
         accommodationCost: 150, 
         totalCost: 0, // based on the total cost of the trip
-        isThisCityVisited: false,
+        isThisCityVisited: true,
         cityRating: 4.5,
         cityDuration: 3,
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       {
@@ -122,6 +128,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       {
@@ -140,6 +147,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       {
@@ -158,6 +166,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       {
@@ -176,6 +185,7 @@ export const useDestinationStore = defineStore({
         daysRemainingForCity: 150,
         expenseIncludedOnCity: 15,
         cityComments: "comments",
+        date: new Date(2024, 7, 10).toDateString(),
         expenses: [],
       },
       
@@ -195,9 +205,10 @@ export const useDestinationStore = defineStore({
         duration: 2.0,
         comments: "Iconic mosque-cathedral, a blend of Islamic and Christian architecture",
         location: 'Córdoba, Spain',
-        isCompleted: false,
+        isCompleted: true,
         placerating: 4.9,
         daysRemainingForExpense: 0,
+        
       },
       {
         expenseID: "ex2",

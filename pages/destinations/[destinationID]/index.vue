@@ -11,14 +11,9 @@ const cityId = route.params.expensesID;
 <template>
   <div>
     destinationID: {{ destId }}
-    <UICard>
+    <UIContainer>
       <div>CITIES BASED ON ID HERE</div>
-      <!-- {{ cities }}  -->
-      <div v-for="d in cities" :key="d.cityId">
-        {{ d.city}}
-      </div>
-      <button class="btn btn-primary">HELLo</button>
-      <UButton>Button</UButton>
-    </UICard>
+      <CitiesList />
+    </UIContainer>
   </div>
 </template>

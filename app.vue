@@ -1,6 +1,11 @@
 <template>
   <div  >
     <UINavbar />
+    <UICard class="mt-5 mb-2"> 
+      <div>MAIN SECTION STATIC</div>
+      <div>Up coming attractions</div>
+      <div>more to come</div>
+    </UICard>
     <NuxtPage  />
     <UIFooter />
   </div>
@@ -19,3 +24,19 @@
 
 
 </style>
+
+// "cityID",
+// "parentDestinationID",
+// "city",
+// "accommodation",
+// "accommodationCost",
+// "totalCost",
+// "from",
+// "to",
+// "isThisCityVisited",
+// "cityRating",
+// "cityDuration",
+// "daysRemainingForCity",
+// "expenseIncludedOnCity",
+// "expenseIncludedOnCity",
+//  "cityComments",
