@@ -48,7 +48,7 @@ const isOpen = ref(false);
               <span class="pb-2 title-section ">Rating</span>
               <h2>{{ props.tripRating }}</h2>
 
-              <UButton color="blue" label="Show Details" @click="isOpen = true" />
+              <UButton color="blue" label="Details" @click="isOpen = true" />
             </div>
             <div>
               <span class="mr-auto">
@@ -88,17 +88,7 @@ const isOpen = ref(false);
     </UModal>
   </div>
           </div>
-          <!-- <div class="section-two">
-       
-        <p>Number of cities:{{ props.citiesIncludedOnTrip }}</p>
-        <p>Destination Budget{{ props.destinationBudget }}</p>
-        <p>{{ props.isTripCompleted }}</p>
-        <p>Rating: {{ props.tripRating }}</p>
-        </div> -->
-          <!-- <div class="section-three">
-        <p>From: {{ props.from }}</p>
-        <p>To: {{ props.to }}</p>
-       </div> -->
+   
         </div>
       </div>
     </div>
@@ -106,14 +96,8 @@ const isOpen = ref(false);
 </template>
 
 <style scoped>
-.pp {
-  min-height: 35rem;
-  min-width: 90%;
-  margin: auto 0;
-}
-.destination {
-  /* border: solid red 1px; */
 
+.destination {
   min-width: 100%;
 }
 .title {

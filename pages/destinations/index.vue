@@ -8,11 +8,10 @@ const { destination } = storeToRefs(store);
 
 <template>
   <div>
-    <UICard>
-      ALL destinations PAGE
-      <div>list of destinations shown</div>
+    <UIContainer>
+   
       <!-- {{ destination }} -->
      <DestinationList/>
-   </UICard>
+   </UIContainer>
   </div>
 </template>

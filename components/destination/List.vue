@@ -25,7 +25,7 @@ const props = defineProps([
     <UITitle title="Projects" class="container border-bottom" />
 
     <div class="container">
-      <SearchFilter v-model="searchInput" />
+
     </div>
     <DestinationItem
       v-for="trip in destination"
