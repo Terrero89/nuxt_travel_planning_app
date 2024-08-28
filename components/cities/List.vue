@@ -27,7 +27,7 @@ const props = defineProps([
   <div class="projects">
     <UITitle title="Projects" class="container border-bottom" />
 
-    <div class="container"></div>
+   
     <CitiesItem
       v-for="city in cities"
       :key="city.cityID"

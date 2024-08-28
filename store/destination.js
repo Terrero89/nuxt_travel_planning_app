@@ -14,7 +14,7 @@ export const useDestinationStore = defineStore({
         destinationBudget: 1000,
         tripDuration: 10,
         dateAdded: new Date(2024, 7, 7).toDateString(),
-        isTripCompleted: false,
+        isTripCompleted: true,
         daysRemainingForTrip: 5,
         citiesIncludedOnTrip: 9,
         tripRating: 4.5,
@@ -103,7 +103,7 @@ export const useDestinationStore = defineStore({
         accommodation: 'airbnb', // hotel, hostel, home, apt. 
         accommodationCost: 150, 
         totalCost: 0, // based on the total cost of the trip
-        isThisCityVisited: false,
+        isThisCityVisited: true,
         cityRating: 4.5,
         cityDuration: 3,
         daysRemainingForCity: 150,
@@ -205,7 +205,7 @@ export const useDestinationStore = defineStore({
         duration: 2.0,
         comments: "Iconic mosque-cathedral, a blend of Islamic and Christian architecture",
         location: 'Córdoba, Spain',
-        isCompleted: false,
+        isCompleted: true,
         placerating: 4.9,
         daysRemainingForExpense: 0,
         

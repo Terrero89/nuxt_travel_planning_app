@@ -55,7 +55,7 @@ const isOpen = ref(false);
                 <UBadge v-if="!props.isTripCompleted" size="md" color="red"
                   >In progress</UBadge
                 >
-                <UBadge v-if="props.isTripCompleted" color="primary"
+                <UBadge v-if="props.isTripCompleted" size="md" color="primary"
                   >Complete</UBadge
                 >
               </span>

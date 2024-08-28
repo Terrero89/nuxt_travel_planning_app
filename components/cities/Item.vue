@@ -58,10 +58,10 @@ const isOpen = ref(false);
             </div>
             <div>
               <span class="mr-auto">
-                <UBadge v-if="!props.isTripCompleted" size="md" color="red"
+                <UBadge v-if="!props.isThisCityVisited" size="md" color="red"
                   >In progress</UBadge
                 >
-                <UBadge v-if="props.isTripCompleted" color="primary"
+                <UBadge v-if="props.isThisCityVisited" size="md" color="primary"
                   >Complete</UBadge
                 >
               </span>

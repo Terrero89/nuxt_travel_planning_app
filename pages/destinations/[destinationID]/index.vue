@@ -13,10 +13,7 @@ const cityId = route.params.expensesID;
     destinationID: {{ destId }}
     <UIContainer>
       <div>CITIES BASED ON ID HERE</div>
-   
       <CitiesList />
-      <button class="btn btn-primary">HELLo</button>
-      <UButton>Button</UButton>
     </UIContainer>
   </div>
 </template>
