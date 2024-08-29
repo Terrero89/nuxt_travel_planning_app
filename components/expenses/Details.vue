@@ -77,9 +77,9 @@ const props = defineProps([
     </div>
 <!-- < 4 -->
     <div v-if="props.placeRating < 4">
-      <span class="details-row" >
+      <span class="mx-2" >
         <span class="detail-label">Rating: </span>
-        <UBadge v-if="props.placeRating < 4" size="md" color="red">{{
+        <UBadge  class="mx-3"  v-if="props.placeRating < 4" size="md" color="red">{{
           props.placeRating
         }}</UBadge>
         
@@ -87,9 +87,9 @@ const props = defineProps([
     </div>
 
     <div  v-else-if="props.placeRating >= 4 && props.placeRating <= 4.5">
-      <span class="details-row" >
+      <span >
         <span class="detail-label">Rating: </span>
-        <UBadge v-if="props.placeRating >= 4 && props.placeRating <= 4.5"  size="md" color="yellow">{{
+        <UBadge class="mx-3"  v-if="props.placeRating >= 4 && props.placeRating <= 4.5"  size="md" color="yellow">{{
           props.placeRating
         }}</UBadge>
         
@@ -97,9 +97,9 @@ const props = defineProps([
     </div>
 
     <div  v-else-if="props.placeRating > 4.5">
-      <span class="details-row" >
+      <span  >
         <span class="detail-label">Rating: </span>
-        <UBadge v-if="props.placeRating > 4.5" size="md" color="green">{{
+        <UBadge class="mx-3"  v-if="props.placeRating > 4.5" size="md" color="green">{{
           props.placeRating
         }}</UBadge>
         
