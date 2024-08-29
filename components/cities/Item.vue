@@ -11,6 +11,7 @@ const props = defineProps([
   "city",
   "accommodation",
   "accommodationCost",
+  "isAccommodationPaid",
   "totalCost",
   "from",
   "to",
@@ -39,6 +40,8 @@ const isOpen = ref(false);
               <h2>{{ props.accommodation }}</h2>
               <span class="pb-2 title-su">Accommodation Cost </span>
               <h2>$ {{ props.accommodationCost }}</h2>
+              <span class="pb-2 title-su">is Accommodation paid </span>
+              <h2> {{ !props.isAccommodationPaid  ? 'no' : 'yes'}}</h2>
             </div>
             <div class="col section">
               <span class="title-section pb-2"> Total Cost</span>

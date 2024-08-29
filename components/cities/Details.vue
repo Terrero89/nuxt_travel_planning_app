@@ -9,6 +9,7 @@ const props = defineProps([
   "city",
   "accommodation",
   "accommodationCost",
+  "isAccommodationPaid",
   "totalCost",
   "from",
   "to",
@@ -32,6 +33,10 @@ const props = defineProps([
       <div class="details-row">
         <span class="detail-label">Accommodation:</span>
         <span class="detail-value space"> {{ props.accommodation }}</span>
+      </div>
+      <div class="details-row">
+        <span class="detail-label">Is Accommodation paid:</span>
+        <span class="detail-value space"> {{ !props.isAccommodationPaid  ? 'no' : 'yes'}}</span>
       </div>
 
       <div class="details-row">

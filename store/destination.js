@@ -64,6 +64,7 @@ export const useDestinationStore = defineStore({
         to: new Date(2024, 10, 10).toDateString(),
         accommodation: 'airbnb', // hotel, hostel, home, apt. 
         accommodationCost: 150, 
+        isAccommodationPaid: true,
         totalCost: 0, // based on the total cost of the trip
         isThisCityVisited: false,
         cityRating: 4.5,
@@ -83,6 +84,7 @@ export const useDestinationStore = defineStore({
         to: new Date(2024, 10, 12).toDateString(),
         accommodation: 'airbnb', // hotel, hostel, home, apt. 
         accommodationCost: 150, 
+        isAccommodationPaid: true,
         totalCost: 0, // based on the total cost of the trip
         isThisCityVisited: false,
         cityRating: 4.5,
@@ -102,6 +104,7 @@ export const useDestinationStore = defineStore({
         to: new Date(2024, 10, 12).toDateString(),
         accommodation: 'airbnb', // hotel, hostel, home, apt. 
         accommodationCost: 150, 
+        isAccommodationPaid: false,
         totalCost: 0, // based on the total cost of the trip
         isThisCityVisited: true,
         cityRating: 4.5,
@@ -121,6 +124,7 @@ export const useDestinationStore = defineStore({
         to: new Date(2024, 10, 12).toDateString(),
         accommodation: 'airbnb', // hotel, hostel, home, apt. 
         accommodationCost: 150, 
+        isAccommodationPaid: false,
         totalCost: 0, // based on the total cost of the trip
         isThisCityVisited: false,
         cityRating: 4.5,
@@ -140,6 +144,7 @@ export const useDestinationStore = defineStore({
         to: new Date(2024, 10, 12).toDateString(),
         accommodation: 'airbnb', // hotel, hostel, home, apt. 
         accommodationCost: 150, 
+        isAccommodationPaid: false,
         totalCost: 0, // based on the total cost of the trip
         isThisCityVisited: false,
         cityRating: 4.5,
@@ -159,6 +164,7 @@ export const useDestinationStore = defineStore({
         to: new Date(2024, 10, 12).toDateString(),
         accommodation: 'airbnb', // hotel, hostel, home, apt. 
         accommodationCost: 150, 
+        isAccommodationPaid: false,
         totalCost: 0, // based on the total cost of the trip
         isThisCityVisited: false,
         cityRating: 4.5,
@@ -178,6 +184,7 @@ export const useDestinationStore = defineStore({
         to: new Date(2024, 10, 12).toDateString(),
         accommodation: 'hotel', // hotel, hostel, home, apt. 
         accommodationCost: 150, 
+        isAccommodationPaid: false,
         totalCost: 0, // based on the total cost of the trip
         isThisCityVisited: false,
         cityRating: 4.5,
@@ -199,6 +206,7 @@ export const useDestinationStore = defineStore({
         category: "Attractions",
         expense: "Mezquita-Catedral de Córdoba",
         cost: 11,
+        isExpensePaid: true,
         date: new Date(2024, 10, 12).toDateString(),
         startTime: '09:00am',
         endTime: '11:00am',
@@ -206,7 +214,7 @@ export const useDestinationStore = defineStore({
         comments: "Iconic mosque-cathedral, a blend of Islamic and Christian architecture",
         location: 'Córdoba, Spain',
         isCompleted: true,
-        placerating: 4.9,
+        placeRating: 4,
         daysRemainingForExpense: 0,
         
       },
@@ -217,6 +225,7 @@ export const useDestinationStore = defineStore({
         category: "Food",
         expense: "Salmorejo at Bodegas Mezquita",
         cost: 15,
+        isExpensePaid: true,
         date: new Date(2024, 10, 12).toDateString(),
         startTime: '12:00pm',
         endTime: '01:30pm',
@@ -224,7 +233,7 @@ export const useDestinationStore = defineStore({
         comments: "Traditional cold soup, a must-try dish in Córdoba",
         location: 'Bodegas Mezquita, Córdoba, Spain',
         isCompleted: false,
-        placerating: 4.7,
+        placeRating: 4.7,
         daysRemainingForExpense: 0,
       },
       {
@@ -234,6 +243,7 @@ export const useDestinationStore = defineStore({
         category: "Landmarks",
         expense: "Mezquita-Catedral de Córdoba",
         cost: 11,
+        isExpensePaid: true,
         date: new Date(2024, 10, 12).toDateString(),
         startTime: '09:00am',
         endTime: '11:00am',
@@ -241,7 +251,7 @@ export const useDestinationStore = defineStore({
         comments: "Iconic mosque-cathedral, a blend of Islamic and Christian architecture",
         location: 'Córdoba, Spain',
         isCompleted: false,
-        placerating: 4.9,
+        placeRating: 4.2,
         daysRemainingForExpense: 0,
       },
       {
@@ -251,6 +261,7 @@ export const useDestinationStore = defineStore({
         category: "Taxi",
         expense: "Salmorejo at Bodegas Mezquita",
         cost: 15,
+        isExpensePaid: true,
         date: new Date(2024, 10, 12).toDateString(),
         startTime: '12:00pm',
         endTime: '01:30pm',
@@ -258,7 +269,7 @@ export const useDestinationStore = defineStore({
         comments: "Traditional cold soup, a must-try dish in Córdoba",
         location: 'Bodegas Mezquita, Córdoba, Spain',
         isCompleted: false,
-        placerating: 4.7,
+        placeRating: 4.7,
         daysRemainingForExpense: 0,
       },
       {
@@ -268,6 +279,7 @@ export const useDestinationStore = defineStore({
         category: "Souvenirs",
         expense: "Mezquita-Catedral de Córdoba",
         cost: 11,
+        isExpensePaid: true,
         date: new Date(2024, 10, 12).toDateString(),
         startTime: '09:00am',
         endTime: '11:00am',
@@ -275,7 +287,7 @@ export const useDestinationStore = defineStore({
         comments: "Iconic mosque-cathedral, a blend of Islamic and Christian architecture",
         location: 'Córdoba, Spain',
         isCompleted: false,
-        placerating: 4.9,
+        placeRating: 3.9,
         daysRemainingForExpense: 0,
       },
       {
@@ -285,6 +297,7 @@ export const useDestinationStore = defineStore({
         category: "Accommodation",
         expense: "Salmorejo at Bodegas Mezquita",
         cost: 15,
+        isExpensePaid: true,
         date: new Date(2024, 10, 12).toDateString(),
         startTime: '12:00pm',
         endTime: '01:30pm',
@@ -292,7 +305,7 @@ export const useDestinationStore = defineStore({
         comments: "Traditional cold soup, a must-try dish in Córdoba",
         location: 'Bodegas Mezquita, Córdoba, Spain',
         isCompleted: false,
-        placerating: 4.7,
+        placeRating: 4.1,
         daysRemainingForExpense: 0,
       },
       {
@@ -302,6 +315,7 @@ export const useDestinationStore = defineStore({
         category: "Transportation",
         expense: "Quebec City Cathedral",
         cost: 15,
+        isExpensePaid: true,
         date: new Date(2024, 10, 12).toDateString(),
         startTime: '12:00pm',
         endTime: '01:30pm',
@@ -309,7 +323,7 @@ export const useDestinationStore = defineStore({
         comments: "Traditional cold soup, a must-try dish in Córdoba",
         location: 'Bodegas Mezquita, Córdoba, Spain',
         isCompleted: false,
-        placerating: 4.7,
+        placeRating: 4.9,
         daysRemainingForExpense: 0,
       },
       {
@@ -319,6 +333,7 @@ export const useDestinationStore = defineStore({
         category: "Purchase",
         expense: "Salmorejo at Bodegas Mezquita",
         cost: 15,
+        isExpensePaid: true,
         date: new Date(2024, 10, 12).toDateString(),
         startTime: '12:00pm',
         endTime: '01:30pm',
@@ -326,7 +341,7 @@ export const useDestinationStore = defineStore({
         comments: "Traditional cold soup, a must-try dish in Córdoba",
         location: 'Bodegas Mezquita, Córdoba, Spain',
         isCompleted: false,
-        placerating: 4.7,
+        placeRating: 4.9,
         daysRemainingForExpense: 0,
       },
     ],
