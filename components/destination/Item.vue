@@ -153,6 +153,7 @@ const isOpen = ref(false);
 }
 .title {
   font-weight: bold;
+  color: rgb(78, 77, 77);
 }
 .section span {
   font-weight: bold;

@@ -2,7 +2,6 @@
 import { useDestinationStore } from "@/store/destination";
 const store = useDestinationStore();
 import { storeToRefs } from "pinia";
-
 const props = defineProps([
   "expensesID",
   "destinationParentID",
@@ -46,10 +45,7 @@ const props = defineProps([
       <span class="detail-label">Cost:</span>
       <span class="detail-value space">${{ props.cost }}</span>
     </div>
-    <!-- <div class="details-row" v-if="props.category === 'Attractions'">
-      <span class="detail-label">Is paid: </span>
-      <span class="detail-value space">{{ props.isExpensePaid }}</span>
-    </div> -->
+   
 
     <div v-if="props.category === 'Attractions'">
       <span>
@@ -74,6 +70,7 @@ const props = defineProps([
           v-if="!props.isExpensePaid"
           size="md"
           color="red"
+          variant="soft"
           >{{ !props.isExpensePaid ? "Pending" : "" }}</UBadge
         >
       </span>
@@ -83,12 +80,7 @@ const props = defineProps([
       <span class="detail-label">Duration:</span>
       <span class="detail-value space">{{ props.duration }} Hours</span>
     </div>
-    <div v-if="props.isCompleted">
-      <div class="details-row">
-        <span class="detail-label">Expense Paid: </span>
-        <span class="detail-value space">{{ props.isExpensePaid }}</span>
-      </div>
-    </div>
+  
 
     <div v-if="props.category === 'Attractions'">
       <span>

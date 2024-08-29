@@ -56,38 +56,24 @@ const isOpen = ref(false);
               <span class="pb-2 title-section">Rating</span>
               <h2 v-if="props.placeRating < 4">
                 <span class="highlight">
-                  <UBadge
-                    v-if="props.placeRating < 4"
-                    variant="soft"
-                    size="md"
-                    color="red"
-                    >{{ props.placeRating }}</UBadge
-                  >
+                  <UBadge v-if="props.placeRating < 4" variant="soft" size="md" color="red">{{
+                    props.placeRating
+                  }}</UBadge>
                 </span>
               </h2>
 
-              <h2
-                v-else-if="props.placeRating >= 4 && props.placeRating <= 4.5"
-              >
+              <h2  v-else-if="props.placeRating >= 4 && props.placeRating <= 4.5">
                 <span class="highlight">
-                  <UBadge
-                    v-if="props.placeRating >= 4 && props.placeRating <= 4.5"
-                    variant="soft"
-                    size="md"
-                    color="yellow"
-                    >{{ props.placeRating }}</UBadge
-                  >
+                  <UBadge v-if="props.placeRating >= 4 && props.placeRating <= 4.5" variant="soft" size="md" color="yellow">{{
+                    props.placeRating
+                  }}</UBadge>
                 </span>
               </h2>
-              <h2 v-else-if="props.placeRating > 4.5">
+              <h2  v-else-if="props.placeRating > 4.5">
                 <span class="highlight">
-                  <UBadge
-                    v-if="props.placeRating > 4.5"
-                    variant="soft"
-                    size="md"
-                    color="green"
-                    >{{ props.placeRating }}</UBadge
-                  >
+                  <UBadge v-if="props.placeRating > 4.5" variant="soft" size="md" color="green">{{
+                    props.placeRating
+                  }}</UBadge>
                 </span>
               </h2>
 
@@ -95,18 +81,10 @@ const isOpen = ref(false);
             </div>
             <div>
               <span class="mr-auto">
-                <UBadge
-                  v-if="!props.isCompleted"
-                  variant="soft"
-                  size="md"
-                  color="red"
+                <UBadge v-if="!props.isCompleted" variant="soft" size="md" color="red"
                   >In progress</UBadge
                 >
-                <UBadge
-                  v-if="props.isCompleted"
-                  variant="soft"
-                  size="md"
-                  color="primary"
+                <UBadge v-if="props.isCompleted" variant="soft"  size="md" color="primary"
                   >Complete</UBadge
                 >
               </span>
@@ -157,7 +135,7 @@ const isOpen = ref(false);
   min-width: 100%;
 }
 .title {
-  color: gray;
+  color: rgb(78, 77, 77);
   font-weight: bold;
 }
 .section span {
