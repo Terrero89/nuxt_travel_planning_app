@@ -11,9 +11,9 @@ const cityId = route.params.expensesID;
 <template>
   <div>
     destinationID: {{ destId }}
-    <UIContainer>
+ 
       <div>CITIES BASED ON ID HERE</div>
       <CitiesList />
-    </UIContainer>
+    
   </div>
 </template>

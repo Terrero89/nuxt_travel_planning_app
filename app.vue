@@ -6,7 +6,10 @@
       <div>Up coming attractions</div>
       <div>more to come</div>
     </UICard>
-    <NuxtPage  />
+    <UIContainer>
+      <NuxtPage  />
+    </UIContainer>
+   
     <UIFooter />
   </div>
 </template>
@@ -25,18 +28,23 @@
 
 </style>
 
-// "cityID",
-// "parentDestinationID",
-// "city",
-// "accommodation",
-// "accommodationCost",
-// "totalCost",
-// "from",
-// "to",
-// "isThisCityVisited",
-// "cityRating",
-// "cityDuration",
-// "daysRemainingForCity",
-// "expenseIncludedOnCity",
-// "expenseIncludedOnCity",
-//  "cityComments",
+// const props = defineProps([
+  // "expensesID",
+  // "destinationParentID",
+  // "cityParentID",
+  // "expense", // food, landmarks, transport, uber, plane, hotel, attractions, 
+  // "category",
+  // "startTime",
+  // "endTime",
+  // "from",
+  // "to",
+  // "cost",
+  // "isExpensePaid",
+  // "location",
+  // "duration",
+  // "date",
+  // "isCompleted",
+  // "daysRemainingForExpense",
+  // "citiesIncludedOnTrip",
+  // "expenseRating",
+// ]);

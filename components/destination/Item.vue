@@ -33,29 +33,80 @@ const isOpen = ref(false);
             <div class="col section">
               <span class="pb-2 title-su">Transportation </span>
               <h2>{{ props.transportType }}</h2>
-              <span class="pb-2 title-section ">Duration </span>
-              <h2>{{ props.tripDuration }} days</h2>
+              <span class="pb-2 title-section">Duration </span>
+              <h2>
+                <span class="highlight">{{ props.tripDuration }}</span>
+                Days
+              </h2>
             </div>
             <div class="col section">
               <span class="title-section pb-2"> Budget </span>
-              <h2>${{ props.destinationBudget }}</h2>
+              <h2>
+                $ <span class="highlight">{{ props.destinationBudget }} </span>
+              </h2>
+
               <span class="pb-2 title-section"> Days until trip </span>
-              <h2>{{ props.daysRemainingForTrip }} days</h2>
+              <h2>
+                $
+                <span class="highlight">{{ props.daysRemainingForTrip }} </span>
+                days
+              </h2>
             </div>
             <div class="col section">
-              <span class="pb-2 title-section ">Date Planned</span>
+              <span class="pb-2 title-section">Date Planned</span>
               <h2>{{ props.date }}</h2>
-              <span class="pb-2 title-section ">Rating</span>
-              <h2>{{ props.tripRating }}</h2>
+              <span class="pb-2 title-section">Rating</span>
+              <h2 v-if="props.tripRating < 4">
+                <span class="highlight">
+                  <UBadge
+                    v-if="props.tripRating < 4"
+                    variant="soft"
+                    size="md"
+                    color="red"
+                    >{{ props.tripRating }}</UBadge
+                  >
+                </span>
+              </h2>
+
+              <h2 v-else-if="props.tripRating >= 4 && props.tripRating <= 4.5">
+                <span class="highlight">
+                  <UBadge
+                    v-if="props.tripRating >= 4 && props.tripRating <= 4.5"
+                    variant="soft"
+                    size="md"
+                    color="yellow"
+                    >{{ props.tripRating }}</UBadge
+                  >
+                </span>
+              </h2>
+              <h2 v-else-if="props.tripRating > 4.5">
+                <span class="highlight">
+                  <UBadge
+                    v-if="props.tripRating > 4.5"
+                    variant="soft"
+                    size="md"
+                    color="green"
+                    >{{ props.tripRating }}</UBadge
+                  >
+                </span>
+              </h2>
 
               <UButton color="blue" label="Details" @click="isOpen = true" />
             </div>
             <div>
               <span class="mr-auto">
-                <UBadge v-if="!props.isTripCompleted" size="md" color="red"
+                <UBadge
+                  v-if="!props.isTripCompleted"
+                  variant="outline"
+                  size="md"
+                  color="red"
                   >In progress</UBadge
                 >
-                <UBadge v-if="props.isTripCompleted" size="md" color="primary"
+                <UBadge
+                  v-if="props.isTripCompleted"
+                  variant="outline"
+                  size="md"
+                  color="primary"
                   >Complete</UBadge
                 >
               </span>
@@ -63,32 +114,27 @@ const isOpen = ref(false);
           </div>
           <div>
             <div>
-
-
-    <UModal v-model="isOpen">
-      <div class="p-4">
-      <DestinationDetails
-      :destinationID="props.destinationID"
-      :destination="props.destination"
-      :transportType="props.transportType"
-      :destinationBudget="props.destinationBudget"
-      :from="props.from"
-      :to="props.to"
-      :tripDuration="props.tripDuration"
-      :date="props.date"
-      :isTripCompleted="props.isTripCompleted"
-      :daysRemainingForTrip="props.daysRemainingForTrip"
-      :citiesIncludedOnTrip="props.citiesIncludedOnTrip"
-      :tripRating="props.tripRating"
-      :tripComments="props.tripComments"
-      
-      
-      />
-      </div>
-    </UModal>
-  </div>
+              <UModal v-model="isOpen">
+                <div class="p-4">
+                  <DestinationDetails
+                    :destinationID="props.destinationID"
+                    :destination="props.destination"
+                    :transportType="props.transportType"
+                    :destinationBudget="props.destinationBudget"
+                    :from="props.from"
+                    :to="props.to"
+                    :tripDuration="props.tripDuration"
+                    :date="props.date"
+                    :isTripCompleted="props.isTripCompleted"
+                    :daysRemainingForTrip="props.daysRemainingForTrip"
+                    :citiesIncludedOnTrip="props.citiesIncludedOnTrip"
+                    :tripRating="props.tripRating"
+                    :tripComments="props.tripComments"
+                  />
+                </div>
+              </UModal>
+            </div>
           </div>
-   
         </div>
       </div>
     </div>
@@ -96,12 +142,18 @@ const isOpen = ref(false);
 </template>
 
 <style scoped>
+.highlight {
+  font-weight: 800;
+
+  color: rgb(43, 41, 41) !important;
+}
 
 .destination {
   min-width: 100%;
 }
 .title {
   font-weight: bold;
+  color: rgb(78, 77, 77);
 }
 .section span {
   font-weight: bold;
@@ -122,7 +174,6 @@ const isOpen = ref(false);
   font-size: 1rem;
 }
 .destination-item .title-section {
-  
   color: gray;
   font-size: 0.9rem;
 }

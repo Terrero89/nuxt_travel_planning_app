@@ -10,6 +10,7 @@ const props = defineProps([
   "city",
   "accommodation",
   "accommodationCost",
+  "isAccommodationPaid",
   "totalCost",
   "from",
   "to",
@@ -35,6 +36,7 @@ const props = defineProps([
       :city="city.city"
       :accommodation="city.accommodation"
       :accommodationCost="city.accommodationCost"
+      :isAccommodationPaid="city.isAccommodationPaid"
       :from="city.from"
       :to="city.to"
       :totalCost="city.totalCost"
