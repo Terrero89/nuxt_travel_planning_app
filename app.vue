@@ -6,7 +6,10 @@
       <div>Up coming attractions</div>
       <div>more to come</div>
     </UICard>
-    <NuxtPage  />
+    <UIContainer>
+      <NuxtPage  />
+    </UIContainer>
+   
     <UIFooter />
   </div>
 </template>
