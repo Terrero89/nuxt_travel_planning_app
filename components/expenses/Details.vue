@@ -51,47 +51,78 @@ const props = defineProps([
       <span class="detail-value space">{{ props.isExpensePaid }}</span>
     </div> -->
 
-    <div v-if=" props.category === 'Attractions'">
-        <span >
-          <span  v-if="props.isExpensePaid" class="detail-label">Booking Status </span>
-          <UBadge
-            class="mx-3"
-            v-if="props.isExpensePaid"
-            size="md"
-            color="green"
-            >{{ props.isExpensePaid ? "Booked" : "" }}</UBadge
-          >
+    <div v-if="props.category === 'Attractions'">
+      <span>
+        <span v-if="props.isExpensePaid" class="detail-label"
+          >Booking Status
         </span>
-      </div>
-      <div v-if=" props.category === 'Attractions'">
-        <span class=""  v-if="!props.isExpensePaid">
-          <span class="detail-label">Booking Status</span>
-          <UBadge
-            class="mx-3"
-            v-if="!props.isExpensePaid"
-            size="md"
-            color="red"
-            >{{ !props.isExpensePaid ? "Pending" : "" }}</UBadge
-          >
-        </span>
-      </div>
+        <UBadge
+          class="mx-3"
+          v-if="props.isExpensePaid"
+          size="md"
+          color="green"
+          variant="soft"
+          >{{ props.isExpensePaid ? "Booked" : "" }}</UBadge
+        >
+      </span>
+    </div>
+    <div v-if="props.category === 'Attractions'">
+      <span class="" v-if="!props.isExpensePaid">
+        <span class="detail-label">Booking Status</span>
+        <UBadge
+          class="mx-3"
+          v-if="!props.isExpensePaid"
+          size="md"
+          color="red"
+          >{{ !props.isExpensePaid ? "Pending" : "" }}</UBadge
+        >
+      </span>
+    </div>
 
-    <div class="details-row" v-if="props.category !== 'Food'">
+    <div class="details-row" v-if="props.category === 'Attractions'">
       <span class="detail-label">Duration:</span>
       <span class="detail-value space">{{ props.duration }} Hours</span>
     </div>
-    <div v-if="expense.isCompleted">
+    <div v-if="props.isCompleted">
       <div class="details-row">
         <span class="detail-label">Expense Paid: </span>
         <span class="detail-value space">{{ props.isExpensePaid }}</span>
       </div>
     </div>
 
+    <div v-if="props.category === 'Attractions'">
+      <span>
+        <span class="detail-label"> Paid in advance </span>
+        <UBadge
+          class="mx-3"
+          v-if="props.isExpensePaid"
+          size="md"
+          color="green"
+          variant="soft"
+          >{{ props.isExpensePaid ? "Booked" : "" }}</UBadge
+        >
+      </span>
+    </div>
+
+    <div v-if="!props.isExpensePaid">
+      <span class="">
+        <span class="detail-label">Paid in advance</span>
+        <UBadge
+          class="mx-3"
+          v-if="!props.isExpensePaid"
+          size="md"
+          color="red"
+          variant="soft"
+          >{{ !props.isExpensePaid ? "Pending" : "" }}</UBadge
+        >
+      </span>
+    </div>
+
     <div>
       <div class="details-row">
         <span class="detail-label">Days Remaining: </span>
         <span class="detail-value space">
-          {{ expense.daysRemainingForExpense }} days
+          {{ props.daysRemainingForExpense }} days
         </span>
       </div>
     </div>
@@ -101,38 +132,47 @@ const props = defineProps([
         <span class="detail-value space">{{ props.location }}</span>
       </div>
     </div>
-<!-- < 4 -->
+    <!-- < 4 -->
     <div v-if="props.placeRating < 4">
-      <span class="mx-2" >
+      <span class="mx-2">
         <span class="detail-label">Rating: </span>
-        <UBadge  class="mx-3"  v-if="props.placeRating < 4" size="md" color="red">{{
-          props.placeRating
-        }}</UBadge>
-        
+        <UBadge
+          class="mx-3"
+          v-if="props.placeRating < 4"
+          size="md"
+          color="red"
+          >{{ props.placeRating }}</UBadge
+        >
       </span>
     </div>
 
-    <div  v-else-if="props.placeRating >= 4 && props.placeRating <= 4.5">
-      <span >
+    <div v-else-if="props.placeRating >= 4 && props.placeRating <= 4.5">
+      <span>
         <span class="detail-label">Rating: </span>
-        <UBadge class="mx-3"  v-if="props.placeRating >= 4 && props.placeRating <= 4.5"  size="md" color="yellow">{{
-          props.placeRating
-        }}</UBadge>
-        
+        <UBadge
+          class="mx-3"
+          v-if="props.placeRating >= 4 && props.placeRating <= 4.5"
+          size="md"
+          color="yellow"
+          >{{ props.placeRating }}</UBadge
+        >
       </span>
     </div>
 
-    <div  v-else-if="props.placeRating > 4.5">
-      <span  >
+    <div v-else-if="props.placeRating > 4.5">
+      <span>
         <span class="detail-label">Rating: </span>
-        <UBadge class="mx-3"  v-if="props.placeRating > 4.5" size="md" color="green">{{
-          props.placeRating
-        }}</UBadge>
-        
+        <UBadge
+          class="mx-3"
+          v-if="props.placeRating > 4.5"
+          size="md"
+          color="green"
+          >{{ props.placeRating }}</UBadge
+        >
       </span>
     </div>
-    
-<!-- 
+
+    <!-- 
     <div class="details-row">
       <span class="detail-label">Rating: </span>
       <span class="detail-value space">{{ props.placeRating }}</span>

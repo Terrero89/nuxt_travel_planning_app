@@ -128,8 +128,8 @@ const props = defineProps([
     
 
     <div class="modal-actions">
-      <UButton @click="$emit('close')">Close</UButton>
-      <UButton>Update</UButton>
+      <UButton variant="outline" color="blue"  >Destinations</UButton>
+      <UButton>Update Expense</UButton>
     </div>
   </div>
 </template>

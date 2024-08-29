@@ -42,6 +42,7 @@ const props = defineProps([
             v-if="props.isThisCityVisited"
             size="md"
             color="green"
+            variant="soft"
             >{{ props.isThisCityVisited ? "Booked" : "" }}</UBadge
           >
         </span>
@@ -55,6 +56,7 @@ const props = defineProps([
             v-if="!props.isAccommodationPaid"
             size="md"
             color="red"
+            variant="soft"
             >{{ !props.isAccommodationPaid ? "Pending" : "" }}</UBadge
           >
         </span>
@@ -68,7 +70,8 @@ const props = defineProps([
             v-if="!props.isThisCityVisited"
             size="md"
             color="red"
-            >{{ props.isThisCityVisited ? "Visited" : "Pending" }}</UBadge
+            variant="soft"
+            >{{ props.isThisCityVisited ? "Visited" : "" }}</UBadge
           >
         </span>
       </div>
@@ -98,6 +101,7 @@ const props = defineProps([
             v-if="props.isThisCityVisited"
             size="md"
             color="green"
+            variant="soft"
             >{{ props.isThisCityVisited ? "Visited" : "Pending" }}</UBadge
           >
         </span>
@@ -105,12 +109,13 @@ const props = defineProps([
 
       <div v-if="!props.isThisCityVisited">
         <span class="">
-          <span class="detail-label">Visit Status</span>
+          <span class="detail-label">Visit Status:</span>
           <UBadge
             class="mx-3"
             v-if="!props.isThisCityVisited"
             size="md"
             color="red"
+                variant="soft"
             >{{ props.isThisCityVisited ? "Visited" : "Pending" }}</UBadge
           >
         </span>
@@ -136,6 +141,35 @@ const props = defineProps([
         <span class="detail-label">Rating: </span>
         <span class="detail-value space"> {{ props.cityRating }}</span>
       </div>
+      <div v-if="props.cityRating < 4">
+      <span class="mx-2" >
+        <span class="detail-label">Rating: </span>
+        <UBadge  class="mx-3"  v-if="props.cityRating < 4" size="md" color="red">{{
+          props.cityRating 
+        }}</UBadge>
+        
+      </span>
+    </div>
+
+    <div  v-else-if="props.cityRating  >= 4 && props.cityRating <= 4.5">
+      <span >
+        <span class="detail-label">Rating: </span>
+        <UBadge class="mx-3"  v-if="props.cityRating >= 4 && props.cityRating  <= 4.5"  size="md" color="yellow">{{
+          props.cityRating 
+        }}</UBadge>
+        
+      </span>
+    </div>
+
+    <div  v-else-if="props.cityRating > 4.5">
+      <span  >
+        <span class="detail-label">Rating: </span>
+        <UBadge class="mx-3"  v-if="props.cityRating  > 4.5" size="md" color="green">{{
+          props.cityRating 
+        }}</UBadge>
+        
+      </span>
+    </div>
 
       <div class="details-row d-block">
         <span class="detail-label">Trip Comments: </span>
@@ -148,8 +182,8 @@ const props = defineProps([
       </div>
 
       <div class="modal-actions">
-        <UButton @click="$emit('close')">Close</UButton>
-        <UButton>Update</UButton>
+        <UButton variant="outline" color="blue"  >Expenses</UButton>
+        <UButton>Update City</UButton>
       </div>
     </div>
   </div>
