@@ -4,6 +4,8 @@ export const useDestinationStore = defineStore({
   id: "destinations",
 
   state: () => ({
+
+    URL: "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json" ,
     destination: [
       {
         destinationID: "trip1",
@@ -14,7 +16,7 @@ export const useDestinationStore = defineStore({
           day: "numeric",
           year: "numeric",
         }),
-        to:   new Date(2024, 10, 12).toLocaleDateString("en-US", {
+        to: new Date(2024, 10, 12).toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",
           year: "numeric",
@@ -42,18 +44,20 @@ export const useDestinationStore = defineStore({
           day: "numeric",
           year: "numeric",
         }),
-        to:   new Date(2024, 10, 12).toLocaleDateString("en-US", {
+        to: new Date(2024, 10, 12).toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",
           year: "numeric",
         }),
         destinationBudget: 1000,
         tripDuration: 12,
-        dateAdded: new Date(2024, 7, 7).toDateString(),  dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {
+        dateAdded: new Date(2024, 7, 7).toDateString(),
+        dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",
           year: "numeric",
-        }),       isTripCompleted: false,
+        }),
+        isTripCompleted: false,
         daysRemainingForTrip: 122,
         citiesIncludedOnTrip: 2,
         tripRating: 4.3,
@@ -69,7 +73,7 @@ export const useDestinationStore = defineStore({
           day: "numeric",
           year: "numeric",
         }),
-        to:   new Date(2024, 10, 12).toLocaleDateString("en-US", {
+        to: new Date(2024, 10, 12).toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",
           year: "numeric",
@@ -189,7 +193,8 @@ export const useDestinationStore = defineStore({
       {
         cityID: "city5",
         parentDestinationId: "trip2",
-        city: "Quebec",   date: new Date(2024, 10, 12).toDateString(),
+        city: "Quebec",
+        date: new Date(2024, 10, 12).toDateString(),
         location: "Montreal, Canada <url address added here>",
         from: new Date(2024, 10, 9).toDateString(),
         to: new Date(2024, 10, 12).toDateString(),
@@ -464,4 +469,19 @@ export const useDestinationStore = defineStore({
       },
     ],
   }),
+  actions:{
+    async addDestination(data) {
+   
+      let response = await fetch(
+        'https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json',
+        {
+          method: "POST",
+          body: JSON.stringify({...data}),
+        }
+      );
+       if (!response.ok) {
+        console.log("ERROR PROJECTS");
+      }
+    },
+  }
 });

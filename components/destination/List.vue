@@ -14,6 +14,7 @@ const props = defineProps([
   "tripDuration",
   "date",
   "isTripCompleted",
+  "destinationComments",
   "daysRemainingForTrip",
   "citiesIncludedOnTrip",
   "destinationRating",

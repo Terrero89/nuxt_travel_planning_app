@@ -1,11 +1,7 @@
 <template>
   <div  >
     <UINavbar />
-    <UICard class="mt-5 mb-2"> 
-      <div>MAIN SECTION STATIC</div>
-      <div>Up coming attractions</div>
-      <div>more to come</div>
-    </UICard>
+
     <UIContainer>
       <NuxtPage  />
     </UIContainer>
@@ -28,23 +24,3 @@
 
 </style>
 
-// const props = defineProps([
-  // "expensesID",
-  // "destinationParentID",
-  // "cityParentID",
-  // "expense", // food, landmarks, transport, uber, plane, hotel, attractions, 
-  // "category",
-  // "startTime",
-  // "endTime",
-  // "from",
-  // "to",
-  // "cost",
-  // "isExpensePaid",
-  // "location",
-  // "duration",
-  // "date",
-  // "isCompleted",
-  // "daysRemainingForExpense",
-  // "citiesIncludedOnTrip",
-  // "expenseRating",
-// ]);

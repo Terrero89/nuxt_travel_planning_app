@@ -84,7 +84,7 @@ const props = defineProps([
     </div>
 
     <div class="modal-actions">
-      <UButton @click="$emit('close')">Close</UButton>
+      <UButton @click="$emit('close')">Delete</UButton>
       <UButton>Update</UButton>
     </div>
   </div>
