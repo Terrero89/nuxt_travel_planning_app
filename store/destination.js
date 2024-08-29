@@ -9,8 +9,16 @@ export const useDestinationStore = defineStore({
         destinationID: "trip1",
         destination: "Andalusia Trip",
         transportType: "Plane", // train, car, bus, plane
-        from: new Date(2024, 10, 7).toDateString(),
-        to: new Date(2024, 10, 19).toDateString(),
+        from: new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
+        to:   new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
         destinationBudget: 1000,
         tripDuration: 10,
         dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {
@@ -29,8 +37,16 @@ export const useDestinationStore = defineStore({
         destinationID: "trip2",
         destination: "Canada",
         transportType: "Car", // train, car, bus, plane
-        from: new Date(2024, 11, 7).toDateString(),
-        to: new Date(2024, 11, 19).toDateString(),
+        from: new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
+        to:   new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
         destinationBudget: 1000,
         tripDuration: 12,
         dateAdded: new Date(2024, 7, 7).toDateString(),  dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {
@@ -48,8 +64,16 @@ export const useDestinationStore = defineStore({
         destinationID: "trip3",
         destination: "Dominican Republic",
         transportType: "Plane", // train, car, bus, plane
-        from: new Date(2024, 11, 7).toDateString(),
-        to: new Date(2024, 11, 19).toDateString(),
+        from: new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
+        to:   new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
         destinationBudget: 105,
         tripDuration: 12,
         dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {

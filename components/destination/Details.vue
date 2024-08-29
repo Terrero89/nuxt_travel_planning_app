@@ -47,28 +47,13 @@ const props = defineProps([
       <span class="detail-value space">{{ props.tripDuration }} Days</span>
     </div>
 
-    <div  v-if="props.isTripCompleted ">
-      <span  >
-        <span class="detail-label">Trip Status  </span>
-        <UBadge class="mx-3"  v-if="props.isTripCompleted" variant="soft" size="md" color="green">{{
-          props.isTripCompleted ? 'Visited' : 'Pending'
-        }}</UBadge>
-    
-      
-        
-      </span>
+    <div v-if="props.isTripCompleted">
+      <div class="details-row">
+        <span class="detail-label">Trip Completed: </span>
+        <span class="detail-value space">{{ props.isTripCompleted }}</span>
+      </div>
     </div>
-    <div  v-if="!props.isTripCompleted ">
-      <span  >
-        <span class="detail-label">Trip Status  </span>
-        <UBadge class="mx-3"  v-if="!props.isTripCompleted" variant="soft" size="md" color="red">{{
-          props.isTripCompleted ? 'Visited' : 'Pending'
-        }}</UBadge>
-    
-      
-        
-      </span>
-    </div>
+
     <div v-else>
       <div class="details-row">
         <span class="detail-label">Days Remaining: </span>
@@ -82,39 +67,11 @@ const props = defineProps([
       <span class="detail-label">Cities Included: </span>
       <span class="detail-value space">{{ props.citiesIncludedOnTrip }} cities</span>
     </div>
-    <div v-if="props.tripRating < 4">
-      <span class="" >
-        <span class="detail-label">Rating: </span>
-        <UBadge class="mx-3"  v-if="props.tripRating < 4" size="md" color="red">{{
-          props.tripRating
-        }}</UBadge>
-        
-      </span>
-    </div>
 
-    <div  v-else-if="props.tripRating >= 4 && props.tripRating<= 4.5">
-      <span class="" >
-        <span class="detail-label">Rating: </span>
-        <UBadge class="mx-3"  v-if="props.tripRating >= 4 && props.tripRating < 4.5"  size="md" color="yellow">{{
-          props.tripRating
-        }}</UBadge>
-        
-      </span>
-    </div>
-    <div  v-else-if="props.tripRating >= 4.5">
-      <span class="" >
-        <span class="detail-label">Rating: </span>
-        <UBadge class="mx-3"  v-if="props.tripRating >= 4.5" size="md" color="green">{{
-          props.tripRating
-        }}</UBadge>
-        
-      </span>
-    </div>
-
-    <!-- <div class="details-row">
+    <div class="details-row">
       <span class="detail-label">Trip Rating: </span>
       <span class="detail-value space"> {{ props.tripRating }}</span>
-    </div> -->
+    </div>
 
     <div class="details-row d-block">
       <span class="detail-label">Trip Comments: </span>
@@ -125,11 +82,10 @@ const props = defineProps([
         consequatur ducimus in!
       </p>
     </div>
-    
 
     <div class="modal-actions">
-      <UButton variant="outline" color="blue"  >Destinations</UButton>
-      <UButton>Update Expense</UButton>
+      <UButton @click="$emit('close')">Close</UButton>
+      <UButton>Update</UButton>
     </div>
   </div>
 </template>
