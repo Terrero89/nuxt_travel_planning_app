@@ -46,10 +46,36 @@ const props = defineProps([
       <span class="detail-label">Cost:</span>
       <span class="detail-value space">${{ props.cost }}</span>
     </div>
-    <div class="details-row" v-if="props.category === 'Attractions'">
+    <!-- <div class="details-row" v-if="props.category === 'Attractions'">
       <span class="detail-label">Is paid: </span>
       <span class="detail-value space">{{ props.isExpensePaid }}</span>
-    </div>
+    </div> -->
+
+    <div v-if=" props.category === 'Attractions'">
+        <span >
+          <span  v-if="props.isExpensePaid" class="detail-label">Booking Status </span>
+          <UBadge
+            class="mx-3"
+            v-if="props.isExpensePaid"
+            size="md"
+            color="green"
+            >{{ props.isExpensePaid ? "Booked" : "" }}</UBadge
+          >
+        </span>
+      </div>
+      <div v-if=" props.category === 'Attractions'">
+        <span class=""  v-if="!props.isExpensePaid">
+          <span class="detail-label">Booking Status</span>
+          <UBadge
+            class="mx-3"
+            v-if="!props.isExpensePaid"
+            size="md"
+            color="red"
+            >{{ !props.isExpensePaid ? "Pending" : "" }}</UBadge
+          >
+        </span>
+      </div>
+
     <div class="details-row" v-if="props.category !== 'Food'">
       <span class="detail-label">Duration:</span>
       <span class="detail-value space">{{ props.duration }} Hours</span>

@@ -134,6 +134,7 @@ const isOpen = ref(false);
                   :city="props.city"
                   :accommodation="props.accommodation"
                   :accommodationCost="props.accommodationCost"
+                  :isAccommodationPaid="props.isAccommodationPaid"
                   :totalCost="props.totalCost"
                   :from="props.from"
                   :to="props.to"

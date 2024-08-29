@@ -219,6 +219,25 @@ export const useDestinationStore = defineStore({
         
       },
       {
+        expenseID: "ex11",
+        destinationParentID:'trip1',
+        cityParentID:'city1',
+        category: "Attractions",
+        expense: "Mezquita-Catedral de Córdobaaaaa",
+        cost: 11,
+        isExpensePaid: false,
+        date: new Date(2024, 10, 12).toDateString(),
+        startTime: '09:00am',
+        endTime: '11:00am',
+        duration: 2.0,
+        comments: "Iconic mosque-cathedral, a blend of Islamic and Christian architecture",
+        location: 'Córdoba, Spain',
+        isCompleted: true,
+        placeRating: 4,
+        daysRemainingForExpense: 0,
+        
+      },
+      {
         expenseID: "ex2",
         destinationParentID:'trip1',
         cityParentID:'city1',
