@@ -3,18 +3,20 @@ import { useDestinationStore } from "@/store/destination";
 import { useCityStore } from "@/store/cities";
 const cityStore = useCityStore();
 import { storeToRefs } from "pinia";
-const { cities } = storeToRefs(cityStore);
+const {  } = storeToRefs(cityStore);
+const { addCity } = cityStore;
 const props = defineProps(["destinationParamID"]);
 const route = useRoute(); //route object
+
 const destId = route.params.destinationID;
 const cityId = route.params.expensesID;
-
 
 // initiate
 const cityID = ref();
 const parentDestinationID = ref();
 const city = ref();
 const accommodation = ref();
+const accommodationCost = ref();
 const isAccommodationPaid = ref(false);
 const totalCost = ref();
 const from = ref();
@@ -28,25 +30,26 @@ const date = ref();
 const cityRating = ref();
 const submitForm = async () => {
   const cityData = {
-    city: destinationName.value,
-    parentDestinationID : parentDestinationID, 
+    city: city.value,
+    parentDestinationID: destId,
     city: city.value,
     accommodation: accommodation.value,
-    isAccommodationPaid: isAccommodationPaid.value,
-    totalCost: totalCost.value,
+    accommodationCost: accommodationCost.value,
+    isAccommodationPaid: false,
+    totalCost: 0,
     from: from.value,
     to: to.value,
-    isThisCityVisited: isThisCityVisited.value,
-    cityDuration: cityDuration.value,
-    daysRemainingForCity: daysRemainingForCity.value,
-    expenseIncludedOnCity: expenseIncludedOnCity.value,
+    isThisCityVisited: false,
+    cityDuration: 3,
+    daysRemainingForCity:72,
+    expenseIncludedOnCity: 5,
     cityComments: cityComments.value,
     cityRating: cityRating.value,
     date: formatDate(new Date()),
   };
 
-  await addDestination(cityData); //add project to pinia
-  navigateTo("/destinations/trip1"); //after, go to projects
+  await addCity(cityData); //add project to pinia
+//   navigateTo("/destinations/trip1"); //after, go to projects
   console.log(cityData);
 };
 
@@ -57,38 +60,47 @@ const submitForm = async () => {
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Add a City</h3>
- 
+
       <div>
-        <label for="inputPassword4" class="form-label">Destination</label>
+        <label for="inputPassword4" class="form-label">City</label>
         <input
           type="input"
-          v-model.trim="destinationName"
+          v-model.trim="city"
+          class="form-control"
+          id="name-input"
+        />
+      </div>
+      <div class="col-6">
+        <label for="transportType" class="form-label"
+          >Accommodation Type</label
+        >
+      
+
+        <select
+          class="form-select"
+          v-model="accommodation"
+          aria-label="Default select example"
+        >
+          <option>Airbnb</option>
+          <option>Hotel</option>
+          <option>Hostel</option>
+          <option>Home</option>
+        </select>
+      </div>
+      <div class="col-6">
+        <label for="inputPassword4" class="form-label">Accommodation Price</label>
+        <input
+          type="number"
+          v-model.trim="accommodationCost"
           class="form-control"
           id="name-input"
         />
       </div>
       <div>
-        <label for="transportType" class="form-label"
-          >Transportation Type</label
-        >
-        {{ from }}
-
-        <select
-          class="form-select"
-          v-model="transportType"
-          aria-label="Default select example"
-        >
-          <option>Plane</option>
-          <option>Train</option>
-          <option>Car</option>
-          <option>Cruise</option>
-        </select>
-      </div>
-      <div>
-        <label for="inputPassword4" class="form-label">Budget</label>
+        <label for="inputPassword4" class="form-label">Total Cost</label>
         <input
           type="number"
-          v-model.trim="destinationBudget"
+          v-model.trim="totalCost"
           class="form-control"
           id="name-input"
         />
@@ -118,7 +130,7 @@ const submitForm = async () => {
         <label for="inputPassword4" class="form-label">Duration</label>
         <input
           type="number"
-          v-model.trim="duration"
+          v-model.trim="cityDuration"
           class="form-control"
           id="name-input"
         />
@@ -129,7 +141,7 @@ const submitForm = async () => {
 
         <input
           type="number"
-          v-model.trim="tripRating"
+          v-model.trim="cityRating"
           class="form-control"
           id="name-input"
         />
@@ -138,7 +150,7 @@ const submitForm = async () => {
       <div>
         <textarea
           class="form-control"
-          v-model="tripComments"
+          v-model="cityComments"
           aria-label="With textarea"
         />
       </div>
