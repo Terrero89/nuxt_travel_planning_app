@@ -136,3 +136,82 @@ export function formatDate(date: { getFullYear: () => any; getMonth: () => numbe
 export function formatNumber(number: number) {
   return new Intl.NumberFormat('en-US').format(number);
 }
+
+
+// export function calculateDuration(startTime: any, endTime:any) {
+//     // Parse the start and end times
+//     const [startHours, startMinutes] = startTime.split(':').map(Number);
+//     const [endHours, endMinutes] = endTime.split(':').map(Number);
+  
+//     // Calculate the total minutes for start and end times
+//     const startTotalMinutes = startHours * 60 + startMinutes;
+//     const endTotalMinutes = endHours * 60 + endMinutes;
+  
+//     // Calculate the difference in minutes
+//     let diffMinutes = endTotalMinutes - startTotalMinutes;
+  
+//     // If the difference is negative, it means the end time is on the next day
+//     if (diffMinutes < 0) {
+//       diffMinutes += 24 * 60;
+//     }
+  
+//     // Calculate the duration hours and minutes
+//     const durationHours = Math.floor(diffMinutes / 60);
+//     const durationMinutes = diffMinutes % 60;
+  
+//     // Convert the duration to 12-hour format with AM/PM
+//     const durationPeriod = durationHours >= 12 ? 'PM' : 'AM';
+//     const formattedHours = ((durationHours % 12) || 12); // Convert 0 to 12 for 12-hour format
+  
+//     return `${formattedHours}:${durationMinutes.toString().padStart(2, '0')} ${durationPeriod}`;
+//   }
+
+  // Example usage:
+// const startTime = '14:35';
+// const endTime = '15:47';
+// const duration = calculateDuration(startTime, endTime);
+// console.log(duration); // Output: "1:12 PM"
+
+export function calculateTotalDuration(startTime:any, endTime:any) {
+    if (!startTime || !endTime) {
+      return "Invalid time input"; // Handle cases where input times are missing
+    }
+  
+    // Parse the start and end times
+    const [startHours, startMinutes] = startTime.split(':').map(Number);
+    const [endHours, endMinutes] = endTime.split(':').map(Number);
+  
+    // Ensure parsed times are valid numbers
+    if (isNaN(startHours) || isNaN(startMinutes) || isNaN(endHours) || isNaN(endMinutes)) {
+      return "Invalid time format"; // Handle invalid time formats
+    }
+  
+    // Calculate the total minutes for start and end times
+    const startTotalMinutes = startHours * 60 + startMinutes;
+    const endTotalMinutes = endHours * 60 + endMinutes;
+  
+    // Calculate the difference in minutes
+    let diffMinutes = endTotalMinutes - startTotalMinutes;
+  
+    // If the difference is negative, it means the end time is on the next day
+    if (diffMinutes < 0) {
+      diffMinutes += 24 * 60;
+    }
+  
+    // Calculate the duration hours and minutes
+    const durationHours = Math.floor(diffMinutes / 60);
+    const durationMinutes = diffMinutes % 60;
+  
+    // Return hours if more than 1 hour, else return minutes
+    if (durationHours >= 1) {
+      return `${durationHours} hours`;
+    } else {
+      return `${durationMinutes} minutes`;
+    }
+  }
+  
+  // Example usage:
+//   const startTime = '14:35';
+//   const endTime = '15:47';
+//   const duration = calculateTotalDuration(startTime, endTime);
+//   console.log(duration); // Output: "1:12 hours"

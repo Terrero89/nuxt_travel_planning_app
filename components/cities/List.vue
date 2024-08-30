@@ -1,8 +1,10 @@
 <script setup>
+import {onMounted} from 'vue'
 import { useDestinationStore } from "@/store/destination";
 import { useCityStore } from "@/store/cities";
 const cityStore = useCityStore();
 import { storeToRefs } from "pinia";
+const {fetchCities} = cityStore
 const { cities } = storeToRefs(cityStore);
 const props = defineProps([
   "cityID",
@@ -22,6 +24,10 @@ const props = defineProps([
   "date",
   "cityComments",
 ]);
+
+onMounted(() => {
+  fetchCities();
+});
 </script>
 
 <template>
