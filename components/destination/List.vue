@@ -1,9 +1,10 @@
 <script setup>
+import {onMounted} from 'vue'
 import { useDestinationStore } from "@/store/destination";
 const store = useDestinationStore();
 import { storeToRefs } from "pinia";
-
 const { destination } = storeToRefs(store);
+const { fetchDestinations } = store;
 const props = defineProps([
   "destinationID",
   "destination",
@@ -14,10 +15,17 @@ const props = defineProps([
   "tripDuration",
   "date",
   "isTripCompleted",
+  "destinationComments",
   "daysRemainingForTrip",
   "citiesIncludedOnTrip",
-  "destinationRating",
+  "tripRating",
 ]);
+
+onMounted(() => {
+  fetchDestinations();
+});
+
+
 </script>
 
 <template>
@@ -27,6 +35,7 @@ const props = defineProps([
     <div class="container">
 
     </div>
+   
     <DestinationItem
       v-for="trip in destination"
       :key="trip.destinationID"

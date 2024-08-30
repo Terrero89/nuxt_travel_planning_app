@@ -4,13 +4,22 @@ export const useDestinationStore = defineStore({
   id: "destinations",
 
   state: () => ({
+    URL: "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json",
     destination: [
       {
         destinationID: "trip1",
         destination: "Andalusia Trip",
         transportType: "Plane", // train, car, bus, plane
-        from: new Date(2024, 10, 7).toDateString(),
-        to: new Date(2024, 10, 19).toDateString(),
+        from: new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
+        to: new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
         destinationBudget: 1000,
         tripDuration: 10,
         dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {
@@ -29,15 +38,25 @@ export const useDestinationStore = defineStore({
         destinationID: "trip2",
         destination: "Canada",
         transportType: "Car", // train, car, bus, plane
-        from: new Date(2024, 11, 7).toDateString(),
-        to: new Date(2024, 11, 19).toDateString(),
-        destinationBudget: 1000,
-        tripDuration: 12,
-        dateAdded: new Date(2024, 7, 7).toDateString(),  dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {
+        from: new Date(2024, 10, 12).toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",
           year: "numeric",
-        }),       isTripCompleted: false,
+        }),
+        to: new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
+        destinationBudget: 1000,
+        tripDuration: 12,
+        dateAdded: new Date(2024, 7, 7).toDateString(),
+        dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
+        isTripCompleted: false,
         daysRemainingForTrip: 122,
         citiesIncludedOnTrip: 2,
         tripRating: 4.3,
@@ -48,8 +67,16 @@ export const useDestinationStore = defineStore({
         destinationID: "trip3",
         destination: "Dominican Republic",
         transportType: "Plane", // train, car, bus, plane
-        from: new Date(2024, 11, 7).toDateString(),
-        to: new Date(2024, 11, 19).toDateString(),
+        from: new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
+        to: new Date(2024, 10, 12).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
         destinationBudget: 105,
         tripDuration: 12,
         dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {
@@ -165,7 +192,8 @@ export const useDestinationStore = defineStore({
       {
         cityID: "city5",
         parentDestinationId: "trip2",
-        city: "Quebec",   date: new Date(2024, 10, 12).toDateString(),
+        city: "Quebec",
+        date: new Date(2024, 10, 12).toDateString(),
         location: "Montreal, Canada <url address added here>",
         from: new Date(2024, 10, 9).toDateString(),
         to: new Date(2024, 10, 12).toDateString(),
@@ -440,4 +468,57 @@ export const useDestinationStore = defineStore({
       },
     ],
   }),
+  actions: {
+    async fetchDestinations() {
+
+      const response = await fetch(
+         "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json"
+      );
+      const responseData = await response.json();
+      this.destination = responseData;
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || "Failed to fetch!");
+        throw error;
+      }
+
+      const destinationsList = [];
+
+      for (const key in this.destination) {
+        const destination = {
+          id: key,
+          destination: destination[key].destination,
+          transportType: transportType[key].transportType,
+          from: from[key].from,
+          to: to[key].to,
+          destinationBudget: destinationBudget[key].destinationBudget,  
+          tripDuration: tripDuration[key].tripDuration,
+          date: dateAdded[key].dateAdded,
+          isTripCompleted: isTripCompleted[key].isTripCompleted,
+          destinationComments: destinationComments[key].destinationComments,
+          daysRemainingForTrip: daysRemainingForTrip[key].daysRemainingForTrip,
+          citiesIncludedOnTrip: citiesIncludedOnTrip[key].citiesIncludedOnTrip,
+          destinationRating: destinationRating[key].destinationRating,
+          tripRating: tripRating[key].tripRating
+        
+        };
+        destinationsList.push(destination);
+      }
+      this.destination = destinations;
+    },
+    async addDestination(data) {
+      let response = await fetch(
+        "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json",
+        {
+          method: "POST",
+          body: JSON.stringify({ ...data }),
+        }
+      );
+      if (!response.ok) {
+        console.log("ERROR PROJECTS");
+      }
+    },
+  },
 });
+-
+3

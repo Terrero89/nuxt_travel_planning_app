@@ -1,9 +1,9 @@
 <script setup>
-import { useDestinationStore } from "@/store/destination";
-const store = useDestinationStore();
+import { useExpenseStore } from "@/store/expenses";
+const expenseStore = useExpenseStore();
 import { storeToRefs } from "pinia";
 
-const { expenses } = storeToRefs(store);
+const { expenses } = storeToRefs(expenseStore);
 const props = defineProps([
     "expensesID",
   "destinationParentID",
@@ -21,9 +21,12 @@ const props = defineProps([
   "date",
   "isCompleted",
   "daysRemainingForExpense",
- 
   "placeRating",
 ]);
+// onMounted(() => {
+//   fetchDestinations();
+// });
+
 </script>
 
 <template>
