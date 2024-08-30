@@ -1,40 +1,53 @@
 <script setup>
 import { useDestinationStore } from "@/store/destination";
-const store = useDestinationStore();
+import { useCityStore } from "@/store/cities";
+const cityStore = useCityStore();
 import { storeToRefs } from "pinia";
-const {} = storeToRefs(store);
-const { addDestination } = store;
+const { cities } = storeToRefs(cityStore);
 const props = defineProps(["destinationParamID"]);
+const route = useRoute(); //route object
+const destId = route.params.destinationID;
+const cityId = route.params.expensesID;
 
-const destinationName = ref("");
-const transportType = ref("");
-const destinationBudget = ref();
-const from = ref("");
-const to = ref(new Date(""));
-const duration = ref();
-const tripRating = ref();
-const tripComments = ref("");
 
-const submitForm = () => {
-  const tripData = {
-    destination: destinationName.value,
-    transportType: transportType.value,
-    destinationBudget: destinationBudget.value,
-    isTripComplete: false,
+// initiate
+const cityID = ref();
+const parentDestinationID = ref();
+const city = ref();
+const accommodation = ref();
+const isAccommodationPaid = ref(false);
+const totalCost = ref();
+const from = ref();
+const to = ref();
+const isThisCityVisited = ref(false);
+const cityDuration = ref();
+const daysRemainingForCity = ref();
+const expenseIncludedOnCity = ref();
+const cityComments = ref();
+const date = ref();
+const cityRating = ref();
+const submitForm = async () => {
+  const cityData = {
+    city: destinationName.value,
+    parentDestinationID : parentDestinationID, 
+    city: city.value,
+    accommodation: accommodation.value,
+    isAccommodationPaid: isAccommodationPaid.value,
+    totalCost: totalCost.value,
     from: from.value,
     to: to.value,
-    tripDuration: calculateDaysRangeDuration(from.value, to.value),
-    daysRemainingForTrip: 0,
-    tripRating: 0.0,
-    tripComments: "",
+    isThisCityVisited: isThisCityVisited.value,
+    cityDuration: cityDuration.value,
+    daysRemainingForCity: daysRemainingForCity.value,
+    expenseIncludedOnCity: expenseIncludedOnCity.value,
+    cityComments: cityComments.value,
+    cityRating: cityRating.value,
     date: formatDate(new Date()),
   };
 
-  addDestination(tripData); //add project to pinia
-  // addHistory(projectData); //add history to pinia
-  // projectAddedToActions(props.param); //add project to actions
-  navigateTo("/destinations"); //after, go to projects
-  console.log(tripData);
+  await addDestination(cityData); //add project to pinia
+  navigateTo("/destinations/trip1"); //after, go to projects
+  console.log(cityData);
 };
 
 // };
@@ -43,8 +56,8 @@ const submitForm = () => {
 <template>
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
-      <h3 class="mb-4">Create Destination</h3>
-      {{ props.destinationParamID }}
+      <h3 class="mb-4">Add a City</h3>
+ 
       <div>
         <label for="inputPassword4" class="form-label">Destination</label>
         <input

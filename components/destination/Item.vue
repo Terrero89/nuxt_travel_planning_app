@@ -2,7 +2,7 @@
 import { useDestinationStore } from "@/store/destination";
 const store = useDestinationStore();
 import { storeToRefs } from "pinia";
-const { destinations } = storeToRefs(store);
+const { destination } = storeToRefs(store);
 const props = defineProps([
   "destinationID",
   "destination",
@@ -24,6 +24,7 @@ const isOpen = ref(false);
 <template>
   <div class="destination-item">
     <div class="item">
+      {{ destinationID}}
       <div class="destination">
         <h1 class="title">{{ props.destination }}</h1>
         <div class="destination-wrapper">
