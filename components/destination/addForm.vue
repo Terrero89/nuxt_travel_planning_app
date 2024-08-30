@@ -17,14 +17,15 @@ const tripComments = ref("");
 
 const submitForm = () => {
   const tripData = {
-    destinationName: destinationName.value,
+    destination: destinationName.value,
     transportType: transportType.value,
     destinationBudget: destinationBudget.value,
     isTripComplete: false,
-    duration: 0,
+    tripDuration: 0,
     from: from.value,
     to: to.value,
-    tripRating: 0,
+    daysRemainingForTrip: 0,
+    tripRating: 0.0,
     tripComments: "",
     date: new Date(),
   };
@@ -32,7 +33,7 @@ const submitForm = () => {
   addDestination(tripData); //add project to pinia
   // addHistory(projectData); //add history to pinia
   // projectAddedToActions(props.param); //add project to actions
-  navigateTo("/destinations"); //after, go to projects
+  // navigateTo("/destinations"); //after, go to projects
   console.log(tripData);
 };
 

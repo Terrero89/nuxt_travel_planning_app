@@ -4,8 +4,7 @@ export const useDestinationStore = defineStore({
   id: "destinations",
 
   state: () => ({
-
-    URL: "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json" ,
+    URL: "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json",
     destination: [
       {
         destinationID: "trip1",
@@ -469,19 +468,57 @@ export const useDestinationStore = defineStore({
       },
     ],
   }),
-  actions:{
+  actions: {
+    async fetchDestinations() {
+
+      const response = await fetch(
+         "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json"
+      );
+      const responseData = await response.json();
+      this.destination = responseData;
+
+      if (!response.ok) {
+        const error = new Error(responseData.message || "Failed to fetch!");
+        throw error;
+      }
+
+      const destinationsList = [];
+
+      for (const key in this.destination) {
+        const destination = {
+          id: key,
+          destination: destination[key].destination,
+          transportType: transportType[key].transportType,
+          from: from[key].from,
+          to: to[key].to,
+          destinationBudget: destinationBudget[key].destinationBudget,  
+          tripDuration: tripDuration[key].tripDuration,
+          date: dateAdded[key].dateAdded,
+          isTripCompleted: isTripCompleted[key].isTripCompleted,
+          destinationComments: destinationComments[key].destinationComments,
+          daysRemainingForTrip: daysRemainingForTrip[key].daysRemainingForTrip,
+          citiesIncludedOnTrip: citiesIncludedOnTrip[key].citiesIncludedOnTrip,
+          destinationRating: destinationRating[key].destinationRating,
+          tripRating: tripRating[key].tripRating
+        
+        };
+        destinationsList.push(destination);
+      }
+      this.destination = destinations;
+    },
     async addDestination(data) {
-   
       let response = await fetch(
-        'https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json',
+        "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json",
         {
           method: "POST",
-          body: JSON.stringify({...data}),
+          body: JSON.stringify({ ...data }),
         }
       );
-       if (!response.ok) {
+      if (!response.ok) {
         console.log("ERROR PROJECTS");
       }
     },
-  }
+  },
 });
+-
+3
