@@ -3,7 +3,6 @@ import {onMounted} from 'vue'
 import { useDestinationStore } from "@/store/destination";
 const store = useDestinationStore();
 import { storeToRefs } from "pinia";
-
 const { destination } = storeToRefs(store);
 const { fetchDestinations } = store;
 const props = defineProps([

@@ -1,9 +1,9 @@
 <script setup>
 import { useDestinationStore } from "@/store/destination";
-const store = useDestinationStore();
+import { useCityStore } from "@/store/cities";
+const cityStore = useCityStore();
 import { storeToRefs } from "pinia";
-
-const { cities } = storeToRefs(store);
+const { cities } = storeToRefs(cityStore);
 const props = defineProps([
   "cityID",
   "parentDestinationID",

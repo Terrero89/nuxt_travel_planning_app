@@ -12,7 +12,7 @@ export const useExpenseStore = defineStore({
         destinationParentID: "trip1",
         cityParentID: "city1",
         category: "Attractions",
-        expense: "Mezquita-Catedral de Córdoba",
+        expense: "Mezquita-Catedral de Córdobaa",
         cost: 11,
         isExpensePaid: true,
         date: new Date(2024, 10, 12).toLocaleDateString("en-US", {
