@@ -18,14 +18,18 @@ const props = defineProps([
   "tripRating",
   "tripComments",
 ]);
+
+const destinationParam = ref(props.destinationID)
 const isOpen = ref(false);
 </script>
 
 <template>
   <div class="destination-item">
+    
     <div class="item">
-      {{ destinationID}}
       <div class="destination">
+        {{props.destinationID}}
+   
         <h1 class="title">{{ props.destination }}</h1>
         <div class="destination-wrapper">
           <div class="section-one row">

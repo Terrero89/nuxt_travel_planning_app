@@ -2,14 +2,17 @@
 import { useExpenseStore } from "@/store/expenses";
 const expenseStore = useExpenseStore();
 import { storeToRefs } from "pinia";
-import { calculateTotalDuration } from "../../utils/date-conversion";
+import {
+  calculateTotalDuration,
+  calculateDaysRemaining,
+} from "../../utils/date-conversion";
 const {} = storeToRefs(expenseStore);
 const { addExpense } = expenseStore;
 
 const route = useRoute(); //route object
 
 const destId = route.params.destinationID;
-const cityId = route.params.expensesID;
+const cityId = route.params.cityID;
 
 // initiate
 const expense = ref("");
@@ -18,11 +21,9 @@ const startTime = ref("");
 const endTime = ref("");
 const cost = ref();
 const location = ref("");
-const locationLink = ref("");
 const address = ref("");
 const date = ref();
 const isCompleted = ref();
-const daysRemainingForExpense = ref();
 const placeRating = ref();
 const comments = ref();
 
@@ -30,8 +31,11 @@ const comments = ref();
 
 const submitForm = async () => {
   const expenseData = {
+    // parentCityID: cityId,
+    // parentCityID: "O5UMyVb-zRSDBSu-xcJ",
     parentCityID: cityId,
-    parentDestinationId: destId,
+    // parentDestinationId: destId,
+    parentDestinationID: "-O5PPTfcVs2rR02VPLi6",
     expense: expense.value,
     category: category.value,
     startTime: startTime.value,
@@ -39,8 +43,6 @@ const submitForm = async () => {
     cost: cost.value,
     isExpensePaid: false,
     location: location.value,
-    locationLink: locationLink.value,
-    address: address.value,
     duration: duration.value,
     date: new Date(),
     isCompleted: isCompleted.value,
@@ -49,34 +51,28 @@ const submitForm = async () => {
     date: formatDate(new Date()),
   };
 
-  await addExpense(expenseData); //add project to pinia
+  // await addExpense({ ...expenseData, parentCityID: cityId }); //add project to pinia
   //   navigateTo("/destinations/trip1"); //after, go to projects
-  console.log(expenseData);
+  console.log({ ...expenseData, parentCityID: cityId, parentDestinationID:destId });
 };
 
-// Use the utility function in a computed property
-// Use the utility function in a computed property
 const duration = computed(() => {
   if (!startTime.value || !endTime.value) {
-    return "";
+    return 0;
   }
-
   return calculateTotalDuration(startTime.value, endTime.value);
 });
-//? functions
-const copyLocation = () => {
-  navigator.clipboard.writeText(location.value);
-  alert("COPIED TO CLIPBOARD");
-};
 
-// ? computed properties
-
+const daysRemainingForExpense = computed(() => {
+  return calculateDaysRemaining("11-07-2024");
+});
 </script>
 
 <template>
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Add Expense</h3>
+      {{cityID}}
 
       <div>
         <label for="inputPassword4" class="form-label">Expense</label>
@@ -87,6 +83,7 @@ const copyLocation = () => {
           id="name-input"
         />
       </div>
+
       <div class="col-6">
         <label for="transportType" class="form-label">Expense Type</label>
 
@@ -154,6 +151,9 @@ const copyLocation = () => {
           v-model.trim="placeRating"
           class="form-control"
           id="placeRating-input"
+          min="0"
+          max="5"
+          step="0.1"
         />
       </div>
       <div>
@@ -179,7 +179,7 @@ const copyLocation = () => {
       <div>
         <textarea
           class="form-control"
-          v-model="cityComments"
+          v-model="comments"
           aria-label="With textarea"
         />
       </div>

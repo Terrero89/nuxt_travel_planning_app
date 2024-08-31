@@ -1,144 +1,59 @@
 import axios from "axios";
 import { defineStore } from "pinia";
+
 export const useDestinationStore = defineStore({
   id: "destinations",
-
   state: () => ({
     URL: "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json",
-    destination: [
-      // {
-      //   destinationID: "trip1",
-      //   destination: "Andalusia Trip",
-      //   transportType: "Plane", // train, car, bus, plane
-      //   from: new Date(2024, 10, 12).toLocaleDateString("en-US", {
-      //     month: "short",
-      //     day: "numeric",
-      //     year: "numeric",
-      //   }),
-      //   to: new Date(2024, 10, 12).toLocaleDateString("en-US", {
-      //     month: "short",
-      //     day: "numeric",
-      //     year: "numeric",
-      //   }),
-      //   destinationBudget: 1000,
-      //   tripDuration: 10,
-      //   dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {
-      //     month: "short",
-      //     day: "numeric",
-      //     year: "numeric",
-      //   }),
-      //   isTripCompleted: true,
-      //   daysRemainingForTrip: 5,
-      //   citiesIncludedOnTrip: 9,
-      //   tripRating: 4.7,
-      //   tripComments: "Great trip",
-      //   cities: [],
-      // },
-      // {
-      //   destinationID: "trip2",
-      //   destination: "Canada",
-      //   transportType: "Car", // train, car, bus, plane
-      //   from: new Date(2024, 10, 12).toLocaleDateString("en-US", {
-      //     month: "short",
-      //     day: "numeric",
-      //     year: "numeric",
-      //   }),
-      //   to: new Date(2024, 10, 12).toLocaleDateString("en-US", {
-      //     month: "short",
-      //     day: "numeric",
-      //     year: "numeric",
-      //   }),
-      //   destinationBudget: 1000,
-      //   tripDuration: 12,
-      //   dateAdded: new Date(2024, 7, 7).toDateString(),
-      //   dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {
-      //     month: "short",
-      //     day: "numeric",
-      //     year: "numeric",
-      //   }),
-      //   isTripCompleted: false,
-      //   daysRemainingForTrip: 122,
-      //   citiesIncludedOnTrip: 2,
-      //   tripRating: 4.3,
-      //   tripComments: "Great trip",
-      //   cities: [],
-      // },
-      // {
-      //   destinationID: "trip3",
-      //   destination: "Dominican Republic",
-      //   transportType: "Plane", // train, car, bus, plane
-      //   from: new Date(2024, 10, 12).toLocaleDateString("en-US", {
-      //     month: "short",
-      //     day: "numeric",
-      //     year: "numeric",
-      //   }),
-      //   to: new Date(2024, 10, 12).toLocaleDateString("en-US", {
-      //     month: "short",
-      //     day: "numeric",
-      //     year: "numeric",
-      //   }),
-      //   destinationBudget: 105,
-      //   tripDuration: 12,
-      //   dateAdded: new Date(2024, 10, 12).toLocaleDateString("en-US", {
-      //     month: "short",
-      //     day: "numeric",
-      //     year: "numeric",
-      //   }),
-      //   isTripCompleted: false,
-      //   daysRemainingForTrip: 5,
-      //   citiesIncludedOnTrip: 9,
-      //   tripRating: 3.9,
-      //   tripComments: "Great trip",
-      //   cities: [],
-      // },
-    ],
+    destination: [],
+    isLoading: false, // Add loading state
+    testDestination: [{name:'Sergio', hobbies:[{action:'run', enjoy:'eat'}, {action:'jump', enjoy:'fuck'}]}]
   }),
   actions: {
     async fetchDestinations() {
-      const response = await fetch(
-        "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json"
-      );
-      const responseData = await response.json();
-      this.destination = responseData;
+      this.isLoading = true; // Start loading
+      try {
+        const response = await fetch(this.URL);
+        const responseData = await response.json();
 
-      if (!response.ok) {
-        const error = new Error(responseData.message || "Failed to fetch!");
-        throw error;
+        if (!response.ok) {
+          throw new Error(responseData.message || "Failed to fetch!");
+        }
+
+        const destinationsList = [];
+        for (const key in responseData) {
+          const destination = {
+            destinationID: key,
+            destination: responseData[key].destination,
+            transportType: responseData[key].transportType,
+            from: responseData[key].from,
+            to: responseData[key].to,
+            destinationBudget: responseData[key].destinationBudget,
+            tripDuration: responseData[key].tripDuration,
+            date: responseData[key].dateAdded,
+            isTripCompleted: responseData[key].isTripCompleted,
+            destinationComments: responseData[key].destinationComments,
+            daysRemainingForTrip: responseData[key].daysRemainingForTrip,
+            citiesIncludedOnTrip: responseData[key].citiesIncludedOnTrip,
+            destinationRating: responseData[key].destinationRating,
+            tripRating: responseData[key].tripRating,
+          };
+          destinationsList.push(destination);
+        }
+        this.destination = destinationsList;
+      } catch (error) {
+        console.error("Failed to fetch destinations:", error);
+      } finally {
+        this.isLoading = false; // Stop loading
       }
-
-      const destinationsList = [];
-
-      for (const key in this.destination) {
-        const destination = {
-          destinationID: key,
-          destination: destination[key].destination,
-          transportType: transportType[key].transportType,
-          from: from[key].from,
-          to: to[key].to,
-          destinationBudget: destinationBudget[key].destinationBudget,
-          tripDuration: tripDuration[key].tripDuration,
-          date: dateAdded[key].dateAdded,
-          isTripCompleted: isTripCompleted[key].isTripCompleted,
-          destinationComments: destinationComments[key].destinationComments,
-          daysRemainingForTrip: daysRemainingForTrip[key].daysRemainingForTrip,
-          citiesIncludedOnTrip: citiesIncludedOnTrip[key].citiesIncludedOnTrip,
-          destinationRating: destinationRating[key].destinationRating,
-          tripRating: tripRating[key].tripRating,
-        };
-        destinationsList.push(destination);
-      }
-      this.destination = destinations;
     },
     async addDestination(data) {
-      const response = await fetch(
-        "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json",
-        {
-          method: "POST",
-          body: JSON.stringify({ ...data }),
-        }
-      );
+      const response = await fetch(this.URL, {
+        method: "POST",
+        body: JSON.stringify({ ...data }),
+      });
       if (!response.ok) {
-        console.log("ERROR PROJECTS");
+        console.error("Failed to add destination");
       }
     },
     async updateDestination(tripData) {
@@ -149,12 +64,11 @@ export const useDestinationStore = defineStore({
         );
         const updatedDestination = response.data;
 
-        // Update the local state if necessary
-        const index = this.destinations.findIndex(
-          (dest) => dest.destinationId === tripData.destinationID
+        const index = this.destination.findIndex(
+          (dest) => dest.destinationID === tripData.destinationID
         );
         if (index !== -1) {
-          this.destinations[index] = updatedDestination;
+          this.destination[index] = updatedDestination;
         }
 
         return updatedDestination;
@@ -163,7 +77,6 @@ export const useDestinationStore = defineStore({
         throw error;
       }
     },
-
-    // need a delete and update specific destination
+    // Add delete action if needed
   },
 });

@@ -4,11 +4,7 @@ const destinationParamID = route.params.destinationID;
 const props = defineProps(["destinationParamID"]);
 </script>
 <template>
-    <div>
-    
-        <DestinationAddForm  />
-    </div>
-  
-
-
+  <div>
+    <DestinationAddForm />
+  </div>
 </template>

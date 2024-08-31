@@ -5,7 +5,7 @@ const store = useDestinationStore();
 const { cities } = storeToRefs(store);
 const route = useRoute(); //route object
 const destId = route.params.destinationID;
-const cityId = route.params.expensesID;
+// const cityId = route.params.expensesID;
 </script>
 
 <template>
@@ -13,7 +13,7 @@ const cityId = route.params.expensesID;
     destinationID: {{ destId }}
  
       <div>CITIES BASED ON ID HERE</div>
-      <CitiesList />
+      <CitiesList :parentDestinationID="destId" />
     
   </div>
 </template>

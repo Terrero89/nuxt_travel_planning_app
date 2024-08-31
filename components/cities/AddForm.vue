@@ -3,7 +3,7 @@ import { useDestinationStore } from "@/store/destination";
 import { useCityStore } from "@/store/cities";
 const cityStore = useCityStore();
 import { storeToRefs } from "pinia";
-const {  } = storeToRefs(cityStore);
+const {} = storeToRefs(cityStore);
 const { addCity } = cityStore;
 const props = defineProps(["destinationParamID"]);
 const route = useRoute(); //route object
@@ -13,14 +13,14 @@ const cityId = route.params.expensesID;
 
 // initiate
 const cityID = ref();
-const parentDestinationID = ref();
+const parentDestinationID = ref(destId);
 const city = ref();
-const accommodation = ref();
-const accommodationCost = ref();
+const accommodation = ref("Hotel");
+const accommodationCost = ref(150);
 const isAccommodationPaid = ref(false);
-const totalCost = ref();
-const from = ref();
-const to = ref();
+const totalCost = ref(550);
+const from = ref("2024-11-27");
+const to = ref("2024-11-30");
 const isThisCityVisited = ref(false);
 const cityDuration = ref();
 const daysRemainingForCity = ref();
@@ -32,7 +32,6 @@ const submitForm = async () => {
   const cityData = {
     city: city.value,
     parentDestinationID: destId,
-    city: city.value,
     accommodation: accommodation.value,
     accommodationCost: accommodationCost.value,
     isAccommodationPaid: false,
@@ -40,16 +39,17 @@ const submitForm = async () => {
     from: from.value,
     to: to.value,
     isThisCityVisited: false,
-    cityDuration: 3,
-    daysRemainingForCity:72,
+    cityDuration: cityDuration.value,
+    daysRemainingForCity: 72,
     expenseIncludedOnCity: 5,
     cityComments: cityComments.value,
     cityRating: cityRating.value,
     date: formatDate(new Date()),
   };
+  console.log(destId);
 
-  await addCity(cityData); //add project to pinia
-//   navigateTo("/destinations/trip1"); //after, go to projects
+  await addCity({ ...cityData }); //add project to pinia
+  //   navigateTo("/destinations/trip1"); //after, go to projects
   console.log(cityData);
 };
 
@@ -71,10 +71,7 @@ const submitForm = async () => {
         />
       </div>
       <div class="col-6">
-        <label for="transportType" class="form-label"
-          >Accommodation Type</label
-        >
-      
+        <label for="transportType" class="form-label">Accommodation Type</label>
 
         <select
           class="form-select"
@@ -88,7 +85,9 @@ const submitForm = async () => {
         </select>
       </div>
       <div class="col-6">
-        <label for="inputPassword4" class="form-label">Accommodation Price</label>
+        <label for="inputPassword4" class="form-label"
+          >Accommodation Price</label
+        >
         <input
           type="number"
           v-model.trim="accommodationCost"
