@@ -23,6 +23,10 @@ const props = defineProps([
   "cityComments",
   "date",
 ]);
+const route = useRoute(); //route object
+const destId = route.params.destinationID;
+
+
 const isOpen = ref(false);
 </script>
 
@@ -32,7 +36,9 @@ const isOpen = ref(false);
     <div class="item">
       <!-- <div class="status" :class="currStatus"></div> -->
       <div class="destination">
-        {{props.parentDestinationID}}    <h1 class="title">{{ props.city }}</h1>
+        {{ props.parentDestinationID  }}
+    
+           <h1 class="title">{{ props.city }}</h1>
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
@@ -127,7 +133,6 @@ const isOpen = ref(false);
             </span>
           </div>
           <div>
-            <div></div>
             <UModal v-model="isOpen">
               <div class="p-4">
                 <CitiesDetails

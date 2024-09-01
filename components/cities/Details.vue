@@ -3,6 +3,8 @@
 // const store = useDestinationStore();
 // import { storeToRefs } from "pinia";
 // const { cities } = storeToRefs(store);
+const route = useRoute(); //route object
+const destId = route.params.destinationID;
 const props = defineProps([
   "cityID",
   "parentDestinationID",
@@ -20,8 +22,10 @@ const props = defineProps([
   "expenseIncludedOnCity",
   "cityComments",
 ]);
+// have to find a way to grab all the required fields now that i have both ids
+
 const citiesLink = computed(
-  () => `/destinations/${props.destinationID}/cities--O5UMyVb-zRSDBSu-xcJ`
+  () => `/destinations/${destId}/cities--O5UMyVb-zRSDBSu-xcJ`
 );
 </script>
 
@@ -29,7 +33,7 @@ const citiesLink = computed(
   <div>
     <div class="modal-details">
       <h3>City Details</h3>
-      {{ props.cityID }}
+{{ props.cityID }}
       <hr />
       <h2>{{ props.city }}</h2>
 

@@ -9,11 +9,9 @@ const props = defineProps(["destinationParamID"]);
 const route = useRoute(); //route object
 
 const destId = route.params.destinationID;
-const cityId = route.params.expensesID;
 
 // initiate
-const cityID = ref();
-const parentDestinationID = ref(destId);
+
 const city = ref();
 const accommodation = ref("Hotel");
 const accommodationCost = ref(150);
@@ -46,9 +44,9 @@ const submitForm = async () => {
     cityRating: cityRating.value,
     date: formatDate(new Date()),
   };
-  console.log(destId);
+  console.log(cityData);
 
-  await addCity({ ...cityData }); //add project to pinia
+  await addCity(cityData); //add project to pinia
   //   navigateTo("/destinations/trip1"); //after, go to projects
   console.log(cityData);
 };

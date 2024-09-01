@@ -5,7 +5,7 @@ import { storeToRefs } from "pinia";
 
 // Access the store
 const store = useDestinationStore();
-const { destination, isLoading, testDestination } = storeToRefs(store); // Include isLoading state
+const { destination, isLoading } = storeToRefs(store); // Include isLoading state
 
 // Fetch destinations when the component is mounted
 const { fetchDestinations } = store;
@@ -61,9 +61,8 @@ const props = defineProps([
       </div>
 
       <div v-else>
-       <div v-for="trip in testDestination" :key="trip.destinationID">
-{{ trip.hobbies.map((test)=> test.action) }}
-       </div>
+   
+    
         <DestinationItem
           v-for="trip in destination"
           :key="trip.destinationID"

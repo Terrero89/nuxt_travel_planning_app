@@ -10,10 +10,10 @@ const destId = route.params.destinationID;
 
 <template>
   <div>
-    destinationID: {{ destId }}
+  
  
       <div>CITIES BASED ON ID HERE</div>
-      <CitiesList :parentDestinationID="destId" />
+      <CitiesList/>
     
   </div>
 </template>

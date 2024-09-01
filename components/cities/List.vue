@@ -2,16 +2,17 @@
 import { onMounted } from "vue";
 import { useDestinationStore } from "@/store/destination";
 import { useCityStore } from "@/store/cities";
-
+import { useExpenseStore } from "@/store/expenses";
 const cityStore = useCityStore();
 const destStore = useDestinationStore();
 
 import { storeToRefs } from "pinia";
 
-const { fetchCities } = cityStore;
+const { fetchCities} = cityStore;
 const { fetchDestinations } = destStore;
 const { cities } = storeToRefs(cityStore);
 const { destination } = storeToRefs(destStore);
+const { expenses } = useExpenseStore();
 
 const route = useRoute(); //route object
 const destId = route.params.destinationID;
@@ -38,28 +39,23 @@ const props = defineProps([
 onMounted(() => {
   fetchCities();
   fetchDestinations();
+
 });
-// grab the ones that are under the parent id x
-// const findByDestination = () => {
-//   const findCities = destination.value.filter(
-//     (city) => city.parentDestinationID === 'd1'
-//   );
-//   return findCities
-// };
+// now i can find based on id
 </script>
 
 <template>
   <div class="projects">
     <UITitle title="Projects" class="container border-bottom" />
-    <div>destID: {{ props.parentDestinationID }}</div>
-    <div>CITY ID:{{ cityId }}</div>
-
-
+    <div>
+      <div>HHHHH---{{ props.cityID }}</div>
+      {{ destination.length }} {{ cityStore.citiesAsArray }}
+    </div>
     <CitiesItem
-      v-for="city in cities"
+      v-for="city in cityStore.citiesAsArray"
       :key="city.cityID"
-      :cityID="city.id"
-      :parentDestinationID="props.parentDestinationID"
+      :cityID="city.cityID"
+      :parentDestinationID="destId"
       :city="city.city"
       :accommodation="city.accommodation"
       :accommodationCost="city.accommodationCost"

@@ -4,8 +4,9 @@ import { defineStore } from "pinia";
 export const useCityStore = defineStore({
   id: "cities",
   state: () => ({
-    URL: "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json",
+    URL: "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities.json",
     cities: [],
+    punto: "cero",
   }),
   actions: {
     async fetchCities() {
@@ -40,23 +41,31 @@ export const useCityStore = defineStore({
           expenseIncludedOnCity:
             expenseIncludedOnCity[key].expenseIncludedOnCity,
           cityComments: cityComments[key].cityComments,
+          date: date[key].date,
         };
         cityList.push(newCity);
       }
       this.cities = cityList;
     },
     async addCity(data) {
-      const response = await fetch(
-        "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities.json",
-        {
+      this.isLoading = true; // Start loading
+      try {
+        const response = await fetch(this.URL, {
           method: "POST",
-          body: JSON.stringify({ ...data }),
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+          throw new Error("Failed to add city");
         }
-      );
-      if (!response.ok) {
-        console.log("ERROR PROJECTS");
+
+        // No need to generate a unique ID here, data is stored directly
+      } catch (error) {
+        console.error("Failed to add city:", error);
+      } finally {
+        this.isLoading = false; // Stop loading
       }
     },
+
     // async updateDestination(cityData) {
     //   try {
     //     const response = await axios.put(
@@ -81,6 +90,19 @@ export const useCityStore = defineStore({
     // },
 
     // need a delete and update specific destination
+  },
+  getters: {
+    citiesAsArray: (state) => {
+      const cityList = [];
+      for (const key in state.cities) {
+        const cityData = {
+          cityID: key,
+          ...state.cities[key],
+        };
+        cityList.push(cityData);
+      }
+      return cityList;
+    },
   },
 });
 

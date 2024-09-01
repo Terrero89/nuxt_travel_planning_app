@@ -19,14 +19,14 @@ const props = defineProps([
   "tripRating",
   "tripComments",
 ]);
-
+//? links
 const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
 </script>
 
 <template>
   <div class="modal-details">
-    {{ destinationID }}
     <h3>Destination Details</h3>
+    {{props.destinationID}}
     <hr />
     <h2>{{ props.destination }}</h2>
 
