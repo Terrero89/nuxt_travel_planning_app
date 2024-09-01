@@ -1,40 +1,54 @@
 <script setup>
 import { useDestinationStore } from "@/store/destination";
-const store = useDestinationStore();
+import { useCityStore } from "@/store/cities";
+const cityStore = useCityStore();
 import { storeToRefs } from "pinia";
-const {} = storeToRefs(store);
-const { addDestination } = store;
+const {} = storeToRefs(cityStore);
+const { addCity } = cityStore;
 const props = defineProps(["destinationParamID"]);
+const route = useRoute(); //route object
 
-const destinationName = ref("");
-const transportType = ref("");
-const destinationBudget = ref();
-const from = ref("");
-const to = ref(new Date(""));
-const duration = ref();
-const tripRating = ref();
-const tripComments = ref("");
+const destId = route.params.destinationID;
 
-const submitForm = () => {
-  const tripData = {
-    destination: destinationName.value,
-    transportType: transportType.value,
-    destinationBudget: destinationBudget.value,
-    isTripComplete: false,
+// initiate
+
+const city = ref();
+const accommodation = ref("Hotel");
+const accommodationCost = ref(150);
+const isAccommodationPaid = ref(false);
+const totalCost = ref(550);
+const from = ref("2024-11-27");
+const to = ref("2024-11-30");
+const isThisCityVisited = ref(false);
+const cityDuration = ref();
+const daysRemainingForCity = ref();
+const expenseIncludedOnCity = ref();
+const cityComments = ref();
+const date = ref();
+const cityRating = ref();
+const submitForm = async () => {
+  const cityData = {
+    city: city.value,
+    parentDestinationID: destId,
+    accommodation: accommodation.value,
+    accommodationCost: accommodationCost.value,
+    isAccommodationPaid: false,
+    totalCost: 0,
     from: from.value,
     to: to.value,
-    tripDuration: calculateDaysRangeDuration(from.value, to.value),
-    daysRemainingForTrip: 0,
-    tripRating: 0.0,
-    tripComments: "",
+    isThisCityVisited: false,
+    cityDuration: cityDuration.value,
+    daysRemainingForCity: 72,
+    expenseIncludedOnCity: 5,
+    cityComments: cityComments.value,
+    cityRating: cityRating.value,
     date: formatDate(new Date()),
   };
+  console.log(cityData);
 
-  addDestination(tripData); //add project to pinia
-  // addHistory(projectData); //add history to pinia
-  // projectAddedToActions(props.param); //add project to actions
-  navigateTo("/destinations"); //after, go to projects
-  console.log(tripData);
+  await addCity(cityData); //add project to pinia
+  //   navigateTo("/destinations/trip1"); //after, go to projects
+  console.log(cityData);
 };
 
 // };
@@ -43,39 +57,47 @@ const submitForm = () => {
 <template>
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
-      <h3 class="mb-4">Create Destination</h3>
-      {{ props.destinationParamID }}
+      <h3 class="mb-4">Add a City</h3>
+
       <div>
-        <label for="inputPassword4" class="form-label">Destination</label>
+        <label for="inputPassword4" class="form-label">City</label>
         <input
           type="input"
-          v-model.trim="destinationName"
+          v-model.trim="city"
+          class="form-control"
+          id="name-input"
+        />
+      </div>
+      <div class="col-6">
+        <label for="transportType" class="form-label">Accommodation Type</label>
+
+        <select
+          class="form-select"
+          v-model="accommodation"
+          aria-label="Default select example"
+        >
+          <option>Airbnb</option>
+          <option>Hotel</option>
+          <option>Hostel</option>
+          <option>Home</option>
+        </select>
+      </div>
+      <div class="col-6">
+        <label for="inputPassword4" class="form-label"
+          >Accommodation Price</label
+        >
+        <input
+          type="number"
+          v-model.trim="accommodationCost"
           class="form-control"
           id="name-input"
         />
       </div>
       <div>
-        <label for="transportType" class="form-label"
-          >Transportation Type</label
-        >
-        {{ from }}
-
-        <select
-          class="form-select"
-          v-model="transportType"
-          aria-label="Default select example"
-        >
-          <option>Plane</option>
-          <option>Train</option>
-          <option>Car</option>
-          <option>Cruise</option>
-        </select>
-      </div>
-      <div>
-        <label for="inputPassword4" class="form-label">Budget</label>
+        <label for="inputPassword4" class="form-label">Total Cost</label>
         <input
           type="number"
-          v-model.trim="destinationBudget"
+          v-model.trim="totalCost"
           class="form-control"
           id="name-input"
         />
@@ -105,7 +127,7 @@ const submitForm = () => {
         <label for="inputPassword4" class="form-label">Duration</label>
         <input
           type="number"
-          v-model.trim="duration"
+          v-model.trim="cityDuration"
           class="form-control"
           id="name-input"
         />
@@ -116,7 +138,7 @@ const submitForm = () => {
 
         <input
           type="number"
-          v-model.trim="tripRating"
+          v-model.trim="cityRating"
           class="form-control"
           id="name-input"
         />
@@ -125,7 +147,7 @@ const submitForm = () => {
       <div>
         <textarea
           class="form-control"
-          v-model="tripComments"
+          v-model="cityComments"
           aria-label="With textarea"
         />
       </div>

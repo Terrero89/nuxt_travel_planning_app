@@ -2,7 +2,7 @@
 import { useDestinationStore } from "@/store/destination";
 const store = useDestinationStore();
 import { storeToRefs } from "pinia";
-const { destinations } = storeToRefs(store);
+const { destination } = storeToRefs(store);
 const props = defineProps([
   "destinationID",
   "destination",
@@ -18,13 +18,18 @@ const props = defineProps([
   "tripRating",
   "tripComments",
 ]);
+
+const destinationParam = ref(props.destinationID)
 const isOpen = ref(false);
 </script>
 
 <template>
   <div class="destination-item">
+    
     <div class="item">
       <div class="destination">
+        {{props.destinationID}}
+   
         <h1 class="title">{{ props.destination }}</h1>
         <div class="destination-wrapper">
           <div class="section-one row">

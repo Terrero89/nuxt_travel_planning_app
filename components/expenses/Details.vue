@@ -21,6 +21,8 @@ const props = defineProps([
   "daysRemainingForExpense",
   "placeRating",
 ]);
+
+const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
 </script>
 
 <template>
@@ -162,6 +164,13 @@ const props = defineProps([
           >{{ props.placeRating }}</UBadge
         >
       </span>
+    </div>
+    <div>
+      <span class="detail-label">See Cities to visit </span>
+      <NuxtLink  class="space dr-button" :to="citiesLink">
+        <button> Cities</button>
+      </NuxtLink>
+      
     </div>
 
     <!-- 

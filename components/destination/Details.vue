@@ -19,11 +19,14 @@ const props = defineProps([
   "tripRating",
   "tripComments",
 ]);
+//? links
+const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
 </script>
 
 <template>
   <div class="modal-details">
     <h3>Destination Details</h3>
+    {{props.destinationID}}
     <hr />
     <h2>{{ props.destination }}</h2>
 
@@ -65,12 +68,22 @@ const props = defineProps([
 
     <div class="details-row">
       <span class="detail-label">Cities Included: </span>
-      <span class="detail-value space">{{ props.citiesIncludedOnTrip }} cities</span>
+      <span class="detail-value space"
+        >{{ props.citiesIncludedOnTrip }} cities</span
+      >
     </div>
 
     <div class="details-row">
       <span class="detail-label">Trip Rating: </span>
       <span class="detail-value space"> {{ props.tripRating }}</span>
+    </div>
+
+    <div>
+      <span class="detail-label">See Cities to visit </span>
+      <NuxtLink  class="space dr-button" :to="citiesLink">
+        <button> Cities</button>
+      </NuxtLink>
+      
     </div>
 
     <div class="details-row d-block">
@@ -84,13 +97,23 @@ const props = defineProps([
     </div>
 
     <div class="modal-actions">
-      <UButton @click="$emit('close')">Delete</UButton>
+      <UButton>Delete</UButton>
       <UButton>Update</UButton>
     </div>
   </div>
 </template>
 
 <style scoped>
+.dr-button {
+  padding: 3px 13px;
+  border-radius: 5px;
+  background: rgb(223, 222, 222);
+  cursor: pointer;
+}
+.dr-button:hover {
+  background-color: rgb(136, 134, 134)
+  
+}
 .space {
   margin: 0 0.5rem;
 }

@@ -1,9 +1,9 @@
 <script setup>
-import { useDestinationStore } from "@/store/destination";
-const store = useDestinationStore();
-import { storeToRefs } from "pinia";
+// import { useDestinationStore } from "@/store/destination";
+// const store = useDestinationStore();
+// import { storeToRefs } from "pinia";
 
-const { cities } = storeToRefs(store);
+// const { cities } = storeToRefs(store);
 const props = defineProps([
   "cityID",
   "parentDestinationID",
@@ -23,15 +23,22 @@ const props = defineProps([
   "cityComments",
   "date",
 ]);
+const route = useRoute(); //route object
+const destId = route.params.destinationID;
+
+
 const isOpen = ref(false);
 </script>
 
 <template>
   <div class="destination-item">
+ 
     <div class="item">
       <!-- <div class="status" :class="currStatus"></div> -->
       <div class="destination">
-        <h1 class="title">{{ props.city }}</h1>
+        {{ props.parentDestinationID  }}
+    
+           <h1 class="title">{{ props.city }}</h1>
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
@@ -126,7 +133,6 @@ const isOpen = ref(false);
             </span>
           </div>
           <div>
-            <div></div>
             <UModal v-model="isOpen">
               <div class="p-4">
                 <CitiesDetails

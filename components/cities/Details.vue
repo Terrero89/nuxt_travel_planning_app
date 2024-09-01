@@ -1,8 +1,10 @@
 <script setup>
-import { useDestinationStore } from "@/store/destination";
-const store = useDestinationStore();
-import { storeToRefs } from "pinia";
-const { cities } = storeToRefs(store);
+// import { useDestinationStore } from "@/store/destination";
+// const store = useDestinationStore();
+// import { storeToRefs } from "pinia";
+// const { cities } = storeToRefs(store);
+const route = useRoute(); //route object
+const destId = route.params.destinationID;
 const props = defineProps([
   "cityID",
   "parentDestinationID",
@@ -20,12 +22,18 @@ const props = defineProps([
   "expenseIncludedOnCity",
   "cityComments",
 ]);
+// have to find a way to grab all the required fields now that i have both ids
+
+const citiesLink = computed(
+  () => `/destinations/${destId}/cities--O5UMyVb-zRSDBSu-xcJ`
+);
 </script>
 
 <template>
   <div>
     <div class="modal-details">
       <h3>City Details</h3>
+{{ props.cityID }}
       <hr />
       <h2>{{ props.city }}</h2>
 
@@ -115,7 +123,7 @@ const props = defineProps([
             v-if="!props.isThisCityVisited"
             size="md"
             color="red"
-                variant="soft"
+            variant="soft"
             >{{ props.isThisCityVisited ? "Visited" : "Pending" }}</UBadge
           >
         </span>
@@ -142,34 +150,49 @@ const props = defineProps([
         <span class="detail-value space"> {{ props.cityRating }}</span>
       </div>
       <div v-if="props.cityRating < 4">
-      <span class="mx-2" >
-        <span class="detail-label">Rating: </span>
-        <UBadge  class="mx-3"  v-if="props.cityRating < 4" size="md" color="red">{{
-          props.cityRating 
-        }}</UBadge>
-        
-      </span>
-    </div>
+        <span class="mx-2">
+          <span class="detail-label">Rating: </span>
+          <UBadge
+            class="mx-3"
+            v-if="props.cityRating < 4"
+            size="md"
+            color="red"
+            >{{ props.cityRating }}</UBadge
+          >
+        </span>
+      </div>
 
-    <div  v-else-if="props.cityRating  >= 4 && props.cityRating <= 4.5">
-      <span >
-        <span class="detail-label">Rating: </span>
-        <UBadge class="mx-3"  v-if="props.cityRating >= 4 && props.cityRating  <= 4.5"  size="md" color="yellow">{{
-          props.cityRating 
-        }}</UBadge>
-        
-      </span>
-    </div>
+      <div v-else-if="props.cityRating >= 4 && props.cityRating <= 4.5">
+        <span>
+          <span class="detail-label">Rating: </span>
+          <UBadge
+            class="mx-3"
+            v-if="props.cityRating >= 4 && props.cityRating <= 4.5"
+            size="md"
+            color="yellow"
+            >{{ props.cityRating }}</UBadge
+          >
+        </span>
+      </div>
 
-    <div  v-else-if="props.cityRating > 4.5">
-      <span  >
-        <span class="detail-label">Rating: </span>
-        <UBadge class="mx-3"  v-if="props.cityRating  > 4.5" size="md" color="green">{{
-          props.cityRating 
-        }}</UBadge>
-        
-      </span>
-    </div>
+      <div v-else-if="props.cityRating > 4.5">
+        <span>
+          <span class="detail-label">Rating: </span>
+          <UBadge
+            class="mx-3"
+            v-if="props.cityRating > 4.5"
+            size="md"
+            color="green"
+            >{{ props.cityRating }}</UBadge
+          >
+        </span>
+      </div>
+      <div>
+        <span class="detail-label">See Cities to visit </span>
+        <NuxtLink class="space dr-button" :to="citiesLink">
+          <button>Cities</button>
+        </NuxtLink>
+      </div>
 
       <div class="details-row d-block">
         <span class="detail-label">Trip Comments: </span>
@@ -182,7 +205,7 @@ const props = defineProps([
       </div>
 
       <div class="modal-actions">
-        <UButton variant="outline" color="blue"  >Expenses</UButton>
+        <UButton variant="outline" color="blue">Expenses</UButton>
         <UButton>Update City</UButton>
       </div>
     </div>
@@ -190,6 +213,15 @@ const props = defineProps([
 </template>
 
 <style scoped>
+.dr-button {
+  padding: 3px 13px;
+  border-radius: 5px;
+  background: rgb(223, 222, 222);
+  cursor: pointer;
+}
+.dr-button:hover {
+  background-color: rgb(136, 134, 134);
+}
 .space {
   margin: 0 0.5rem;
 }
