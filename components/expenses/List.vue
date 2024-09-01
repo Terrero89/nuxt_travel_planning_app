@@ -29,9 +29,6 @@ onMounted(async() => {
   await fetchExpenses();
 });
 
-const showMe = computed(()=> {
-  return expenseStore.expensesAsArray.filter((expense)=> expense.parentCityID === cityId)
-})
 
 const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this is working!
 </script>
@@ -41,9 +38,7 @@ const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this
     <UITitle title="Projects" class="container border-bottom" />
 
     <div class="container">
-      <!-- {{getExpensesByCityID(cityParentID)}} -->
-    <!-- {{showMe}} -->
-      <!-- {{expenseStore.expensesAsArray}} -->
+    
     </div>
     <ExpensesItem
       v-for="expense in getExpensesByCityID(cityId)"

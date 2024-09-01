@@ -28,6 +28,7 @@ const props = defineProps([
   "daysRemainingForTrip",
   "citiesIncludedOnTrip",
   "tripRating",
+  "tripComments"
 
 ]);
 
@@ -39,7 +40,7 @@ const props = defineProps([
 <template>
   <div class="projects">
   
-    <UICard class="mt-5 mb-2 py-4">
+    <UICard class="mt-5 mb-1 py-4">
       <UButton label="Go To Cities" to="/destinations/trips1"></UButton>
       <UButton
         label="Create Destination"
@@ -49,7 +50,7 @@ const props = defineProps([
       ></UButton>
     </UICard>
     <UITitle title="Projects" class="container border-bottom" />
-    <div class="container">
+    <UIContainer >
       <!-- Display loading message or spinner while data is being fetched -->
       <div v-if="isLoading" class="flex items-center space-x-4">
         <div class="space-y-2 mx-auto">
@@ -81,7 +82,7 @@ const props = defineProps([
           :tripComments="trip.tripComments"
         />
       </div>
-    </div>
+    </UIContainer>
   </div>
 </template>
 

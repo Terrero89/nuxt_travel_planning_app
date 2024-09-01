@@ -41,10 +41,7 @@ onMounted(async() => {
  await  fetchDestinations();
 
 });
-// now i can find based on id
-// const showMe = computed(()=> {
-//   return cityStore.citiesAsArray.filter((city)=> city.parentDestinationID === destId)
-// })
+
 
 const getCitiesByDestinationID = computed(() => cityStore.filterItemById); // this is working!
 </script>
@@ -54,8 +51,7 @@ const getCitiesByDestinationID = computed(() => cityStore.filterItemById); // th
     <UITitle title="Projects" class="container border-bottom" />
     <div>
     
-      <!-- <div>{{ showMe }}</div> -->
-      <!-- {{ destination.length }} {{ cityStore.citiesAsArray }} -->
+  
     </div>
     <CitiesItem
       v-for="city in getCitiesByDestinationID(destId)"

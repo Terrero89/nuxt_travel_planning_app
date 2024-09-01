@@ -1,17 +1,21 @@
 <template>
-  <div class="container wrapper">
+  <div class="main-container wrapper">
     <slot />
   </div>
 </template>
 
 <style scoped>
+.main-container {
+  max-width: 60rem;
+  margin: 0 auto;
+}
 .wrapper {
+  /* border: solid red 1px; */
   max-width: 60rem;
   /* min-height:43rem; */
-  padding: 1rem 1rem;
-  margin: 1rem auto 3rem auto;
-  border-radius: 5px;
 
+  /* margin: 1rem auto 3rem auto; */
+  border-radius: 5px;
 }
 </style>
 v

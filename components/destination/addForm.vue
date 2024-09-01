@@ -23,8 +23,8 @@ const submitForm = () => {
     isTripComplete: false,
     from: from.value,
     to: to.value,
-    tripDuration: calculateDaysRangeDuration(from.value, to.value),
-    daysRemainingForTrip: 0,
+    tripDuration: tripDuration.value,
+    daysRemainingForTrip: daysRemainingForTrip.value,
     tripRating: 0.0,
     tripComments: "",
     date: formatDate(new Date()),
@@ -37,7 +37,17 @@ const submitForm = () => {
   console.log(tripData);
 };
 
-// };
+//? COMPUTED PROPERTIES
+const daysRemainingForTrip = computed(() => {
+  return calculateDaysRemaining(from.value);
+});
+
+const tripDuration = computed(() => {
+  if (!from.value || !to.value) {
+    return 0;
+  }
+  return calculateDaysRangeDuration(from.value, to.value)
+});
 </script>
 
 <template>
@@ -58,7 +68,7 @@ const submitForm = () => {
         <label for="transportType" class="form-label"
           >Transportation Type</label
         >
-        {{ from }}
+    
 
         <select
           class="form-select"

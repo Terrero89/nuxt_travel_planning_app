@@ -49,7 +49,7 @@ const submitForm = async () => {
   console.log(cityData);
 
   await addCity(cityData); //add project to pinia
-  //   navigateTo("/destinations/trip1"); //after, go to projects
+    navigateTo(`/destinations/${destId}`); //after, go to projects
   console.log(cityData);
 };
 

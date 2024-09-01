@@ -2,7 +2,7 @@
 import { useDestinationStore } from "@/store/destination";
 const store = useDestinationStore();
 import { storeToRefs } from "pinia";
-
+const { deleteDestination, fetchDestinations } = store;
 const { destination } = storeToRefs(store);
 const props = defineProps([
   "destinationID",
@@ -19,19 +19,31 @@ const props = defineProps([
   "tripRating",
   "tripComments",
 ]);
+
 //? links
-const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
+const citiesLink = computed(() => `/destinations/${props.destinationID}`);
+const updateLink = computed(
+  () => `/destinations/${props.destinationID}/update`
+);
+
+const removeItem = async (id) => {
+  console.log(props.destinationID);
+
+  store.deleteDestination(id);
+
+  navigateTo("/destinations");
+};
 </script>
 
 <template>
   <div class="modal-details">
     <h3>Destination Details</h3>
-    {{props.destinationID}}
+    {{ props.destinationID }}
     <hr />
     <h2>{{ props.destination }}</h2>
 
     <div class="details-row">
-      <span class="detail-label ">Transport Type:</span>
+      <span class="detail-label">Transport Type:</span>
       <span class="detail-value space">By {{ props.transportType }}</span>
     </div>
 
@@ -50,34 +62,33 @@ const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
       <span class="detail-value space">{{ props.tripDuration }} Days</span>
     </div>
 
-
     <div v-if="props.isTripCompleted">
-        <span class="">
-          <span class="detail-label">Visit Status</span>
-          <UBadge
-            class="mx-3"
-            v-if="props.isTripCompleted"
-            size="md"
-            color="green"
-            variant="soft"
-            >{{props.isTripCompleted ? "Visited" : "" }}</UBadge
-          >
-        </span>
-      </div>
+      <span class="">
+        <span class="detail-label">Visit Status</span>
+        <UBadge
+          class="mx-3"
+          v-if="props.isTripCompleted"
+          size="md"
+          color="green"
+          variant="soft"
+          >{{ props.isTripCompleted ? "Visited" : "" }}</UBadge
+        >
+      </span>
+    </div>
 
-      <div v-if="!props.isTripCompleted">
-        <span class="">
-          <span class="detail-label">Visit Status</span>
-          <UBadge
-            class="mx-3"
-            v-if="!props.isTripCompleted"
-            size="md"
-            color="red"
-            variant="soft"
-            >{{!props.isTripCompleted ? "Not Visited" : "" }}</UBadge
-          >
-        </span>
-      </div>
+    <div v-if="!props.isTripCompleted">
+      <span class="">
+        <span class="detail-label">Visit Status</span>
+        <UBadge
+          class="mx-3"
+          v-if="!props.isTripCompleted"
+          size="md"
+          color="red"
+          variant="soft"
+          >{{ !props.isTripCompleted ? "Not Visited" : "" }}</UBadge
+        >
+      </span>
+    </div>
 
     <div v-else>
       <div class="details-row">
@@ -100,71 +111,68 @@ const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
       <span class="detail-value space"> {{ props.tripRating }}</span>
     </div> -->
     <div v-if="props.tripRating < 4">
-        <span class="mx-2">
-          <span class="detail-label">Rating: </span>
-          <UBadge
-            class="mx-3"
-            v-if="props.tripRating < 4"
-            size="md"
-            color="red"
-            >{{ props.cityRating }}</UBadge
-          >
-        </span>
-      </div>
+      <span class="mx-2">
+        <span class="detail-label">Rating: </span>
+        <UBadge
+          class="mx-3"
+          v-if="props.tripRating < 4"
+          size="md"
+          color="red"
+          >{{ props.cityRating }}</UBadge
+        >
+      </span>
+    </div>
 
-      <div v-else-if="props.tripRating >= 4 && props.tripRating <= 4.5">
-        <span>
-          <span class="detail-label">Rating: </span>
-          <UBadge
-            class="mx-3"
-            v-if="props.tripRating >= 4 && props.tripRating <= 4.5"
-            size="md"
-            color="yellow"
-            >{{ props.tripRating }}</UBadge
-          >
-        </span>
-      </div>
+    <div v-else-if="props.tripRating >= 4 && props.tripRating <= 4.5">
+      <span>
+        <span class="detail-label">Rating: </span>
+        <UBadge
+          class="mx-3"
+          v-if="props.tripRating >= 4 && props.tripRating <= 4.5"
+          size="md"
+          color="yellow"
+          >{{ props.tripRating }}</UBadge
+        >
+      </span>
+    </div>
 
-      <div v-else-if="props.tripRating > 4.5">
-        <span>
-          <span class="detail-label">Rating: </span>
-          <UBadge
-            class="mx-3"
-            v-if="props.tripRating > 4.5"
-            size="md"
-            color="green"
-            >{{ props.tripRating }}</UBadge
-          >
-        </span>
-      </div>
+    <div v-else-if="props.tripRating > 4.5">
+      <span>
+        <span class="detail-label">Rating: </span>
+        <UBadge
+          class="mx-3"
+          v-if="props.tripRating > 4.5"
+          size="md"
+          color="green"
+          >{{ props.tripRating }}</UBadge
+        >
+      </span>
+    </div>
 
     <div>
       <span class="detail-label">See Cities to visit </span>
-      <NuxtLink  class="space dr-button" :to="citiesLink">
-        <button> Cities</button>
+      <NuxtLink class="space dr-button" :to="citiesLink">
+        <button>Cities</button>
       </NuxtLink>
-      
     </div>
 
     <div class="details-row d-block">
       <span class="detail-label">Trip Comments: </span>
       <p class="d-block">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta natus
-        earum a quam quas fugit voluptatem laborum sit similique, totam
-        provident numquam. Adipisci facilis perspiciatis vel, aliquid
-        consequatur ducimus in!
+        {{ props.tripComments }}
       </p>
     </div>
 
     <div class="modal-actions">
-      <UButton>Delete</UButton>
-      <UButton>Update</UButton>
+      <UButton color="red" @click="removeItem(props.destinationID)"
+        >Delete</UButton
+      >
+      <UButton :to="updateLink">Update</UButton>
     </div>
   </div>
 </template>
 
 <style scoped>
-
 /* for highlighting titles : color: gray; */
 /* for highlighting values :  color: rgb(43, 41, 41);
   font-weight: 500;*/
@@ -183,8 +191,7 @@ const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
   cursor: pointer;
 }
 .dr-button:hover {
-  background-color: rgb(136, 134, 134)
-  
+  background-color: rgb(136, 134, 134);
 }
 .space {
   margin: 0 0.5rem;
@@ -209,12 +216,9 @@ const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
 }
 .detail-label {
   font-weight: bold;
-
 }
 .detail-value {
   flex-grow: 1;
-
- 
 }
 .modal-actions {
   display: flex;

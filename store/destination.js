@@ -6,10 +6,30 @@ export const useDestinationStore = defineStore({
   state: () => ({
     URL: "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations.json",
     destination: [],
+    editedData :{},
     isLoading: false, // Add loading state
     testDestination: [{name:'Sergio', hobbies:[{action:'run', enjoy:'eat'}, {action:'jump', enjoy:'fuck'}]}]
   }),
   actions: {
+
+
+    // editDestination(param) {
+    //   //trick, if project is not eqwual to edit project, then edited project will be equal to what ever is changed to
+    //   let foundDestination = this.destination.find((item) => item.destinationID === param); //finds the project from the
+    //   return foundDestination
+    // },
+
+    // async updateDestinationRequest(id) {
+    //   // const url = `https://project-manager-app-f9829-default-rtdb.firebaseio.com/p/${id}.json`;
+    //   const url =  `${this.URL}/${id}.json`;
+    //   const payload = this.editedData; // payload will be equal to the new updated task
+    //   const response = await fetch(url, {
+    //     method: "POST",
+    //     body: JSON.stringify({...payload}),
+    //   });
+      
+    // },
+
     async fetchDestinations() {
       this.isLoading = true; // Start loading
       try {
@@ -37,6 +57,7 @@ export const useDestinationStore = defineStore({
             citiesIncludedOnTrip: responseData[key].citiesIncludedOnTrip,
             destinationRating: responseData[key].destinationRating,
             tripRating: responseData[key].tripRating,
+            tripComments:responseData[key].tripComments
           };
           destinationsList.push(destination);
         }
@@ -56,6 +77,22 @@ export const useDestinationStore = defineStore({
         console.error("Failed to add destination");
       }
     },
+    async deleteDestination(itemID) {
+    
+      let response = await fetch(
+        `${this.URL}/${itemID}/.json`,
+        {
+          method: "DELETE",
+          "Content-type": "application/json",
+        }
+      );
+      if (!response.ok) {
+        console.log("Error, request failed");
+      }
+
+      // console.log(response)
+    },
+
     async updateDestination(tripData) {
       try {
         const response = await axios.put(
