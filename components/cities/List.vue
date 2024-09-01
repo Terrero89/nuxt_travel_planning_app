@@ -42,17 +42,21 @@ onMounted(() => {
 
 });
 // now i can find based on id
+const showMe = computed(()=> {
+  return cityStore.citiesAsArray.filter((city)=> city.parentDestinationID === destId)
+})
 </script>
 
 <template>
   <div class="projects">
     <UITitle title="Projects" class="container border-bottom" />
     <div>
-      <div>HHHHH---{{ props.cityID }}</div>
-      {{ destination.length }} {{ cityStore.citiesAsArray }}
+      {{ dest }}
+      <div>{{ showMe }}</div>
+      <!-- {{ destination.length }} {{ cityStore.citiesAsArray }} -->
     </div>
     <CitiesItem
-      v-for="city in cityStore.citiesAsArray"
+      v-for="city in showMe"
       :key="city.cityID"
       :cityID="city.cityID"
       :parentDestinationID="destId"
