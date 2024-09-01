@@ -103,6 +103,10 @@ export const useCityStore = defineStore({
       }
       return cityList;
     },
+    filterItemById(state) {
+      const prj = this.citiesAsArray.filter((p) => p.parentDestinationID);
+      return (id) => prj.filter((p) => p.parentDestinationID === id);
+    },
   },
 });
 

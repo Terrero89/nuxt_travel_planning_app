@@ -8,7 +8,7 @@ const destStore = useDestinationStore();
 
 import { storeToRefs } from "pinia";
 
-const { fetchCities} = cityStore;
+const { fetchCities,filterItemById} = cityStore;
 const { fetchDestinations } = destStore;
 const { cities } = storeToRefs(cityStore);
 const { destination } = storeToRefs(destStore);
@@ -45,6 +45,8 @@ onMounted(() => {
 const showMe = computed(()=> {
   return cityStore.citiesAsArray.filter((city)=> city.parentDestinationID === destId)
 })
+
+const destByID = computed(() => cityStore.filterItemById); // this is working!
 </script>
 
 <template>
@@ -56,7 +58,7 @@ const showMe = computed(()=> {
       <!-- {{ destination.length }} {{ cityStore.citiesAsArray }} -->
     </div>
     <CitiesItem
-      v-for="city in showMe"
+      v-for="city in destByID(destId)"
       :key="city.cityID"
       :cityID="city.cityID"
       :parentDestinationID="destId"

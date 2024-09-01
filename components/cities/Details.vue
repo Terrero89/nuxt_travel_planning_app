@@ -25,7 +25,7 @@ const props = defineProps([
 // have to find a way to grab all the required fields now that i have both ids
 
 const citiesLink = computed(
-  () => `/destinations/${destId}/cities--O5UMyVb-zRSDBSu-xcJ`
+  () => `/destinations/${destId}/cities-${props.cityID}`
 );
 </script>
 
