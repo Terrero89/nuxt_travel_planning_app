@@ -33,13 +33,13 @@ export const useCityStore = defineStore({
           to: to[key].to,
           accommodationCost: accommodationCost[key].accommodationCost,
           isAccommodationPaid: isAccommodationPaid[key].isAccommodationPaid,
+          accommodationAddress: accommodationAddress[key].accommodationAddress,
           totalCost: totalCost[key].totalCost,
           isThisCityVisited: isThisCityVisited[key].isThisCityVisited,
           cityRating: cityRating[key].cityRating,
           cityDuration: cityDuration[key].cityDuration,
           daysRemainingForCity: daysRemainingForCity[key].daysRemainingForCity,
-          expenseIncludedOnCity:
-            expenseIncludedOnCity[key].expenseIncludedOnCity,
+          expenseIncludedOnCity: expenseIncludedOnCity[key].expenseIncludedOnCity,
           cityComments: cityComments[key].cityComments,
           date: date[key].date,
         };

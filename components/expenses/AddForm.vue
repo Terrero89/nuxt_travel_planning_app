@@ -34,7 +34,7 @@ const submitForm = async () => {
     // parentCityID: cityId,
     // parentCityID: "O5UMyVb-zRSDBSu-xcJ",
     parentCityID: cityId,
-    parentDestinationId: destId,
+    parentDestinationID: destId,
     expense: expense.value,
     category: category.value,
     startTime: startTime.value,
@@ -50,7 +50,7 @@ const submitForm = async () => {
     date: formatDate(new Date()),
   };
 
-  // await addExpense({ ...expenseData, parentCityID: cityId }); //add project to pinia
+  await addExpense({ ...expenseData, parentCityID: cityId }); //add project to pinia
   //   navigateTo("/destinations/trip1"); //after, go to projects
   console.log({ ...expenseData, parentCityID: cityId, parentDestinationID:destId });
 };

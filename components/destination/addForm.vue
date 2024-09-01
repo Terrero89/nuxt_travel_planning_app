@@ -119,6 +119,9 @@ const submitForm = () => {
           v-model.trim="tripRating"
           class="form-control"
           id="name-input"
+          min="0"
+          max="5"
+          step="0.1"
         />
       </div>
 

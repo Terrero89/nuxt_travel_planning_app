@@ -12,6 +12,7 @@ const props = defineProps([
   "accommodation",
   "accommodationCost",
   "isAccommodationPaid",
+  "accommodationAddress",
   "totalCost",
   "from",
   "to",
@@ -33,10 +34,10 @@ const citiesLink = computed(
   <div>
     <div class="modal-details">
       <h3>City Details</h3>
-{{ props.cityID }}
+      {{ props.cityID }}
       <hr />
       <h2>{{ props.city }}</h2>
-
+cool: {{props.parentDestinationID}}
       <div class="details-row">
         <span class="detail-label">Accommodation:</span>
         <span class="detail-value space"> {{ props.accommodation }}</span>
@@ -70,7 +71,21 @@ const citiesLink = computed(
         </span>
       </div>
 
-      <div v-if="!props.isThisCityVisited">
+      <div v-if="props.isThisCityVisited">
+        <span class="">
+          <span class="detail-label">Visit Status</span>
+          <UBadge
+            class="mx-3"
+            v-if="props.isThisCityVisited"
+            size="md"
+            color="green"
+            variant="soft"
+            >{{ props.isThisCityVisited ? "Visited" : "" }}</UBadge
+          >
+        </span>
+      </div>
+
+      <div v-else-if="!props.isThisCityVisited">
         <span class="">
           <span class="detail-label">Visit Status</span>
           <UBadge
@@ -79,11 +94,10 @@ const citiesLink = computed(
             size="md"
             color="red"
             variant="soft"
-            >{{ props.isThisCityVisited ? "Visited" : "" }}</UBadge
+            >{{ !props.isThisCityVisited ? "Not visited" : "" }}</UBadge
           >
         </span>
       </div>
-
       <div class="details-row">
         <span class="detail-label">Dates: </span>
         <span class="detail-value space">
@@ -139,16 +153,12 @@ const citiesLink = computed(
       </div>
 
       <div class="details-row">
-        <span class="detail-label">Expenses made: </span>
+        <span class="detail-label">Expenses: </span>
         <span class="detail-value space"
-          >{{ props.expenseIncludedOnCity }} cities</span
+          >{{ props.expenseIncludedOnCity }} Expenses</span
         >
       </div>
 
-      <div class="details-row">
-        <span class="detail-label">Rating: </span>
-        <span class="detail-value space"> {{ props.cityRating }}</span>
-      </div>
       <div v-if="props.cityRating < 4">
         <span class="mx-2">
           <span class="detail-label">Rating: </span>
@@ -187,10 +197,15 @@ const citiesLink = computed(
           >
         </span>
       </div>
+      <div class="details-row">
+        <span class="detail-label">Address:</span>
+        <span class="detail-value space">{{ props.accommodationAddress }}</span>
+      </div>
+      
       <div>
         <span class="detail-label">See Cities to visit </span>
         <NuxtLink class="space dr-button" :to="citiesLink">
-          <button>Cities</button>
+          <button>See Expenses</button>
         </NuxtLink>
       </div>
 
@@ -212,7 +227,14 @@ const citiesLink = computed(
   </div>
 </template>
 
+
+
 <style scoped>
+.highlight {
+  font-weight: 800;
+
+  color: rgb(43, 41, 41) !important;
+}
 .dr-button {
   padding: 3px 13px;
   border-radius: 5px;
@@ -248,6 +270,7 @@ const citiesLink = computed(
 
 .detail-label {
   font-weight: bold;
+  
 }
 
 .detail-value {

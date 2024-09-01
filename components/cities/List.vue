@@ -36,29 +36,29 @@ const props = defineProps([
   "cityComments",
 ]);
 
-onMounted(() => {
-  fetchCities();
-  fetchDestinations();
+onMounted(async() => {
+  await fetchCities();
+ await  fetchDestinations();
 
 });
 // now i can find based on id
-const showMe = computed(()=> {
-  return cityStore.citiesAsArray.filter((city)=> city.parentDestinationID === destId)
-})
+// const showMe = computed(()=> {
+//   return cityStore.citiesAsArray.filter((city)=> city.parentDestinationID === destId)
+// })
 
-const destByID = computed(() => cityStore.filterItemById); // this is working!
+const getCitiesByDestinationID = computed(() => cityStore.filterItemById); // this is working!
 </script>
 
 <template>
   <div class="projects">
     <UITitle title="Projects" class="container border-bottom" />
     <div>
-      {{ dest }}
-      <div>{{ showMe }}</div>
+    
+      <!-- <div>{{ showMe }}</div> -->
       <!-- {{ destination.length }} {{ cityStore.citiesAsArray }} -->
     </div>
     <CitiesItem
-      v-for="city in destByID(destId)"
+      v-for="city in getCitiesByDestinationID(destId)"
       :key="city.cityID"
       :cityID="city.cityID"
       :parentDestinationID="destId"
@@ -66,6 +66,7 @@ const destByID = computed(() => cityStore.filterItemById); // this is working!
       :accommodation="city.accommodation"
       :accommodationCost="city.accommodationCost"
       :isAccommodationPaid="city.isAccommodationPaid"
+      :accommodationAddress="city.accommodationAddress"
       :from="city.from"
       :to="city.to"
       :totalCost="city.totalCost"
@@ -73,7 +74,7 @@ const destByID = computed(() => cityStore.filterItemById); // this is working!
       :date="city.date"
       :isThisCityVisited="city.isThisCityVisited"
       :daysRemainingForCity="city.daysRemainingForCity"
-      :expenseIncludedOnCity="city.citiesIncludedOnCity"
+      :expenseIncludedOnCity="city.expenseIncludedOnCity"
       :cityRating="city.cityRating"
       :cityComments="city.cityComments"
     />

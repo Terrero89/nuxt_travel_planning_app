@@ -34,7 +34,7 @@ const isOpen = ref(false);
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
-              <span class="pb-2 title-su">Transportation </span>
+              <span class="pb-2 title-section">Transportation </span>
               <h2>{{ props.transportType }}</h2>
               <span class="pb-2 title-section">Duration </span>
               <h2>

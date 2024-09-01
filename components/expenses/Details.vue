@@ -196,6 +196,11 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
 </template>
 
 <style scoped>
+.highlight {
+  font-weight: 800;
+
+  color: rgb(43, 41, 41) !important;
+}
 .space {
   margin: 0 0.5rem;
 }
@@ -223,6 +228,7 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
 }
 .detail-label {
   font-weight: bold;
+  
 }
 .detail-value {
   flex-grow: 1;

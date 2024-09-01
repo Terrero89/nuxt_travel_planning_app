@@ -31,7 +31,7 @@ const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
     <h2>{{ props.destination }}</h2>
 
     <div class="details-row">
-      <span class="detail-label">Transport Type:</span>
+      <span class="detail-label ">Transport Type:</span>
       <span class="detail-value space">By {{ props.transportType }}</span>
     </div>
 
@@ -50,12 +50,34 @@ const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
       <span class="detail-value space">{{ props.tripDuration }} Days</span>
     </div>
 
+
     <div v-if="props.isTripCompleted">
-      <div class="details-row">
-        <span class="detail-label">Trip Completed: </span>
-        <span class="detail-value space">{{ props.isTripCompleted }}</span>
+        <span class="">
+          <span class="detail-label">Visit Status</span>
+          <UBadge
+            class="mx-3"
+            v-if="props.isTripCompleted"
+            size="md"
+            color="green"
+            variant="soft"
+            >{{props.isTripCompleted ? "Visited" : "" }}</UBadge
+          >
+        </span>
       </div>
-    </div>
+
+      <div v-if="!props.isTripCompleted">
+        <span class="">
+          <span class="detail-label">Visit Status</span>
+          <UBadge
+            class="mx-3"
+            v-if="!props.isTripCompleted"
+            size="md"
+            color="red"
+            variant="soft"
+            >{{!props.isTripCompleted ? "Not Visited" : "" }}</UBadge
+          >
+        </span>
+      </div>
 
     <div v-else>
       <div class="details-row">
@@ -73,10 +95,48 @@ const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
       >
     </div>
 
-    <div class="details-row">
+    <!-- <div class="details-row">
       <span class="detail-label">Trip Rating: </span>
       <span class="detail-value space"> {{ props.tripRating }}</span>
-    </div>
+    </div> -->
+    <div v-if="props.tripRating < 4">
+        <span class="mx-2">
+          <span class="detail-label">Rating: </span>
+          <UBadge
+            class="mx-3"
+            v-if="props.tripRating < 4"
+            size="md"
+            color="red"
+            >{{ props.cityRating }}</UBadge
+          >
+        </span>
+      </div>
+
+      <div v-else-if="props.tripRating >= 4 && props.tripRating <= 4.5">
+        <span>
+          <span class="detail-label">Rating: </span>
+          <UBadge
+            class="mx-3"
+            v-if="props.tripRating >= 4 && props.tripRating <= 4.5"
+            size="md"
+            color="yellow"
+            >{{ props.tripRating }}</UBadge
+          >
+        </span>
+      </div>
+
+      <div v-else-if="props.tripRating > 4.5">
+        <span>
+          <span class="detail-label">Rating: </span>
+          <UBadge
+            class="mx-3"
+            v-if="props.tripRating > 4.5"
+            size="md"
+            color="green"
+            >{{ props.tripRating }}</UBadge
+          >
+        </span>
+      </div>
 
     <div>
       <span class="detail-label">See Cities to visit </span>
@@ -104,6 +164,18 @@ const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
 </template>
 
 <style scoped>
+
+/* for highlighting titles : color: gray; */
+/* for highlighting values :  color: rgb(43, 41, 41);
+  font-weight: 500;*/
+.title {
+  font-weight: bold;
+  color: rgb(110, 110, 110);
+}
+.highlight {
+  font-weight: 800;
+  color: rgb(139, 139, 139) !important;
+}
 .dr-button {
   padding: 3px 13px;
   border-radius: 5px;
@@ -137,9 +209,12 @@ const citiesLink = computed(()=> `/destinations/${props.destinationID}`);
 }
 .detail-label {
   font-weight: bold;
+
 }
 .detail-value {
   flex-grow: 1;
+
+ 
 }
 .modal-actions {
   display: flex;

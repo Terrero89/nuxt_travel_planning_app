@@ -16,6 +16,7 @@ const city = ref();
 const accommodation = ref("Hotel");
 const accommodationCost = ref(150);
 const isAccommodationPaid = ref(false);
+const accommodationAddress = ref('')
 const totalCost = ref(550);
 const from = ref("2024-11-27");
 const to = ref("2024-11-30");
@@ -33,6 +34,7 @@ const submitForm = async () => {
     accommodation: accommodation.value,
     accommodationCost: accommodationCost.value,
     isAccommodationPaid: false,
+    accommodationAddress: 'c/8 no 54 Ensanche Las Americas',
     totalCost: 0,
     from: from.value,
     to: to.value,
@@ -103,6 +105,16 @@ const submitForm = async () => {
         />
       </div>
 
+      <div>
+        <label for="inputPassword4" class="form-label">Address</label>
+        <input
+          type="input"
+          v-model.trim="accommodationAddress"
+          class="form-control"
+          id="name-input"
+        />
+      </div>
+
       <div class="col-6">
         <label for="inputPassword4" class="form-label">From: </label>
         <input
@@ -130,6 +142,7 @@ const submitForm = async () => {
           v-model.trim="cityDuration"
           class="form-control"
           id="name-input"
+          
         />
       </div>
 
@@ -141,6 +154,9 @@ const submitForm = async () => {
           v-model.trim="cityRating"
           class="form-control"
           id="name-input"
+          min="0"
+          max="5"
+          step="0.1"
         />
       </div>
 
