@@ -70,7 +70,7 @@ export const useDestinationStore = defineStore({
     },
     async deleteDestination(itemID) {
       let response = await fetch(
-        `https://project-manager-app-f9829-default-rtdb.firebaseio.com/projects/${itemID}/.json`,
+        `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations/${itemID}.json`,
         {
           method: "DELETE",
           "Content-type": "application/json",
