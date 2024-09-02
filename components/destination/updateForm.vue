@@ -2,11 +2,12 @@
 import { ref, onMounted, computed } from "vue";
 import { useDestinationStore } from "@/store/destination";
 import { storeToRefs } from "pinia";
-import { useRoute, useRouter } from "vue-router";
+
+
 
 // Initialize store
 const store = useDestinationStore();
-
+const { editDestination } = store;
 // Extract `destination` array from store using `storeToRefs`
 const { destination } = storeToRefs(store);
 const { updateDestination, fetchDestinations } = store;
@@ -20,13 +21,25 @@ const props = defineProps(["paramDestinationID"]);
 // Computed property to find the specific destination
 const dest = computed(() => {
   return (
-    destination.value.find((item) => item.destinationID === destinationParamID) || {}
+    destination.value.find(
+      (item) => item.destinationID === destinationParamID
+    ) || {}
   );
 });
 
-// Fetch destinations on component mount
-onMounted(async () => {
-  await fetchDestinations();
+const destinationE = computed(() => editDestination(destinationParamID)); // here
+
+const updateDestinationHandler = () => {
+  let index = store.destination.findIndex(
+    (project) => project.destinationID === destinationParamID
+  );
+
+  store.editedData = { ...store.destination[index], dateModified: new Date() };
+  updateDestination(destinationParamID);
+  navigateTo("/destinations");
+};
+onMounted(() => {
+  fetchDestinations();
 });
 </script>
 
@@ -34,7 +47,7 @@ onMounted(async () => {
   <div class="form-wrapper" v-if="Object.keys(dest).length > 0">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Update Destination</h3>
-      {{dest}}
+      {{ dest }}
       <div>
         <label for="destinationName" class="form-label">Destination</label>
         <input
@@ -46,7 +59,9 @@ onMounted(async () => {
       </div>
 
       <div>
-        <label for="transportType" class="form-label">Transportation Type</label>
+        <label for="transportType" class="form-label"
+          >Transportation Type</label
+        >
         <select
           class="form-select"
           v-model="dest.transportType"
@@ -119,9 +134,18 @@ onMounted(async () => {
           id="tripComments"
         />
       </div>
+      {{ dest.tripComments }}
 
       <div>
-        <button type="submit" class="btn btn-primary py-2 px-4">Update</button>
+        <button
+          type="submit"
+          class="btn btn-primary py-2 px-4"
+          @click="updateDestinationHandler"
+     
+      
+        >
+          Update
+        </button>
       </div>
     </form>
   </div>
