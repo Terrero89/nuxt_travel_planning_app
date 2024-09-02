@@ -26,12 +26,13 @@ const updateLink = computed(
   () => `/destinations/${props.destinationID}/update`
 );
 
+
 const removeItem = async (id) => {
-  console.log(props.destinationID);
+  console.log(id);
 
-  store.deleteDestination(id);
+  deleteDestination(id);
 
-  navigateTo("/destinations");
+  navigateTo(`/destinations`);
 };
 </script>
 

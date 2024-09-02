@@ -24,6 +24,8 @@ const props = defineProps([
   "isCompleted",
   "daysRemainingForExpense",
   "placeRating",
+  "priority",
+  "comments"
 ]);
 onMounted(async() => {
   await fetchExpenses();
@@ -61,6 +63,8 @@ const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this
       :daysRemainingForExpense="expense.daysRemainingForExpense"
       :placeRating="expense.placeRating"
       :comments="expense.comments"
+      :priority="expense.priority"
+     
     />
   </div>
 </template>

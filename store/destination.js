@@ -69,10 +69,13 @@ export const useDestinationStore = defineStore({
       }
     },
     async deleteDestination(itemID) {
-      let response = await fetch(`${this.URL}/${itemID}/.json`, {
-        method: "DELETE",
-        "Content-type": "application/json",
-      });
+      let response = await fetch(
+        `https://project-manager-app-f9829-default-rtdb.firebaseio.com/projects/${itemID}/.json`,
+        {
+          method: "DELETE",
+          "Content-type": "application/json",
+        }
+      );
       if (!response.ok) {
         console.log("Error, request failed");
       }

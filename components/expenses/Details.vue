@@ -20,6 +20,8 @@ const props = defineProps([
   "isCompleted",
   "daysRemainingForExpense",
   "placeRating",
+  "priority",
+  "comments"
 ]);
 
 const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
@@ -36,7 +38,7 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
       <span class="detail-value space">{{ props.category }}</span>
     </div>
 
-    <div class="details-row" v-if="props.category !== 'Food'">
+    <div class="details-row" v-if="props.category !== 'Food' ">
       <span class="detail-label">Start: </span>
       <span class="detail-value space">{{ props.startTime }}</span>
       <span class="detail-label">End time: </span>
@@ -83,7 +85,7 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
       <span class="detail-value space">{{ props.duration }} Hours</span>
     </div>
   
-
+<!-- 
     <div v-if="props.category === 'Attractions'">
       <span>
         <span class="detail-label"> Paid in advance </span>
@@ -96,7 +98,7 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
           >{{ props.isExpensePaid ? "Booked" : "" }}</UBadge
         >
       </span>
-    </div>
+    </div> -->
 
     <div v-if="!props.isExpensePaid">
       <span class="">
@@ -120,10 +122,18 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
         </span>
       </div>
     </div>
+  
+     
     <div>
       <div class="details-row">
         <span class="detail-label">Location: </span>
-        <span class="detail-value space">{{ props.location }}</span>
+        <span class="detail-value space ">
+          <UBadge color="gray" variant="soft">
+          <a class="marked-link" :href="props.location" target="_blank"> Google Location </a>
+        </UBadge>
+        </span>
+   
+     
       </div>
     </div>
     <!-- < 4 -->
@@ -165,26 +175,77 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
         >
       </span>
     </div>
-    <div>
+    <!-- <div>
       <span class="detail-label">See Cities to visit </span>
       <NuxtLink  class="space dr-button" :to="citiesLink">
-        <button> Cities</button>
+        <UButton color="blue" variant="outline"> Cities</UButton>
       </NuxtLink>
       
-    </div>
-
-    <!-- 
-    <div class="details-row">
-      <span class="detail-label">Rating: </span>
-      <span class="detail-value space">{{ props.placeRating }}</span>
     </div> -->
 
+    <div v-if="props.priority === 'Must visit'">
+      <span class="" v-if="props.priority='Must visit'">
+        <span class="detail-label">Priority</span>
+        <UBadge
+          class="mx-3"
+          v-if="props.priority === 'Must visit'"
+          size="md"
+          color="green"
+          variant="soft"
+          >{{ "Must visit" }}</UBadge
+        >
+      </span>
+    </div>
+
+    <div v-else-if="props.priority === 'Nice to visit'">
+      <span class="" v-if="props.priority='Nice to visit'">
+        <span class="detail-label">Priority</span>
+        <UBadge
+          class="mx-3"
+          v-if="props.priority === 'Nice to visit'"
+          size="md"
+          color="indigo"
+          variant="soft"
+          >{{ "Nice to visit" }}</UBadge
+        >
+      </span>
+    </div>
+    <div v-else-if="props.priority === 'Backup option'">
+      <span class="" v-if="props.priority='Backup option'">
+        <span class="detail-label">Priority</span>
+        <UBadge
+          class="mx-3"
+          v-if="props.priority === 'Backup option'"
+          size="md"
+          color="yellow"
+          variant="soft"
+          >{{ "Backup option" }}</UBadge
+        >
+      </span>
+    </div>
+
+    <div v-else-if="props.priority === 'Optional'">
+      <span class="" v-if="props.priority='Optional'">
+        <span class="detail-label">Priority</span>
+        <UBadge
+          class="mx-3"
+          v-if="props.priority === 'Optional'"
+          size="md"
+          color="gray"
+          variant="soft"
+          >{{ "Optional" }}</UBadge
+        >
+      </span>
+    </div>
+
+
+    
+    
     <div class="details-row d-block">
       <span class="detail-label">Comments: </span>
       <p class="d-block">
         {{ props.comments }}
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta natus
-        earum a quam quas fugit voluptatem laborum sit similique, totam
+       
       </p>
     </div>
 
@@ -196,10 +257,14 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
 </template>
 
 <style scoped>
+.marked-link{
+  text-decoration:none;
+  color: gray;
+}
 .highlight {
   font-weight: 800;
 
-  color: rgb(43, 41, 41) !important;
+  color: rgb(4, 54, 112) !important;
 }
 .space {
   margin: 0 0.5rem;
@@ -239,3 +304,4 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
   gap: 10px;
 }
 </style>
+Comments:

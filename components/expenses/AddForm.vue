@@ -21,18 +21,17 @@ const startTime = ref("");
 const endTime = ref("");
 const cost = ref();
 const location = ref("");
-const address = ref("");
+const priority = ref("");
 const date = ref();
 const isCompleted = ref();
 const placeRating = ref();
-const comments = ref();
+
+
 
 //COMPUTED PROPERTIES
 
 const submitForm = async () => {
   const expenseData = {
-    // parentCityID: cityId,
-    // parentCityID: "O5UMyVb-zRSDBSu-xcJ",
     parentCityID: cityId,
     parentDestinationID: destId,
     expense: expense.value,
@@ -47,7 +46,10 @@ const submitForm = async () => {
     isCompleted: isCompleted.value,
     daysRemainingForExpense: daysRemainingForExpense.value,
     placeRating: placeRating.value,
+    priority: priority.value,
     date: formatDate(new Date()),
+    comments: comments.value,
+
   };
 
   await addExpense({ ...expenseData, parentCityID: cityId }); //add project to pinia
@@ -65,6 +67,14 @@ const duration = computed(() => {
 const daysRemainingForExpense = computed(() => {
   return calculateDaysRemaining("11-07-2024");
 });
+
+const showPrice = computed(() => {
+  if(category.value === 'N/A' || category.value === 'Landmarks' || category.value === 'Other'){
+    return false
+  }else{
+    return true
+  }
+})
 </script>
 
 <template>
@@ -100,10 +110,11 @@ const daysRemainingForExpense = computed(() => {
           <option>Transportation</option>
           <option>Rentals</option>
           <option>Other</option>
+          <option>N/A</option>
         </select>
       </div>
 
-      <div class="col-6">
+      <div class="col-6" v-if="showPrice">
         <label for="inputPassword4" class="form-label">Price</label>
         <input
           type="number"
@@ -155,6 +166,23 @@ const daysRemainingForExpense = computed(() => {
           step="0.1"
         />
       </div>
+      <div class="">
+        <label for="transportType" class="form-label">Visit Priority</label>
+
+        <select
+          class="form-select"
+          v-model="priority"
+          aria-label="Default select example"
+          placeholder="Priority"
+        >
+          <option></option>
+          <option>Must visit</option>
+          <option>Nice to visit</option>
+          <option>Backup options</option>
+          <option>Optional</option>
+       
+        </select>
+      </div>
       <div>
         <label for="inputPassword4" class="form-label">Location</label>
         <input
@@ -166,20 +194,14 @@ const daysRemainingForExpense = computed(() => {
         />
       </div>
 
-      <div>
-        <label for="inputPassword4" class="form-label">Address</label>
-        <input
-          type="input"
-          v-model.trim="address"
-          class="form-control"
-          id="name-input"
-        />
-      </div>
+ 
+  
       <div>
         <textarea
           class="form-control"
           v-model="comments"
           aria-label="With textarea"
+          placeholder="Comments"
         />
       </div>
 

@@ -40,6 +40,8 @@ export const useExpenseStore = defineStore({
           daysRemainingForExpense:
             daysRemainingForExpense[key].daysRemainingForExpense,
           placeRating: placeRating[key].placeRating,
+          priority: priority[key].priority,
+          comments: comments[key].comments
         };
         cityList.push(newExpense);
       }

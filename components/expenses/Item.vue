@@ -18,6 +18,8 @@ const props = defineProps([
   "isCompleted",
   "daysRemainingForExpense",
   "placeRating",
+  "priority",
+  "comments"
 ]);
 const isOpen = ref(false);
 </script>
@@ -112,6 +114,8 @@ const isOpen = ref(false);
                     :daysRemainingForExpense="props.daysRemainingForExpense"
                     :placeRating="props.placeRating"
                     :comments="props.comments"
+                    :priority="props.priority"
+     
                   />
                 </div>
               </UModal>
