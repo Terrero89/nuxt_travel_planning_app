@@ -88,8 +88,8 @@ export const useDestinationStore = defineStore({
       let found = this.destination.find((dest) => dest.destinationID === param); //finds the project from the
       return found;
     },
-    async updateDestination(id) {
-      const url =`https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations/${id}.json`;
+    async updateDestination(id, parendtID) {
+      const url =`https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations/${parentID}/${id}.json`;
       const payload = this.editedData; // payload will be equal to the new updated task
       const options = {
         method: "PUT",
@@ -106,43 +106,6 @@ export const useDestinationStore = defineStore({
       
     },
 
-    // async updateDestination(id, payload) {
 
-    //   let response = await fetch(`${this.URL}/${id}/.json`,{
-    //     method: "PUT",
-    //     "Content-type": "application/json",
-    //     body: JSON.stringify(payload),
-    //   });
-    // },
-
-    // Add delete action if needed
-    // async updateDestination(id, payload) {
-    //   try {
-    //     const response = await fetch(`https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations/${id}.json`, {
-    //       method: "PUT",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(payload),
-    //     });
-    
-    //     if (!response.ok) {
-    //       throw new Error("Failed to update destination.");
-    //     }
-    
-    //     // Update the local state after a successful update (assuming destinations is in state)
-    //     const updatedDestination = await response.json();
-    //     const index = this.destinations.findIndex(
-    //       (dest) => dest.destinationID === id
-    //     );
-    //     if (index !== -1) {
-    //       this.$patch((state) => {
-    //         state.destinations[index] = updatedDestination; // Update using `$patch`
-    //       });
-    //     }
-    //   } catch (error) {
-    //     console.error("Error updating destination:", error);
-    //   }
-    // }
   },
 });

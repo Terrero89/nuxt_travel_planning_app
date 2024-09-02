@@ -52,12 +52,12 @@ const props = defineProps([
     <UITitle title="Projects" class="container border-bottom" />
     <UIContainer >
       <!-- Display loading message or spinner while data is being fetched -->
-      <div v-if="isLoading" class="flex items-center space-x-4">
+      <div v-if="isLoading" class="flex items-center space-x-4 mx-auto">
         <div class="space-y-2 mx-auto">
-          <USkeleton class="h-10 w-[850px]" />
-          <USkeleton class="mt-5 h-10 w-[800px]" />
-          <USkeleton class="h-10 w-[800px]" />
-          <USkeleton class="h-10 w-[800px]" />
+          <USkeleton class="h-10 w-[650px]" />
+          <USkeleton class="mt-5 h-10 w-[600px]" />
+          <USkeleton class="h-10 w-[600px]" />
+          <USkeleton class="h-10 w-[600px]" />
         </div>
       </div>
 

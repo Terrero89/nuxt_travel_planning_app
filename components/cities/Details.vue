@@ -1,9 +1,14 @@
 <script setup>
-// import { useDestinationStore } from "@/store/destination";
-// const store = useDestinationStore();
-// import { storeToRefs } from "pinia";
-// const { cities } = storeToRefs(store);
+import { ref, onMounted, computed } from "vue";
+import { useCityStore } from "@/store/cities";
+const cityStore = useCityStore();
+import { storeToRefs } from "pinia";
+const { cities } = storeToRefs(cityStore);
+
+const { fetchCities, updateCity, citiesAsArray , deleteCity} = cityStore;
 const route = useRoute(); //route object
+const destinationParamID = route.params.destinationID;
+const cityParamID = route.params.cityID;
 const destId = route.params.destinationID;
 const props = defineProps([
   "cityID",
@@ -28,6 +33,14 @@ const props = defineProps([
 const citiesLink = computed(
   () => `/destinations/${destId}/cities-${props.cityID}`
 );
+
+const removeItem = async (id) => {
+  console.log(id);
+
+  deleteCity(id);
+
+  navigateTo(`/destinations`);
+};
 </script>
 
 <template>
@@ -212,16 +225,13 @@ cool: {{props.parentDestinationID}}
       <div class="details-row d-block">
         <span class="detail-label">Trip Comments: </span>
         <p class="d-block">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta natus
-          earum a quam quas fugit voluptatem laborum sit similique, totam
-          provident numquam. Adipisci facilis perspiciatis vel, aliquid
-          consequatur ducimus in!
+     {{ props.comments }}
         </p>
       </div>
 
       <div class="modal-actions">
-        <UButton variant="outline" color="blue">Expenses</UButton>
-        <UButton>Update City</UButton>
+        <UButton variant="solid" color="red" @click="removeItem(props.cityID)">Delete</UButton>
+        <UButton >Update City</UButton>
       </div>
     </div>
   </div>
