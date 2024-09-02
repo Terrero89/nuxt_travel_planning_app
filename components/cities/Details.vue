@@ -33,13 +33,15 @@ const props = defineProps([
 const citiesLink = computed(
   () => `/destinations/${destId}/cities-${props.cityID}`
 );
+const updateCitiesLink = computed(
+  () => `/destinations/${destId}/cities-${props.cityID}/updateCity`
+);
 
 const removeItem = async (id) => {
   console.log(id);
 
   deleteCity(id);
-
-  navigateTo(`/destinations`);
+  navigateTo( `/destinations/${destId}/cities-${props.cityID}`);
 };
 </script>
 
@@ -231,7 +233,7 @@ cool: {{props.parentDestinationID}}
 
       <div class="modal-actions">
         <UButton variant="solid" color="red" @click="removeItem(props.cityID)">Delete</UButton>
-        <UButton >Update City</UButton>
+        <UButton :to="updateCitiesLink" >Update City</UButton>
       </div>
     </div>
   </div>

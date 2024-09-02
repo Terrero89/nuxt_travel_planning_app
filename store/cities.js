@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import { defineStore } from "pinia";
 
 export const useCityStore = defineStore({
@@ -6,8 +6,7 @@ export const useCityStore = defineStore({
   state: () => ({
     URL: "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities.json",
     cities: [],
-    punto: "cero",
-    editedData:{}
+    editedData:{},
   }),
   actions: {
     async fetchCities() {
@@ -27,7 +26,7 @@ export const useCityStore = defineStore({
       for (const key in this.cities) {
         const newCity = {
           cityID: key,
-          parentDestinationID: parentDestinationID[key].parentDestinationID,
+          // parentDestinationID: parentDestinationID[key].parentDestinationID,
           city: city[key].city,
           accommodation: accommodation[key].accommodation,
           from: from[key].from,

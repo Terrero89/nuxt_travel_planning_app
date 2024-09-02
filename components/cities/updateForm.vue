@@ -4,21 +4,25 @@ import { useCityStore } from "@/store/cities";
 const cityStore = useCityStore();
 import { storeToRefs } from "pinia";
 const { cities } = storeToRefs(cityStore);
-
-const { fetchCities, updateCity, citiesAsArray } = cityStore;
+const { fetchCities, updateCity } = cityStore;
 const route = useRoute(); //route object
 // const destinationParamID = route.params.destinationID;
 const cityParamID = route.params.cityID;
 
 
 // Computed property to find the specific destination
-const city = computed(() => {
-  return (
-    cities.value.find(
-      (item) => item.cityID 
-    ) || {}
-  );
-});
+// const cityItem = computed(() => {
+//   return cityStore.cities.find(
+//     (item) => item
+//   ) || {}
+
+// });
+const cityItem = () => {
+  return cityStore.cities.find(
+    (item) => item
+  ) || {}
+
+};
 
 // const destinationE = computed(() => editDestination(destinationParamID)); // here
 
@@ -32,7 +36,7 @@ const city = computed(() => {
 //   navigateTo("/destinations");
 // };
 onMounted(() => {
-  fetchCities();
+  // fetchCities();
 });
 </script>
 <template>
@@ -40,10 +44,12 @@ onMounted(() => {
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Update City</h3>
       <!-- {{ props.destinationParamID }} -->
-        {{ citiesAsArray }}
+      <!-- {{ cityStore.cities }} -->
+      {{ cityItem() }}
+
       <div>
         <label for="inputPassword4" class="form-label">City</label>
-        <input type="input" v-model.trim="city.city" class="form-control" id="name-input" />
+        <input type="input" v-model.trim="city" class="form-control" id="name-input" />
       </div>
       <div>
         <label for="transportType" class="form-label">Transportation Type</label>
