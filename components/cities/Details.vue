@@ -1,8 +1,10 @@
 <script setup>
-import { useDestinationStore } from "@/store/destination";
-const store = useDestinationStore();
-import { storeToRefs } from "pinia";
-const { cities } = storeToRefs(store);
+// import { useDestinationStore } from "@/store/destination";
+// const store = useDestinationStore();
+// import { storeToRefs } from "pinia";
+// const { cities } = storeToRefs(store);
+const route = useRoute(); //route object
+const destId = route.params.destinationID;
 const props = defineProps([
   "cityID",
   "parentDestinationID",
@@ -10,6 +12,7 @@ const props = defineProps([
   "accommodation",
   "accommodationCost",
   "isAccommodationPaid",
+  "accommodationAddress",
   "totalCost",
   "from",
   "to",
@@ -20,15 +23,21 @@ const props = defineProps([
   "expenseIncludedOnCity",
   "cityComments",
 ]);
+// have to find a way to grab all the required fields now that i have both ids
+
+const citiesLink = computed(
+  () => `/destinations/${destId}/cities-${props.cityID}`
+);
 </script>
 
 <template>
   <div>
     <div class="modal-details">
       <h3>City Details</h3>
+      {{ props.cityID }}
       <hr />
       <h2>{{ props.city }}</h2>
-
+cool: {{props.parentDestinationID}}
       <div class="details-row">
         <span class="detail-label">Accommodation:</span>
         <span class="detail-value space"> {{ props.accommodation }}</span>
@@ -62,7 +71,21 @@ const props = defineProps([
         </span>
       </div>
 
-      <div v-if="!props.isThisCityVisited">
+      <div v-if="props.isThisCityVisited">
+        <span class="">
+          <span class="detail-label">Visit Status</span>
+          <UBadge
+            class="mx-3"
+            v-if="props.isThisCityVisited"
+            size="md"
+            color="green"
+            variant="soft"
+            >{{ props.isThisCityVisited ? "Visited" : "" }}</UBadge
+          >
+        </span>
+      </div>
+
+      <div v-else-if="!props.isThisCityVisited">
         <span class="">
           <span class="detail-label">Visit Status</span>
           <UBadge
@@ -71,11 +94,10 @@ const props = defineProps([
             size="md"
             color="red"
             variant="soft"
-            >{{ props.isThisCityVisited ? "Visited" : "" }}</UBadge
+            >{{ !props.isThisCityVisited ? "Not visited" : "" }}</UBadge
           >
         </span>
       </div>
-
       <div class="details-row">
         <span class="detail-label">Dates: </span>
         <span class="detail-value space">
@@ -115,7 +137,7 @@ const props = defineProps([
             v-if="!props.isThisCityVisited"
             size="md"
             color="red"
-                variant="soft"
+            variant="soft"
             >{{ props.isThisCityVisited ? "Visited" : "Pending" }}</UBadge
           >
         </span>
@@ -131,45 +153,61 @@ const props = defineProps([
       </div>
 
       <div class="details-row">
-        <span class="detail-label">Expenses made: </span>
+        <span class="detail-label">Expenses: </span>
         <span class="detail-value space"
-          >{{ props.expenseIncludedOnCity }} cities</span
+          >{{ props.expenseIncludedOnCity }} Expenses</span
         >
       </div>
 
-      <div class="details-row">
-        <span class="detail-label">Rating: </span>
-        <span class="detail-value space"> {{ props.cityRating }}</span>
-      </div>
       <div v-if="props.cityRating < 4">
-      <span class="mx-2" >
-        <span class="detail-label">Rating: </span>
-        <UBadge  class="mx-3"  v-if="props.cityRating < 4" size="md" color="red">{{
-          props.cityRating 
-        }}</UBadge>
-        
-      </span>
-    </div>
+        <span class="mx-2">
+          <span class="detail-label">Rating: </span>
+          <UBadge
+            class="mx-3"
+            v-if="props.cityRating < 4"
+            size="md"
+            color="red"
+            >{{ props.cityRating }}</UBadge
+          >
+        </span>
+      </div>
 
-    <div  v-else-if="props.cityRating  >= 4 && props.cityRating <= 4.5">
-      <span >
-        <span class="detail-label">Rating: </span>
-        <UBadge class="mx-3"  v-if="props.cityRating >= 4 && props.cityRating  <= 4.5"  size="md" color="yellow">{{
-          props.cityRating 
-        }}</UBadge>
-        
-      </span>
-    </div>
+      <div v-else-if="props.cityRating >= 4 && props.cityRating <= 4.5">
+        <span>
+          <span class="detail-label">Rating: </span>
+          <UBadge
+            class="mx-3"
+            v-if="props.cityRating >= 4 && props.cityRating <= 4.5"
+            size="md"
+            color="yellow"
+            >{{ props.cityRating }}</UBadge
+          >
+        </span>
+      </div>
 
-    <div  v-else-if="props.cityRating > 4.5">
-      <span  >
-        <span class="detail-label">Rating: </span>
-        <UBadge class="mx-3"  v-if="props.cityRating  > 4.5" size="md" color="green">{{
-          props.cityRating 
-        }}</UBadge>
-        
-      </span>
-    </div>
+      <div v-else-if="props.cityRating > 4.5">
+        <span>
+          <span class="detail-label">Rating: </span>
+          <UBadge
+            class="mx-3"
+            v-if="props.cityRating > 4.5"
+            size="md"
+            color="green"
+            >{{ props.cityRating }}</UBadge
+          >
+        </span>
+      </div>
+      <div class="details-row">
+        <span class="detail-label">Address:</span>
+        <span class="detail-value space">{{ props.accommodationAddress }}</span>
+      </div>
+      
+      <div>
+        <span class="detail-label">See Cities to visit </span>
+        <NuxtLink class="space dr-button" :to="citiesLink">
+          <button>See Expenses</button>
+        </NuxtLink>
+      </div>
 
       <div class="details-row d-block">
         <span class="detail-label">Trip Comments: </span>
@@ -182,14 +220,30 @@ const props = defineProps([
       </div>
 
       <div class="modal-actions">
-        <UButton variant="outline" color="blue"  >Expenses</UButton>
+        <UButton variant="outline" color="blue">Expenses</UButton>
         <UButton>Update City</UButton>
       </div>
     </div>
   </div>
 </template>
 
+
+
 <style scoped>
+.highlight {
+  font-weight: 800;
+
+  color: rgb(43, 41, 41) !important;
+}
+.dr-button {
+  padding: 3px 13px;
+  border-radius: 5px;
+  background: rgb(223, 222, 222);
+  cursor: pointer;
+}
+.dr-button:hover {
+  background-color: rgb(136, 134, 134);
+}
 .space {
   margin: 0 0.5rem;
 }
@@ -216,6 +270,7 @@ const props = defineProps([
 
 .detail-label {
   font-weight: bold;
+  
 }
 
 .detail-value {

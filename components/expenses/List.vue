@@ -2,13 +2,15 @@
 import { useExpenseStore } from "@/store/expenses";
 const expenseStore = useExpenseStore();
 import { storeToRefs } from "pinia";
-
+const { fetchExpenses } = expenseStore;
 const { expenses } = storeToRefs(expenseStore);
+const route = useRoute(); //route object
+const cityId = route.params.cityID;
 const props = defineProps([
-    "expensesID",
+  "expensesID",
   "destinationParentID",
   "cityParentID",
-  "expense", // food, landmarks, transport, uber, plane, hotel, attractions, 
+  "expense", // food, landmarks, transport, uber, plane, hotel, attractions,
   "category",
   "startTime",
   "endTime",
@@ -23,10 +25,12 @@ const props = defineProps([
   "daysRemainingForExpense",
   "placeRating",
 ]);
-// onMounted(() => {
-//   fetchDestinations();
-// });
+onMounted(async() => {
+  await fetchExpenses();
+});
 
+
+const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this is working!
 </script>
 
 <template>
@@ -34,10 +38,10 @@ const props = defineProps([
     <UITitle title="Projects" class="container border-bottom" />
 
     <div class="container">
-
+    
     </div>
     <ExpensesItem
-      v-for="expense in expenses"
+      v-for="expense in getExpensesByCityID(cityId)"
       :key="expense.expenseID"
       :destinationParentID="expense.destinationParentID"
       :cityParentID="expense.cityParentID"
@@ -61,6 +65,4 @@ const props = defineProps([
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -25,7 +25,6 @@ const isOpen = ref(false);
 <template>
   <div class="destination-item">
     <div class="item">
-      <!-- <div class="status" :class="currStatus"></div> -->
       <div class="destination">
         <h1 class="title">{{ props.expense }}</h1>
         <div class="destination-wrapper">

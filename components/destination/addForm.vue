@@ -4,15 +4,15 @@ const store = useDestinationStore();
 import { storeToRefs } from "pinia";
 const {} = storeToRefs(store);
 const { addDestination } = store;
-const props = defineProps(["param"]);
+const props = defineProps(["destinationParamID"]);
 
 const destinationName = ref("");
 const transportType = ref("");
-const destinationBudget = ref(0);
-const duration = ref(0);
-const from = ref(new Date("Nov 7, 2024"));
-const to = ref(new Date("Nov 19, 2024"));
-const tripRating = ref(0);
+const destinationBudget = ref();
+const from = ref("");
+const to = ref(new Date(""));
+const duration = ref();
+const tripRating = ref();
 const tripComments = ref("");
 
 const submitForm = () => {
@@ -21,30 +21,40 @@ const submitForm = () => {
     transportType: transportType.value,
     destinationBudget: destinationBudget.value,
     isTripComplete: false,
-    tripDuration: 0,
     from: from.value,
     to: to.value,
-    daysRemainingForTrip: 0,
+    tripDuration: tripDuration.value,
+    daysRemainingForTrip: daysRemainingForTrip.value,
     tripRating: 0.0,
     tripComments: "",
-    date: new Date(),
+    date: formatDate(new Date()),
   };
 
   addDestination(tripData); //add project to pinia
   // addHistory(projectData); //add history to pinia
   // projectAddedToActions(props.param); //add project to actions
-  // navigateTo("/destinations"); //after, go to projects
+  navigateTo("/destinations"); //after, go to projects
   console.log(tripData);
 };
 
-// };
+//? COMPUTED PROPERTIES
+const daysRemainingForTrip = computed(() => {
+  return calculateDaysRemaining(from.value);
+});
+
+const tripDuration = computed(() => {
+  if (!from.value || !to.value) {
+    return 0;
+  }
+  return calculateDaysRangeDuration(from.value, to.value)
+});
 </script>
 
 <template>
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Create Destination</h3>
-
+      {{ props.destinationParamID }}
       <div>
         <label for="inputPassword4" class="form-label">Destination</label>
         <input
@@ -58,6 +68,7 @@ const submitForm = () => {
         <label for="transportType" class="form-label"
           >Transportation Type</label
         >
+    
 
         <select
           class="form-select"
@@ -89,6 +100,8 @@ const submitForm = () => {
           id="name-input"
         />
       </div>
+      <!-- {{formatDate(from)}} -->
+
       <div class="col-6">
         <label for="inputPassword4" class="form-label">To: </label>
         <input
@@ -116,6 +129,9 @@ const submitForm = () => {
           v-model.trim="tripRating"
           class="form-control"
           id="name-input"
+          min="0"
+          max="5"
+          step="0.1"
         />
       </div>
 

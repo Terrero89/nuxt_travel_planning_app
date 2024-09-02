@@ -21,6 +21,8 @@ const props = defineProps([
   "daysRemainingForExpense",
   "placeRating",
 ]);
+
+const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
 </script>
 
 <template>
@@ -163,6 +165,13 @@ const props = defineProps([
         >
       </span>
     </div>
+    <div>
+      <span class="detail-label">See Cities to visit </span>
+      <NuxtLink  class="space dr-button" :to="citiesLink">
+        <button> Cities</button>
+      </NuxtLink>
+      
+    </div>
 
     <!-- 
     <div class="details-row">
@@ -187,6 +196,11 @@ const props = defineProps([
 </template>
 
 <style scoped>
+.highlight {
+  font-weight: 800;
+
+  color: rgb(43, 41, 41) !important;
+}
 .space {
   margin: 0 0.5rem;
 }
@@ -214,6 +228,7 @@ const props = defineProps([
 }
 .detail-label {
   font-weight: bold;
+  
 }
 .detail-value {
   flex-grow: 1;

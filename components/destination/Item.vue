@@ -2,7 +2,7 @@
 import { useDestinationStore } from "@/store/destination";
 const store = useDestinationStore();
 import { storeToRefs } from "pinia";
-const { destinations } = storeToRefs(store);
+const { destination, fetchDestinations } = storeToRefs(store);
 const props = defineProps([
   "destinationID",
   "destination",
@@ -18,18 +18,27 @@ const props = defineProps([
   "tripRating",
   "tripComments",
 ]);
+
+const destinationParam = ref(props.destinationID)
 const isOpen = ref(false);
+
+// onMounted(async () => {
+//   await fetchDestinations();
+// });
 </script>
 
 <template>
   <div class="destination-item">
+    
     <div class="item">
       <div class="destination">
+        {{props.destinationID}}
+   
         <h1 class="title">{{ props.destination }}</h1>
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
-              <span class="pb-2 title-su">Transportation </span>
+              <span class="pb-2 title-section">Transportation </span>
               <h2>{{ props.transportType }}</h2>
               <span class="pb-2 title-section">Duration </span>
               <h2>
@@ -45,8 +54,8 @@ const isOpen = ref(false);
 
               <span class="pb-2 title-section"> Days until trip </span>
               <h2>
-                $
-                <span class="highlight">{{ props.daysRemainingForTrip }} </span>
+                
+                <span class="highlight">{{ props.daysRemainingForTrip  }} </span>
                 days
               </h2>
             </div>
@@ -157,14 +166,12 @@ const isOpen = ref(false);
   font-weight: bold;
   color: gray;
 }
-.mr {
-  margin-left: auto;
-}
+
 .item {
   border-bottom: solid rgb(218, 214, 214) 1px;
   background-color: rgb(248, 248, 248);
   padding: 1rem;
-  margin: 0.5rem 0rem;
+  margin: 0.5rem 0;
   display: flex;
 }
 
