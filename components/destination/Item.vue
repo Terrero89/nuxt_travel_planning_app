@@ -22,9 +22,9 @@ const props = defineProps([
 const destinationParam = ref(props.destinationID)
 const isOpen = ref(false);
 
-onMounted(async () => {
-  await fetchDestinations();
-});
+// onMounted(async () => {
+//   await fetchDestinations();
+// });
 </script>
 
 <template>
