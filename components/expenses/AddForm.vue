@@ -6,7 +6,7 @@ import {
   calculateTotalDuration,
   calculateDaysRemaining,
 } from "../../utils/date-conversion";
-const {} = storeToRefs(expenseStore);
+const { } = storeToRefs(expenseStore);
 const { addExpense } = expenseStore;
 
 const route = useRoute(); //route object
@@ -25,6 +25,7 @@ const priority = ref("");
 const date = ref();
 const isCompleted = ref();
 const placeRating = ref();
+const comments = ref("");
 
 
 
@@ -53,8 +54,8 @@ const submitForm = async () => {
   };
 
   await addExpense({ ...expenseData, parentCityID: cityId }); //add project to pinia
-    navigateTo(`/destinations/${destId}/cities-${cityId}`); //after, go to projects
-  console.log({ ...expenseData, parentCityID: cityId, parentDestinationID:destId });
+  navigateTo(`/destinations/${destId}/cities-${cityId}`);
+  console.log({ ...expenseData, parentCityID: cityId, parentDestinationID: destId });
 };
 
 const duration = computed(() => {
@@ -69,9 +70,9 @@ const daysRemainingForExpense = computed(() => {
 });
 
 const showPrice = computed(() => {
-  if(category.value === 'N/A' || category.value === 'Landmarks' || category.value === 'Other'){
+  if (category.value === 'N/A' || category.value === 'Landmarks' || category.value === 'Other') {
     return false
-  }else{
+  } else {
     return true
   }
 })
@@ -81,26 +82,17 @@ const showPrice = computed(() => {
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Add Expense</h3>
-      {{cityID}}
+      {{ cityID }}
 
       <div>
         <label for="inputPassword4" class="form-label">Expense</label>
-        <input
-          type="input"
-          v-model.trim="expense"
-          class="form-control"
-          id="name-input"
-        />
+        <input type="input" v-model.trim="expense" class="form-control" id="name-input" />
       </div>
 
       <div class="col-6">
         <label for="transportType" class="form-label">Expense Type</label>
 
-        <select
-          class="form-select"
-          v-model="category"
-          aria-label="Default select example"
-        >
+        <select class="form-select" v-model="category" aria-label="Default select example">
           <option></option>
           <option>Food/Drinks</option>
           <option>Attractions</option>
@@ -116,93 +108,51 @@ const showPrice = computed(() => {
 
       <div class="col-6" v-if="showPrice">
         <label for="inputPassword4" class="form-label">Price</label>
-        <input
-          type="number"
-          v-model.trim="cost"
-          class="form-control"
-          id="name-input"
-        />
+        <input type="number" v-model.trim="cost" class="form-control" id="name-input" />
       </div>
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Start Time: </label>
-        <input
-          type="time"
-          v-model.trim="startTime"
-          class="form-control"
-          id="time-input"
-        />
+        <input type="time" v-model.trim="startTime" class="form-control" id="time-input" />
       </div>
       <div class="col-6">
         <label for="inputPassword4" class="form-label">End time: </label>
-        <input
-          type="time"
-          v-model.trim="endTime"
-          class="form-control"
-          id="time-input"
-        />
+        <input type="time" v-model.trim="endTime" class="form-control" id="time-input" />
       </div>
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Duration</label>
-        <input
-          type="number"
-          v-model.trim="duration"
-          class="form-control"
-          id="duration-input"
-        />
+        <input type="number" v-model.trim="duration" class="form-control" id="duration-input" />
       </div>
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Rating</label>
 
-        <input
-          type="number"
-          v-model.trim="placeRating"
-          class="form-control"
-          id="placeRating-input"
-          min="0"
-          max="5"
-          step="0.1"
-        />
+        <input type="number" v-model.trim="placeRating" class="form-control" id="placeRating-input" min="0" max="5"
+          step="0.1" />
       </div>
       <div class="">
         <label for="transportType" class="form-label">Visit Priority</label>
 
-        <select
-          class="form-select"
-          v-model="priority"
-          aria-label="Default select example"
-          placeholder="Priority"
-        >
+        <select class="form-select" v-model="priority" aria-label="Default select example" placeholder="Priority">
           <option></option>
           <option>Must visit</option>
           <option>Nice to visit</option>
           <option>Backup options</option>
           <option>Optional</option>
-       
+
         </select>
       </div>
       <div>
         <label for="inputPassword4" class="form-label">Location</label>
-        <input
-          type="input"
-          v-model.trim="location"
-          @input="generateGoogleMapsLink"
-          class="form-control"
-          id="name-input"
-        />
+        <input type="input" v-model.trim="location"  class="form-control"
+          id="name-input" />
       </div>
 
- 
-  
+
+
       <div>
-        <textarea
-          class="form-control"
-          v-model="comments"
-          aria-label="With textarea"
-          placeholder="Comments"
-        />
+        <textarea class="form-control" v-model.trim="comments" aria-label="With textarea" placeholder="Comments" />
       </div>
 
       <div>
