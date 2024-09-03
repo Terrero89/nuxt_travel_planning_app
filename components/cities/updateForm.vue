@@ -4,7 +4,7 @@ import { useCityStore } from "@/store/cities";
 const cityStore = useCityStore();
 import { storeToRefs } from "pinia";
 const { cities } = storeToRefs(cityStore);
-const { fetchCities, updateCity } = cityStore;
+const { fetchCities, updateCity} = cityStore;
 const route = useRoute(); //route object
 // const destinationParamID = route.params.destinationID;
 const cityParamID = route.params.cityID;
@@ -17,26 +17,26 @@ const cityParamID = route.params.cityID;
 //   ) || {}
 
 // });
-const cityItem = () => {
-  return cityStore.cities.find(
+const cityItem = computed(() => {
+  return cityStore.citiesAsArray.find(
     (item) => item
   ) || {}
 
-};
+});
 
 // const destinationE = computed(() => editDestination(destinationParamID)); // here
 
-// const updateCityHandler = () => {
-//   let index = store.cities.findIndex(
-//     (project) => project.destinationID === destinationParamID
-//   );
+const updateCityHandler = () => {
+  let index = cityStore.cities.findIndex(
+    (city) => city.cityID === cityParamID
+  );
 
-//   cityStore.editedData = { ...cityStore.cities[index], dateModified: new Date() };
-//   updateDestination(destinationParamID);
-//   navigateTo("/destinations");
-// };
-onMounted(() => {
-  // fetchCities();
+  cityStore.editedData = { ...cityStore.cities[index], dateModified: new Date() };
+  updateCityHandler(destinationParamID);
+  navigateTo("/destinations");
+};
+onMounted(async() => {
+  await fetchCities();
 });
 </script>
 <template>
@@ -45,52 +45,90 @@ onMounted(() => {
       <h3 class="mb-4">Update City</h3>
       <!-- {{ props.destinationParamID }} -->
       <!-- {{ cityStore.cities }} -->
-      {{ cityItem() }}
+   <!-- {{cityStore.citiesAsArray}} -->
+   {{cityItem}}
+   
+{{cityItem.city}}
+{{ it }}
 
       <div>
         <label for="inputPassword4" class="form-label">City</label>
-        <input type="input" v-model.trim="city" class="form-control" id="name-input" />
+        <input type="input" v-model.trim="cityItem.city" class="form-control" id="name-input" />
       </div>
       <div>
+        <div class="">
+        <label for="transportType" class="form-label">Accommodation Type</label>
+
+        <select
+          class="form-select"
+          v-model="cityItem.accommodation"
+          aria-label="Default select example"
+        >
+          <option>Airbnb</option>
+          <option>Hotel</option>
+          <option>Hostel</option>
+          <option>Home</option>
+          <option>Other</option>
+          <option>N/A</option>
+        </select>
+      </div>
+      <div class="+">
+        <label for="inputPassword4" class="form-label"
+          >Accommodation Price</label
+        >
+        <input
+          type="number"
+          v-model.trim="cityItem.accommodationCost"
+          class="form-control"
+          id="name-input"
+        />
+        {{ cityItem.accommodationAddress }}
+        <div>
+        <label for="inputPassword4" class="form-label">Address</label>
+        <input type="input" v-model.trim="cityItem.accommodationAddress" class="form-control" id="name-input" />
+      </div>
+      </div>
         <label for="transportType" class="form-label">Transportation Type</label>
 
 
-        <select class="form-select" v-model="transportType" aria-label="Default select example">
+        <select class="form-select" v-model="cityItem.transportType" aria-label="Default select example">
           <option>Plane</option>
           <option>Train</option>
           <option>Car</option>
           <option>Cruise</option>
+          <option>Other</option>
         </select>
       </div>
+     
       <div>
         <label for="inputPassword4" class="form-label">Budget</label>
-        <input type="number" v-model.trim="destinationBudget" class="form-control" id="name-input" />
+        <input type="number" v-model.trim="cityItem.destinationBudget" class="form-control" id="name-input" />
       </div>
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">From: </label>
-        <input type="date" v-model.trim="from" class="form-control" id="name-input" />
+        <input type="date" v-model.trim="cityItem.from" class="form-control" id="name-input" />
       </div>
       <!-- {{formatDate(from)}} -->
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">To: </label>
-        <input type="date" v-model.trim="to" class="form-control" id="name-input" />
+        <input type="date" v-model.trim="cityItem.to" class="form-control" id="name-input" />
       </div>
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Duration</label>
-        <input type="number" v-model.trim="duration" class="form-control" id="name-input" />
+        <input type="number" v-model.trim="cityItem.duration" class="form-control" id="name-input" />
       </div>
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Rating</label>
 
-        <input type="number" v-model.trim="tripRating" class="form-control" id="name-input" min="0" max="5"
+        <input type="number" v-model.trim="cityItem.tripRating" class="form-control" id="name-input" min="0" max="5"
           step="0.1" />
       </div>
 
       <div>
-        <textarea class="form-control" v-model="tripComments" aria-label="With textarea" />
+        <textarea class="form-control" v-model="cityItem.tripComments" aria-label="With textarea" />
       </div>
 
       <div>

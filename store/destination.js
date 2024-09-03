@@ -8,15 +8,7 @@ export const useDestinationStore = defineStore({
     destination: [],
     editedData: {},
     isLoading: false, // Add loading state
-    testDestination: [
-      {
-        name: "Sergio",
-        hobbies: [
-          { action: "run", enjoy: "eat" },
-          { action: "jump", enjoy: "fuck" },
-        ],
-      },
-    ],
+
   }),
   actions: {
     
