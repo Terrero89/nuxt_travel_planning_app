@@ -75,29 +75,61 @@ export const useDestinationStore = defineStore({
       // console.log(response)
     },
 
-    editDestination(param) {
-      //trick, if project is not eqwual to edit project, then edited project will be equal to what ever is changed to
-      let found = this.destination.find((dest) => dest.destinationID === param); //finds the project from the
-      return found;
-    },
-    async updateDestination(id) {
-      const url =`https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations/${parentID}/${id}.json`;
-      const payload = this.editedData; // payload will be equal to the new updated task
+    // editDestination(param) {
+    //   //trick, if project is not eqwual to edit project, then edited project will be equal to what ever is changed to
+    //   let found = this.destination.find((dest) => dest.destinationID === param); //finds the project from the
+    //   return found;
+    // },
+    // async updateDestination(id, payload) {
+    //   const url =`https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations/${parentID}/${id}.json`;
+    //   const payload2 = this.editedData; // payload will be equal to the new updated task
+    //   const options = {
+    //     method: "PUT",
+    //     headers: { "Content-type": "application/json" },
+    //     body: JSON.stringify(payload),
+    //   };
+    //   fetch(url, options).then((response) =>
+    //     console.log("response from pinia " + response.status)
+    //   );
+
+    //   // if (!response.ok) {
+    //   //   console.log("Super error 400");
+    //   // }
+      
+    // },
+    async updateDestination(destID, payload) {
+      const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations/${destID}.json`;
       const options = {
         method: "PUT",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(payload),
       };
-      fetch(url, options).then((response) =>
-        console.log("response from pinia " + response.status)
-      );
+    
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("Failed to update city");
+        }
+    
+        // Ensure the response contains the updated data
+        const updatedDestination = await response.json();
+    
+        // Update the local state after a successful update
+        const index = this.destination.findIndex(dest => dest.destinationID === destID);
+        if (index !== -1) {
+          // Use the returned data from Firebase to ensure consistency
+          this.destination[index] = { destID, ...updatedDestination };
+        }
+      } catch (error) {
+        console.error("Error updating Destination:", error);
+      }
+    }
 
-      // if (!response.ok) {
-      //   console.log("Super error 400");
-      // }
-      
+  },
+  getters: {
+    destinationsAsArray: (state) => {
+      return state.destination;
     },
-
 
   },
 });

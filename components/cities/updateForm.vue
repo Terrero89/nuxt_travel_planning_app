@@ -15,25 +15,25 @@ const cityItem = computed(() => {
   );
 });
 
-// const cityData = ref({
-//   city: cityItem.value.city,
-//   accommodation: cityItem.value.accommodation,
-//   accommodationType: cityItem.value.accommodationType,
-//   accommodationCost: cityItem.value.accommodationCost,
-//   accommodationAddress: cityItem.value.accommodationAddress,
-//   transportType: cityItem.value.transportType,
-//   destinationBudget: cityItem.value.destinationBudget,
-//   to: cityItem.value.to,
-//   from: cityItem.value.from,
-//   duration: cityItem.value.duration,
-//   cityRating: cityItem.value.cityRating,
-//   cityComments: cityItem.value.cityComments,
-// });
+const cityData = ref({
+  city: cityItem.value.city,
+  accommodation: cityItem.value.accommodation,
+  accommodationType: cityItem.value.accommodationType,
+  accommodationCost: cityItem.value.accommodationCost,
+  accommodationAddress: cityItem.value.accommodationAddress,
+  transportType: cityItem.value.transportType,
+  destinationBudget: cityItem.value.destinationBudget,
+  to: cityItem.value.to,
+  from: cityItem.value.from,
+  duration: cityItem.value.duration,
+  cityRating: cityItem.value.cityRating,
+  cityComments: cityItem.value.cityComments,
+});
 
 const updateCityHandler = async () => {
   try {
-     
     await updateCity(cityParamID, cityItem.value);
+    navigateTo('/destinations')
   } catch (error) {
     console.error("Error updating city:", error);
     alert("An error occurred while updating the city. Please try again later.");
@@ -42,10 +42,10 @@ const updateCityHandler = async () => {
 
 onMounted(async () => {
   await fetchCities();
-  const cityItem = cityStore.citiesAsArray.find((item) => item.cityID === cityParamID);
-  if (cityItem) {
-    cityData.value = { ...cityItem };
-  }
+  // const cityItem = cityStore.citiesAsArray.find((item) => item.cityID === cityParamID);
+  // if (cityItem) {
+  //   cityData.value = { ...cityItem };
+  // }
 });
 </script>
 
