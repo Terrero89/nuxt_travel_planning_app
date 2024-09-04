@@ -2,6 +2,7 @@
 import { useDestinationStore } from "@/store/destination";
 const store = useDestinationStore();
 import { storeToRefs } from "pinia";
+import { formatDate } from '../../utils/date-conversion';
 const { destination, fetchDestinations } = storeToRefs(store);
 const props = defineProps([
   "destinationID",
@@ -49,19 +50,20 @@ const isOpen = ref(false);
             <div class="col section">
               <span class="title-section pb-2"> Budget </span>
               <h2>
-                $ <span class="highlight">{{ props.destinationBudget }} </span>
+                $ <span class="highlight">{{ formatNumber(props.destinationBudget) }} </span>
               </h2>
 
               <span class="pb-2 title-section"> Days until trip </span>
               <h2>
                 
                 <span class="highlight">{{ props.daysRemainingForTrip  }} </span>
-                days
+              {{props.daysRemainingForTrip  > 1 ? 'Days' : 'Day'}}
               </h2>
+              <!-- if dates is equal to 0  or is passed then we are going torender the date "ago" instead -->
             </div>
             <div class="col section">
               <span class="pb-2 title-section">Date Planned</span>
-              <h2>{{ props.date }}</h2>
+              <h2>{{ formatDate(props.date)}}</h2>
               <span class="pb-2 title-section">Rating</span>
               <h2 v-if="props.tripRating < 4">
                 <span class="highlight">
@@ -93,7 +95,7 @@ const isOpen = ref(false);
                     variant="soft"
                     size="md"
                     color="green"
-                    >{{ props.tripRating }}</UBadge
+                    >{{ props.tripRating.toFixed(1) }}</UBadge
                   >
                 </span>
               </h2>

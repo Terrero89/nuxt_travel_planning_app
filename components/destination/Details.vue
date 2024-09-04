@@ -2,6 +2,11 @@
 import { useDestinationStore } from "@/store/destination";
 const store = useDestinationStore();
 import { storeToRefs } from "pinia";
+import { formatDate, formatNumber } from '../../utils/date-conversion';
+import {
+  calculateDaysRangeDuration,
+  calculateTotalDuration,
+} from "../../utils/date-conversion";
 const { deleteDestination, fetchDestinations } = store;
 const { destination } = storeToRefs(store);
 const props = defineProps([
@@ -26,7 +31,6 @@ const updateLink = computed(
   () => `/destinations/${props.destinationID}/update`
 );
 
-
 const removeItem = async (id) => {
   console.log(id);
 
@@ -50,17 +54,25 @@ const removeItem = async (id) => {
 
     <div class="details-row">
       <span class="detail-label">Dates: </span>
-      <span class="detail-value space"> {{ props.from }} -{{ props.to }}</span>
+      <span class="detail-value space">
+        {{ formatDate(props.from) }} - {{ formatDate(props.to) }}</span
+      >
     </div>
 
     <div class="details-row">
       <span class="detail-label">Budget:</span>
-      <span class="detail-value space">${{ props.destinationBudget }}</span>
+      <span class="detail-value space">${{ formatNumber(props.destinationBudget) }}</span>
     </div>
 
     <div class="details-row">
       <span class="detail-label">Trip Duration:</span>
-      <span class="detail-value space">{{ props.tripDuration }} Days</span>
+
+      <span class="detail-value space"
+        >{{ calculateDaysRangeDuration(props.from, props.to) }}
+        {{
+          calculateTotalDuration(props.from, props.to) > 1 ? "day" : "days"
+        }}</span
+      >
     </div>
 
     <div v-if="props.isTripCompleted">
@@ -145,7 +157,7 @@ const removeItem = async (id) => {
           v-if="props.tripRating > 4.5"
           size="md"
           color="green"
-          >{{ props.tripRating }}</UBadge
+          >{{ props.tripRating.toFixed(1) }}</UBadge
         >
       </span>
     </div>
@@ -166,7 +178,7 @@ const removeItem = async (id) => {
     <div class="details-row d-block">
       <span class="detail-label">Added on : </span>
       <p class="d-block">
-        {{ props.date }}
+        {{ formatDate(props.date) }}
       </p>
     </div>
 

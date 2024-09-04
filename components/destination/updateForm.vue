@@ -128,7 +128,7 @@ onMounted(async () => {
           id="toDate"
         />
       </div>
-
+{{dest.to}}
       <div class="col-6">
         <label for="duration" class="form-label">Duration</label>
         <input
