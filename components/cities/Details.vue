@@ -44,7 +44,7 @@ const updateCitiesLink = computed(
 
 onMounted( () => {
  fetchCities()
- expenseStore.expensesAsArray.value
+ cityStore.citiesAsArray.value
 });
 </script>
 

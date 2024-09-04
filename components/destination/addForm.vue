@@ -25,9 +25,9 @@ const submitForm = () => {
     to: to.value,
     tripDuration: tripDuration.value,
     daysRemainingForTrip: daysRemainingForTrip.value,
-    tripRating: 0.0,
+    tripRating: 10,
     tripComments: "",
-    date: formatDate(new Date()),
+    date: new Date(),
   };
 
   addDestination(tripData); //add project to pinia
@@ -130,7 +130,7 @@ const tripDuration = computed(() => {
           class="form-control"
           id="name-input"
           min="0"
-          max="5"
+          max="10"
           step="0.1"
         />
       </div>

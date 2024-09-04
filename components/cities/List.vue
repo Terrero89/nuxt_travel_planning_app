@@ -48,7 +48,7 @@ const getCitiesByDestinationID = computed(() => cityStore.filterItemById); // th
 
 <template>
   <div class="projects">
-    <UITitle title="Projects" class="container border-bottom" />
+TITLE HERE
     <div>
     
   

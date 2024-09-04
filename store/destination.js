@@ -41,6 +41,7 @@ export const useDestinationStore = defineStore({
             destinationRating: responseData[key].destinationRating,
             tripRating: responseData[key].tripRating,
             tripComments: responseData[key].tripComments,
+            date: responseData[key].date
           };
           destinationsList.push(destination);
         }

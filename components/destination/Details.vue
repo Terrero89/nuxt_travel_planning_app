@@ -163,6 +163,12 @@ const removeItem = async (id) => {
         {{ props.tripComments }}
       </p>
     </div>
+    <div class="details-row d-block">
+      <span class="detail-label">Added on : </span>
+      <p class="d-block">
+        {{ props.date }}
+      </p>
+    </div>
 
     <div class="modal-actions">
       <UButton color="red" @click="removeItem(props.destinationID)"
