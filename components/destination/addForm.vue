@@ -1,19 +1,40 @@
 <script setup>
+import { ref, computed } from "vue";
 import { useDestinationStore } from "@/store/destination";
-const store = useDestinationStore();
 import { storeToRefs } from "pinia";
-const {} = storeToRefs(store);
+import { useRoute } from 'vue-router';
+
+const store = useDestinationStore();
 const { addDestination } = store;
-const props = defineProps(["destinationParamID"]);
+const route = useRoute();
 
 const destinationName = ref("");
 const transportType = ref("");
 const destinationBudget = ref();
 const from = ref("");
-const to = ref(new Date(""));
-const duration = ref();
-const tripRating = ref();
+const to = ref("");
+const tripRating = ref(10);
 const tripComments = ref("");
+
+// Computed property for trip duration
+const tripDuration = computed(() => {
+  if (!from.value || !to.value) {
+    return 0;
+  }
+  const fromDate = new Date(from.value);
+  const toDate = new Date(to.value);
+  const duration = (toDate - fromDate) / (1000 * 60 * 60 * 24); // Calculate difference in days
+  return duration > 0 ? duration : 0; // Ensure non-negative duration
+});
+
+// Computed property for days remaining for trip
+const daysRemainingForTrip = computed(() => {
+  if (!from.value) return 0;
+  const currentDate = new Date();
+  const fromDate = new Date(from.value);
+  const daysRemaining = (fromDate - currentDate) / (1000 * 60 * 60 * 24);
+  return Math.ceil(daysRemaining); // Round up to the nearest whole number
+});
 
 const submitForm = () => {
   const tripData = {
@@ -25,55 +46,37 @@ const submitForm = () => {
     to: to.value,
     tripDuration: tripDuration.value,
     daysRemainingForTrip: daysRemainingForTrip.value,
-    tripRating: 10,
-    tripComments: "",
+    tripRating: tripRating.value,
+    tripComments: tripComments.value,
     date: new Date(),
   };
 
-  addDestination(tripData); //add project to pinia
-  // addHistory(projectData); //add history to pinia
-  // projectAddedToActions(props.param); //add project to actions
-  navigateTo("/destinations"); //after, go to projects
-  console.log(tripData);
+  addDestination(tripData);
+  navigateTo("/destinations");
 };
-
-//? COMPUTED PROPERTIES
-const daysRemainingForTrip = computed(() => {
-  return calculateDaysRemaining(from.value);
-});
-
-const tripDuration = computed(() => {
-  if (!from.value || !to.value) {
-    return 0;
-  }
-  return calculateDaysRangeDuration(from.value, to.value)
-});
 </script>
 
 <template>
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Create Destination</h3>
-      {{ props.destinationParamID }}
+
       <div>
-        <label for="inputPassword4" class="form-label">Destination</label>
+        <label for="destinationName" class="form-label">Destination</label>
         <input
-          type="input"
+          type="text"
           v-model.trim="destinationName"
           class="form-control"
-          id="name-input"
+          id="destinationName"
         />
       </div>
-      <div>
-        <label for="transportType" class="form-label"
-          >Transportation Type</label
-        >
-    
 
+      <div>
+        <label for="transportType" class="form-label">Transportation Type</label>
         <select
           class="form-select"
           v-model="transportType"
-          aria-label="Default select example"
+          id="transportType"
         >
           <option>Plane</option>
           <option>Train</option>
@@ -81,54 +84,66 @@ const tripDuration = computed(() => {
           <option>Cruise</option>
         </select>
       </div>
+
       <div>
-        <label for="inputPassword4" class="form-label">Budget</label>
+        <label for="destinationBudget" class="form-label">Budget</label>
         <input
           type="number"
           v-model.trim="destinationBudget"
           class="form-control"
-          id="name-input"
+          id="destinationBudget"
         />
       </div>
 
       <div class="col-6">
-        <label for="inputPassword4" class="form-label">From: </label>
+        <label for="fromDate" class="form-label">From</label>
         <input
           type="date"
-          v-model.trim="from"
+          v-model="from"
           class="form-control"
-          id="name-input"
+          id="fromDate"
         />
       </div>
-      <!-- {{formatDate(from)}} -->
 
       <div class="col-6">
-        <label for="inputPassword4" class="form-label">To: </label>
+        <label for="toDate" class="form-label">To</label>
         <input
           type="date"
-          v-model.trim="to"
+          v-model="to"
           class="form-control"
-          id="name-input"
-        />
-      </div>
-      <div class="col-6">
-        <label for="inputPassword4" class="form-label">Duration</label>
-        <input
-          type="number"
-          v-model.trim="duration"
-          class="form-control"
-          id="name-input"
+          id="toDate"
         />
       </div>
 
       <div class="col-6">
-        <label for="inputPassword4" class="form-label">Rating</label>
-
+        <label for="tripDuration" class="form-label">Duration (Days)</label>
         <input
           type="number"
-          v-model.trim="tripRating"
+          :value="tripDuration"
           class="form-control"
-          id="name-input"
+          id="tripDuration"
+          readonly
+        />
+      </div>
+
+      <div class="col-6">
+        <label for="daysRemainingForTrip" class="form-label">Days Remaining</label>
+        <input
+          type="number"
+          :value="daysRemainingForTrip"
+          class="form-control"
+          id="daysRemainingForTrip"
+          readonly
+        />
+      </div>
+
+      <div class="col-6">
+        <label for="tripRating" class="form-label">Rating</label>
+        <input
+          type="number"
+          v-model="tripRating"
+          class="form-control"
+          id="tripRating"
           min="0"
           max="10"
           step="0.1"
@@ -136,11 +151,12 @@ const tripDuration = computed(() => {
       </div>
 
       <div>
+        <label for="tripComments" class="form-label">Comments</label>
         <textarea
           class="form-control"
           v-model="tripComments"
-          aria-label="With textarea"
-        />
+          id="tripComments"
+        ></textarea>
       </div>
 
       <div>

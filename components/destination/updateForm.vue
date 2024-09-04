@@ -33,9 +33,21 @@ const tripDuration = computed(() => {
   return 0;
 });
 
-// Watch for changes in from/to dates and update tripDuration accordingly
+// Computed property for days remaining for the trip
+const daysRemainingForTrip = computed(() => {
+  if (dest.value.from) {
+    const fromDate = new Date(dest.value.from);
+    const currentDate = new Date();
+    const remainingDays = (fromDate - currentDate) / (1000 * 60 * 60 * 24); // Calculate difference in days
+    return remainingDays > 0 ? Math.ceil(remainingDays) : 0; // Round up and ensure non-negative value
+  }
+  return 0;
+});
+
+// Watch for changes in from/to dates and update tripDuration and daysRemainingForTrip accordingly
 watch([() => dest.value.from, () => dest.value.to], () => {
   dest.value.tripDuration = tripDuration.value;
+  dest.value.daysRemainingForTrip = daysRemainingForTrip.value;
 });
 
 const updateDestinationHandler = async () => {
@@ -43,13 +55,12 @@ const updateDestinationHandler = async () => {
     await updateDestination(destinationParamID, {
       ...dest.value,
       tripDuration: tripDuration.value,
+      daysRemainingForTrip: daysRemainingForTrip.value,
     });
     navigateTo("/destinations");
   } catch (error) {
     console.error("Error updating destination:", error);
-    alert(
-      "An error occurred while updating the destination. Please try again later."
-    );
+    alert("An error occurred while updating the destination. Please try again later.");
   }
 };
 
@@ -57,7 +68,6 @@ onMounted(async () => {
   await fetchDestinations();
 });
 </script>
-
 <template>
   <div class="form-wrapper" v-if="Object.keys(dest).length > 0">
     <form class="row g-3" @submit.prevent="submitForm">
