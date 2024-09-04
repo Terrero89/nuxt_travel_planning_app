@@ -22,33 +22,39 @@ export const useExpenseStore = defineStore({
       const expensesList = [];
 
       for (const key in this.expenses) {
-        const newExpense = {
-          expenseID: key,
-          parentDestinationID: parentDestinationID[key].parentDestinationID,
-          parentCityID: parentCityID[key].parentCityID,
-          expense: expense[key].expense,
-          category: category[key].category,
-          startTime: startTime[key].startTime,
-          endTime: endTime[key].endTime,
-          cost: cost[key].cost,
-          isExpensePaid: isExpensePaid[key].isExpensePaid,
-          location: location[key].location,
-          address: address[key].address,
-          duration: duration[key].duration,
-          date: date[key].date,
-          isCompleted: isCompleted[key].isCompleted,
-          daysRemainingForExpense:
-            daysRemainingForExpense[key].daysRemainingForExpense,
-          placeRating: placeRating[key].placeRating,
-          priority: priority[key].priority,
-          comments: comments[key].comments
-        };
-        cityList.push(newExpense);
-      }
+      //   const newExpense = {
+      //     expenseID: key,
+      //     parentDestinationID: parentDestinationID[key].parentDestinationID,
+      //     parentCityID: parentCityID[key].parentCityID,
+      //     expense: expense[key].expense,
+      //     category: category[key].category,
+      //     startTime: startTime[key].startTime,
+      //     endTime: endTime[key].endTime,
+      //     cost: cost[key].cost,
+      //     isExpensePaid: isExpensePaid[key].isExpensePaid,
+      //     location: location[key].location,
+      //     address: address[key].address,
+      //     duration: duration[key].duration,
+      //     date: date[key].date,
+      //     isCompleted: isCompleted[key].isCompleted,
+      //     daysRemainingForExpense:
+      //       daysRemainingForExpense[key].daysRemainingForExpense,
+      //     placeRating: placeRating[key].placeRating,
+      //     priority: priority[key].priority,
+      //     comments: comments[key].comments
+      //   };
+      //   cityList.push(newExpense);
+      // }
+      const newExpense = {
+        expenseID: key,
+        ...this.expenses[key],
+      };
+      expensesList.push(newExpense);
+    }
       this.expenses = expensesList;
     },
-    async updateExpense(cityID, payload) {
-      const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;
+    async updateExpense(itemID, payload) {
+      const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/expenses/${itemID}.json`;
       const options = {
         method: "PUT",
         headers: { "Content-type": "application/json" },
@@ -73,7 +79,7 @@ export const useExpenseStore = defineStore({
       } catch (error) {
         console.error("Error updating city:", error);
       }
-    }
+    },
     async deleteExpense(itemID) {
       let response = await fetch(
         `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/expenses/${itemID}.json`,
@@ -103,15 +109,16 @@ export const useExpenseStore = defineStore({
   },
   getters: {
     expensesAsArray: (state) => {
-      const expensesList = [];
-      for (const key in state.expenses) {
-        const expenseData = {
-          cityID: key,
-          ...state.expenses[key],
-        };
-        expensesList.push(expenseData);
-      }
-      return expensesList;
+      // const expensesList = [];
+      // for (const key in state.expenses) {
+      //   const expenseData = {
+      //     expenseID: key,
+      //     ...state.expenses[key],
+      //   };
+      //   expensesList.push(expenseData);
+      // }
+      // return expensesList;
+      return state.expenses
     },
    
     filterItemById(state) {

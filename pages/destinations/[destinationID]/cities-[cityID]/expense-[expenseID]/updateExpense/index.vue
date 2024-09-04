@@ -1,3 +1,5 @@
 <template>
-    <div>UPDATE EXXPENSE</div>
+  <div>
+    <ExpensesUpdateForm />
+  </div>
 </template>

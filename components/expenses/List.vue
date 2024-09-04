@@ -45,12 +45,12 @@ const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this
     <div class="container">
     
     </div>
-    {{expenseStore.expensesAsArray[0]}}
+   
  <!-- <div v-for="expense in expenses">{{expense.expenseID}}</div> -->
     <ExpensesItem
       v-for="expense in getExpensesByCityID(cityId)"
       :key="expense.expenseID"
-      :expenseID="expense.cityID"
+      :expenseID="expense.expenseID"
       :destinationParentID="expense.destinationParentID"
       :cityParentID="expense.cityParentID"
       :expense="expense.expense"

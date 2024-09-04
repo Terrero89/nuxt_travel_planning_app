@@ -43,7 +43,6 @@ const submitForm = async () => {
     isExpensePaid: false,
     location: location.value,
     duration: duration.value,
-    date: date.value,
     isCompleted: isCompleted.value,
     daysRemainingForExpense: daysRemainingForExpense.value,
     placeRating: placeRating.value,
@@ -148,7 +147,7 @@ const showPrice = computed(() => {
         <input type="input" v-model.trim="location"  class="form-control"
           id="name-input" />
       </div>
-
+ 
 
 
       <div>
@@ -186,6 +185,7 @@ label {
   margin: 0 auto;
   padding: 1rem;
   border: 1px solid #ccc;
+  border-radius: 8px;
   border-radius: 8px;
   background-color: #f9f9f9;
 }

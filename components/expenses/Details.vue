@@ -51,7 +51,7 @@ onMounted(async () => {
     <hr />
     <h2>{{ props.expense }}</h2>
     <!-- dsds:{{ expensesAsArray[0].cityID}} -->
-    {{ props.expenseID }}
+   ds {{ props.expenseID }}
     <div class="details-row">
       <span class="detail-label">Category:</span>
       <span class="detail-value space">{{ props.category }}</span>
@@ -250,7 +250,7 @@ onMounted(async () => {
 
     <div class="modal-actions">
     
-      <UButton @click="removeItem(props.expenseID)">Delete</UButton>
+      <UButton color="red" variant="solid" @click="removeItem(props.expenseID)">Delete</UButton>
       <UButton :to="updateExpensesLink">Update</UButton>
     </div>
   </div>
