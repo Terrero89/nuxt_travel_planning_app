@@ -6,8 +6,10 @@ const { fetchExpenses } = expenseStore;
 const { expenses } = storeToRefs(expenseStore);
 const route = useRoute(); //route object
 const cityId = route.params.cityID;
+
+const {expensesAsArray} = expenseStore;
 const props = defineProps([
-  "expensesID",
+  "expenseID",
   "destinationParentID",
   "cityParentID",
   "expense", // food, landmarks, transport, uber, plane, hotel, attractions,
@@ -29,6 +31,7 @@ const props = defineProps([
 ]);
 onMounted(async() => {
   await fetchExpenses();
+  expenseStore.expensesAsArray.value
 });
 
 
@@ -42,12 +45,14 @@ const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this
     <div class="container">
     
     </div>
+    {{expenseStore.expensesAsArray[0]}}
+ <!-- <div v-for="expense in expenses">{{expense.expenseID}}</div> -->
     <ExpensesItem
       v-for="expense in getExpensesByCityID(cityId)"
       :key="expense.expenseID"
+      :expenseID="expense.cityID"
       :destinationParentID="expense.destinationParentID"
       :cityParentID="expense.cityParentID"
-      :expenseID="expense.expenseID"
       :expense="expense.expense"
       :category="expense.category"
       :startTime="expense.startTime"

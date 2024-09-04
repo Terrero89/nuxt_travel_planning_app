@@ -1,7 +1,7 @@
 import { ColorScheme } from '../../.nuxt/components';
 <script setup>
 const props = defineProps([
-  "expensesID",
+  "expenseID",
   "destinationParentID",
   "cityParentID",
   "expense", // food, landmarks, transport, uber, plane, hotel, attractions,
@@ -28,6 +28,7 @@ const isOpen = ref(false);
   <div class="destination-item">
     <div class="item">
       <div class="destination">
+        {{props.expenseID}}
         <h1 class="title">{{ props.expense }}</h1>
         <div class="destination-wrapper">
           <div class="section-one row">
