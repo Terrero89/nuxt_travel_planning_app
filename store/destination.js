@@ -80,7 +80,7 @@ export const useDestinationStore = defineStore({
       let found = this.destination.find((dest) => dest.destinationID === param); //finds the project from the
       return found;
     },
-    async updateDestination(id, parendtID) {
+    async updateDestination(id) {
       const url =`https://travel-planning-app-44a08-default-rtdb.firebaseio.com/destinations/${parentID}/${id}.json`;
       const payload = this.editedData; // payload will be equal to the new updated task
       const options = {
