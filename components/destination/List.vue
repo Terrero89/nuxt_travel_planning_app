@@ -49,7 +49,7 @@ const props = defineProps([
         to="/destinations/create"
       ></UButton>
     </UICard>
-    <UITitle title="Projects" class="container border-bottom" />
+
     <UIContainer >
       <!-- Display loading message or spinner while data is being fetched -->
       <div v-if="isLoading" class="flex items-center space-x-4 mx-auto">
@@ -74,7 +74,7 @@ const props = defineProps([
           :to="trip.to"
           :destinationBudget="trip.destinationBudget"
           :tripDuration="trip.tripDuration"
-          :date="trip.dateAdded"
+          :date="trip.date"
           :isTripCompleted="trip.isTripCompleted"
           :daysRemainingForTrip="trip.daysRemainingForTrip"
           :citiesIncludedOnTrip="trip.citiesIncludedOnTrip"

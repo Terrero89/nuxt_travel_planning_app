@@ -1,18 +1,17 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useDestinationStore } from "@/store/destination";
 import { storeToRefs } from "pinia";
+
 // Initialize store
 const store = useDestinationStore();
-const { editDestination,updateDestination, fetchDestinations } = store;
-// Extract `destination` array from store using `storeToRefs`
+const { editDestination, updateDestination, fetchDestinations } = store;
 const { destination } = storeToRefs(store);
-const route = useRoute(); //route object
+const route = useRoute();
 const destinationParamID = route.params.destinationID;
 
 // Define props
 const props = defineProps(["paramDestinationID"]);
-
 
 // Computed property to find the specific destination
 const dest = computed(() => {
@@ -23,31 +22,57 @@ const dest = computed(() => {
   );
 });
 
-const destinationE = computed(() => editDestination(destinationParamID)); // here
+// Computed property for trip duration
+const tripDuration = computed(() => {
+  if (dest.value.from && dest.value.to) {
+    const fromDate = new Date(dest.value.from);
+    const toDate = new Date(dest.value.to);
+    const duration = (toDate - fromDate) / (1000 * 60 * 60 * 24); // Calculate difference in days
+    return duration > 0 ? duration : 0; // Ensure non-negative duration
+  }
+  return 0;
+});
 
-const updateDestinationHandler = async() => {
-try{
-  await updateDestination(destinationParamID, dest.value);
-  navigateTo("/destinations");
-} catch (error) {
+// Computed property for days remaining for the trip
+const daysRemainingForTrip = computed(() => {
+  if (dest.value.from) {
+    const fromDate = new Date(dest.value.from);
+    const currentDate = new Date();
+    const remainingDays = (fromDate - currentDate) / (1000 * 60 * 60 * 24); // Calculate difference in days
+    return remainingDays > 0 ? Math.ceil(remainingDays) : 0; // Round up and ensure non-negative value
+  }
+  return 0;
+});
+
+// Watch for changes in from/to dates and update tripDuration and daysRemainingForTrip accordingly
+watch([() => dest.value.from, () => dest.value.to], () => {
+  dest.value.tripDuration = tripDuration.value;
+  dest.value.daysRemainingForTrip = daysRemainingForTrip.value;
+});
+
+const updateDestinationHandler = async () => {
+  try {
+    await updateDestination(destinationParamID, {
+      ...dest.value,
+      tripDuration: tripDuration.value,
+      daysRemainingForTrip: daysRemainingForTrip.value,
+    });
+    navigateTo("/destinations");
+  } catch (error) {
     console.error("Error updating destination:", error);
     alert("An error occurred while updating the destination. Please try again later.");
   }
-
-// 
-//   updateDestination(destinationParamID);
-//   navigateTo("/destinations");
 };
-onMounted(async() => {
-await fetchDestinations();
+
+onMounted(async () => {
+  await fetchDestinations();
 });
 </script>
-
 <template>
   <div class="form-wrapper" v-if="Object.keys(dest).length > 0">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Update Destination</h3>
-      {{ dest }}
+      {{ dest.tripDuration }}
       <div>
         <label for="destinationName" class="form-label">Destination</label>
         <input
@@ -103,7 +128,7 @@ await fetchDestinations();
           id="toDate"
         />
       </div>
-
+{{dest.to}}
       <div class="col-6">
         <label for="duration" class="form-label">Duration</label>
         <input
@@ -122,7 +147,6 @@ await fetchDestinations();
           v-model.trim="dest.tripRating"
           class="form-control"
           id="tripRating"
-          readonly
         />
       </div>
 
@@ -141,8 +165,6 @@ await fetchDestinations();
           type="submit"
           class="btn btn-primary py-2 px-4"
           @click="updateDestinationHandler"
-     
-      
         >
           Update
         </button>

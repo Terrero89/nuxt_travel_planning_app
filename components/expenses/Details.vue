@@ -32,7 +32,7 @@ const removeItem = async (id) => {
   console.log(id);
 
   deleteExpense(id);
-  navigateTo( `/destinations/${props.destinationID}/cities-${cityParamID}`);
+  navigateTo( `/destinations/${props.destinationID}`);
 };
 const updateExpensesLink = computed(
   () =>
@@ -42,6 +42,7 @@ const updateExpensesLink = computed(
 onMounted(async () => {
   await fetchExpenses();
   expenseStore.expensesAsArray.value;
+  navigateTo( `/destinations/${props.destinationID}/cities-${cityParamID}`);
 });
 </script>
 
