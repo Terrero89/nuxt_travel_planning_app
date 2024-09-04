@@ -50,7 +50,7 @@ onMounted(async () => {
     <h3>Expense Details</h3>
     <hr />
     <h2>{{ props.expense }}</h2>
-    <!-- dsds:{{ expensesAsArray[0].cityID}} -->
+
    ds {{ props.expenseID }}
     <div class="details-row">
       <span class="detail-label">Category:</span>
@@ -178,14 +178,7 @@ onMounted(async () => {
         >
       </span>
     </div>
-    <!-- <div>
-      <span class="detail-label">See Cities to visit </span>
-      <NuxtLink  class="space dr-button" :to="citiesLink">
-        <UButton color="blue" variant="outline"> Cities</UButton>
-      </NuxtLink>
-      
-    </div> -->
-
+ 
     <div v-if="props.priority === 'Must visit'">
       <span class="" v-if="(props.priority = 'Must visit')">
         <span class="detail-label">Priority</span>
