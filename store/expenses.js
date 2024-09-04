@@ -47,6 +47,47 @@ export const useExpenseStore = defineStore({
       }
       this.expenses = expensesList;
     },
+    async updateExpense(cityID, payload) {
+      const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;
+      const options = {
+        method: "PUT",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(payload),
+      };
+    
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("Failed to update city");
+        }
+    
+        // Ensure the response contains the updated data
+        const updatedCity = await response.json();
+    
+        // Update the local state after a successful update
+        const index = this.cities.findIndex(city => city.cityID === cityID);
+        if (index !== -1) {
+          // Use the returned data from Firebase to ensure consistency
+          this.cities[index] = { cityID, ...updatedCity };
+        }
+      } catch (error) {
+        console.error("Error updating city:", error);
+      }
+    }
+    async deleteExpense(itemID) {
+      let response = await fetch(
+        `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/expenses/${itemID}.json`,
+        {
+          method: "DELETE",
+          "Content-type": "application/json",
+        }
+      );
+      if (!response.ok) {
+        console.log("Error, request failed");
+      }
+
+      // console.log(response)
+    },
     async addExpense(data) {
       const response = await fetch(
         "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/expenses.json",

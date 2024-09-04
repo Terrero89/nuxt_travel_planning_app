@@ -4,7 +4,7 @@ const expenseStore = useExpenseStore();
 import { storeToRefs } from "pinia";
 const { expenses } = storeToRefs(expenseStore);
 const route = useRoute(); //route object
-const { expensesAsArray , fetchExpenses} = expenseStore;
+const { expensesAsArray , fetchExpenses, deleteExpense} = expenseStore;
 const cityParamID = route.params.cityID;
 const expenseParamID = route.params.expenseID;
 const props = defineProps([
@@ -28,7 +28,12 @@ const props = defineProps([
   "priority",
   "comments",
 ]);
+const removeItem = async (id) => {
+  console.log(id);
 
+  deleteExpense(id);
+  navigateTo( `/destinations/${props.destinationID}/cities-${cityParamID}`);
+};
 const updateExpensesLink = computed(
   () =>
     `/destinations/${props.destinationID}/cities-${cityParamID}/expense-${props.expenseID}/updateExpense`
@@ -98,20 +103,6 @@ onMounted(async () => {
       <span class="detail-value space">{{ props.duration }} Hours</span>
     </div>
 
-    <!-- 
-    <div v-if="props.category === 'Attractions'">
-      <span>
-        <span class="detail-label"> Paid in advance </span>
-        <UBadge
-          class="mx-3"
-          v-if="props.isExpensePaid"
-          size="md"
-          color="green"
-          variant="soft"
-          >{{ props.isExpensePaid ? "Booked" : "" }}</UBadge
-        >
-      </span>
-    </div> -->
 
     <div v-if="!props.isExpensePaid">
       <span class="">
@@ -259,7 +250,7 @@ onMounted(async () => {
 
     <div class="modal-actions">
     
-      <UButton>Delete</UButton>
+      <UButton @click="removeItem(props.expenseID)">Delete</UButton>
       <UButton :to="updateExpensesLink">Update</UButton>
     </div>
   </div>
