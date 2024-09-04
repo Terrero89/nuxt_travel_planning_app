@@ -1,9 +1,14 @@
 <script setup>
-import { useDestinationStore } from "@/store/destination";
-const store = useDestinationStore();
+import { useExpenseStore } from "@/store/expenses";
+const expenseStore = useExpenseStore();
 import { storeToRefs } from "pinia";
+const { expenses } = storeToRefs(expenseStore);
+const route = useRoute(); //route object
+const { expensesAsArray , fetchExpenses, deleteExpense} = expenseStore;
+const cityParamID = route.params.cityID;
+const expenseParamID = route.params.expenseID;
 const props = defineProps([
-  "expensesID",
+  "expenseID",
   "destinationParentID",
   "cityParentID",
   "expense", // food, landmarks, transport, uber, plane, hotel, attractions,
@@ -21,10 +26,23 @@ const props = defineProps([
   "daysRemainingForExpense",
   "placeRating",
   "priority",
-  "comments"
+  "comments",
 ]);
+const removeItem = async (id) => {
+  console.log(id);
 
-const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
+  deleteExpense(id);
+  navigateTo( `/destinations/${props.destinationID}/cities-${cityParamID}`);
+};
+const updateExpensesLink = computed(
+  () =>
+    `/destinations/${props.destinationID}/cities-${cityParamID}/expense-${props.expenseID}/updateExpense`
+);
+
+onMounted(async () => {
+  await fetchExpenses();
+  expenseStore.expensesAsArray.value;
+});
 </script>
 
 <template>
@@ -33,12 +51,13 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
     <hr />
     <h2>{{ props.expense }}</h2>
 
+   ds {{ props.expenseID }}
     <div class="details-row">
       <span class="detail-label">Category:</span>
       <span class="detail-value space">{{ props.category }}</span>
     </div>
 
-    <div class="details-row" v-if="props.category !== 'Food' ">
+    <div class="details-row" v-if="props.category !== 'Food'">
       <span class="detail-label">Start: </span>
       <span class="detail-value space">{{ props.startTime }}</span>
       <span class="detail-label">End time: </span>
@@ -49,7 +68,6 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
       <span class="detail-label">Cost:</span>
       <span class="detail-value space">${{ props.cost }}</span>
     </div>
-   
 
     <div v-if="props.category === 'Attractions'">
       <span>
@@ -84,21 +102,7 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
       <span class="detail-label">Duration:</span>
       <span class="detail-value space">{{ props.duration }} Hours</span>
     </div>
-  
-<!-- 
-    <div v-if="props.category === 'Attractions'">
-      <span>
-        <span class="detail-label"> Paid in advance </span>
-        <UBadge
-          class="mx-3"
-          v-if="props.isExpensePaid"
-          size="md"
-          color="green"
-          variant="soft"
-          >{{ props.isExpensePaid ? "Booked" : "" }}</UBadge
-        >
-      </span>
-    </div> -->
+
 
     <div v-if="!props.isExpensePaid">
       <span class="">
@@ -122,18 +126,17 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
         </span>
       </div>
     </div>
-  
-     
+
     <div>
       <div class="details-row">
         <span class="detail-label">Location: </span>
-        <span class="detail-value space ">
+        <span class="detail-value space">
           <UBadge color="gray" variant="soft">
-          <a class="marked-link" :href="props.location" target="_blank"> Google Location </a>
-        </UBadge>
+            <a class="marked-link" :href="props.location" target="_blank">
+              Google Location
+            </a>
+          </UBadge>
         </span>
-   
-     
       </div>
     </div>
     <!-- < 4 -->
@@ -175,16 +178,9 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
         >
       </span>
     </div>
-    <!-- <div>
-      <span class="detail-label">See Cities to visit </span>
-      <NuxtLink  class="space dr-button" :to="citiesLink">
-        <UButton color="blue" variant="outline"> Cities</UButton>
-      </NuxtLink>
-      
-    </div> -->
-
+ 
     <div v-if="props.priority === 'Must visit'">
-      <span class="" v-if="props.priority='Must visit'">
+      <span class="" v-if="(props.priority = 'Must visit')">
         <span class="detail-label">Priority</span>
         <UBadge
           class="mx-3"
@@ -198,7 +194,7 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
     </div>
 
     <div v-else-if="props.priority === 'Nice to visit'">
-      <span class="" v-if="props.priority='Nice to visit'">
+      <span class="" v-if="(props.priority = 'Nice to visit')">
         <span class="detail-label">Priority</span>
         <UBadge
           class="mx-3"
@@ -211,7 +207,7 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
       </span>
     </div>
     <div v-else-if="props.priority === 'Backup option'">
-      <span class="" v-if="props.priority='Backup option'">
+      <span class="" v-if="(props.priority = 'Backup option')">
         <span class="detail-label">Priority</span>
         <UBadge
           class="mx-3"
@@ -225,7 +221,7 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
     </div>
 
     <div v-else-if="props.priority === 'Optional'">
-      <span class="" v-if="props.priority='Optional'">
+      <span class="" v-if="(props.priority = 'Optional')">
         <span class="detail-label">Priority</span>
         <UBadge
           class="mx-3"
@@ -238,27 +234,24 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
       </span>
     </div>
 
-
-    
-    
     <div class="details-row d-block">
       <span class="detail-label">Comments: </span>
       <p class="d-block">
         {{ props.comments }}
-       
       </p>
     </div>
 
     <div class="modal-actions">
-      <UButton @click="$emit('close')">Close</UButton>
-      <UButton>Update</UButton>
+    
+      <UButton color="red" variant="solid" @click="removeItem(props.expenseID)">Delete</UButton>
+      <UButton :to="updateExpensesLink">Update</UButton>
     </div>
   </div>
 </template>
 
 <style scoped>
-.marked-link{
-  text-decoration:none;
+.marked-link {
+  text-decoration: none;
   color: gray;
 }
 .highlight {
@@ -293,7 +286,6 @@ const expensesLink = computed(()=> `/destinations/${props.destinationID}`);
 }
 .detail-label {
   font-weight: bold;
-  
 }
 .detail-value {
   flex-grow: 1;

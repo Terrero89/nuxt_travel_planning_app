@@ -29,7 +29,12 @@ const props = defineProps([
   "cityComments",
 ]);
 // have to find a way to grab all the required fields now that i have both ids
+const removeItem = async (id) => {
+  console.log(id);
 
+  deleteCity(id);
+  navigateTo( `/destinations/${destId}`);
+};
 const citiesLink = computed(
   () => `/destinations/${destId}/cities-${props.cityID}`
 );
@@ -37,12 +42,10 @@ const updateCitiesLink = computed(
   () => `/destinations/${destId}/cities-${props.cityID}/updateCity`
 );
 
-const removeItem = async (id) => {
-  console.log(id);
-
-  deleteCity(id);
-  navigateTo( `/destinations/${destId}/cities-${props.cityID}`);
-};
+onMounted( () => {
+ fetchCities()
+ expenseStore.expensesAsArray.value
+});
 </script>
 
 <template>
@@ -52,7 +55,7 @@ const removeItem = async (id) => {
       {{ props.cityID }}
       <hr />
       <h2>{{ props.city }}</h2>
-cool: {{props.parentDestinationID}}
+
       <div class="details-row">
         <span class="detail-label">Accommodation:</span>
         <span class="detail-value space"> {{ props.accommodation }}</span>

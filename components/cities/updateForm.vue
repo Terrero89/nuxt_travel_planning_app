@@ -15,20 +15,20 @@ const cityItem = computed(() => {
   );
 });
 
-const cityData = ref({
-  city: cityItem.value.city,
-  accommodation: cityItem.value.accommodation,
-  accommodationType: cityItem.value.accommodationType,
-  accommodationCost: cityItem.value.accommodationCost,
-  accommodationAddress: cityItem.value.accommodationAddress,
-  transportType: cityItem.value.transportType,
-  destinationBudget: cityItem.value.destinationBudget,
-  to: cityItem.value.to,
-  from: cityItem.value.from,
-  duration: cityItem.value.duration,
-  cityRating: cityItem.value.cityRating,
-  cityComments: cityItem.value.cityComments,
-});
+// const cityData = ref({
+//   city: cityItem.value.city,
+//   accommodation: cityItem.value.accommodation,
+//   accommodationType: cityItem.value.accommodationType,
+//   accommodationCost: cityItem.value.accommodationCost,
+//   accommodationAddress: cityItem.value.accommodationAddress,
+//   transportType: cityItem.value.transportType,
+//   destinationBudget: cityItem.value.destinationBudget,
+//   to: cityItem.value.to,
+//   from: cityItem.value.from,
+//   duration: cityItem.value.duration,
+//   cityRating: cityItem.value.cityRating,
+//   cityComments: cityItem.value.cityComments,
+// });
 
 const updateCityHandler = async () => {
   try {
@@ -52,7 +52,7 @@ onMounted(async () => {
 <template>
   <div class="form-wrapper">
     {{ cityItem.city }}
-    <form class="row g-3" @submit.prevent="submitForm">
+    <form class="row g-3" @submit.prevent="updateCityHandler">
       <h3 class="mb-4">Update City</h3>
 
       {{ cityItem }}
