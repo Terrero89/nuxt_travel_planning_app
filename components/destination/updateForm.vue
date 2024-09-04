@@ -2,21 +2,17 @@
 import { ref, onMounted, computed } from "vue";
 import { useDestinationStore } from "@/store/destination";
 import { storeToRefs } from "pinia";
-
-
-
 // Initialize store
 const store = useDestinationStore();
-const { editDestination } = store;
+const { editDestination,updateDestination, fetchDestinations } = store;
 // Extract `destination` array from store using `storeToRefs`
 const { destination } = storeToRefs(store);
-const { updateDestination, fetchDestinations } = store;
-
 const route = useRoute(); //route object
 const destinationParamID = route.params.destinationID;
 
 // Define props
 const props = defineProps(["paramDestinationID"]);
+
 
 // Computed property to find the specific destination
 const dest = computed(() => {
@@ -29,17 +25,21 @@ const dest = computed(() => {
 
 const destinationE = computed(() => editDestination(destinationParamID)); // here
 
-const updateDestinationHandler = () => {
-  let index = store.destination.findIndex(
-    (project) => project.destinationID === destinationParamID
-  );
-
-  store.editedData = { ...store.destination[index], dateModified: new Date() };
-  updateDestination(destinationParamID);
+const updateDestinationHandler = async() => {
+try{
+  await updateDestination(destinationParamID, dest.value);
   navigateTo("/destinations");
+} catch (error) {
+    console.error("Error updating destination:", error);
+    alert("An error occurred while updating the destination. Please try again later.");
+  }
+
+// 
+//   updateDestination(destinationParamID);
+//   navigateTo("/destinations");
 };
-onMounted(() => {
-  fetchDestinations();
+onMounted(async() => {
+await fetchDestinations();
 });
 </script>
 
