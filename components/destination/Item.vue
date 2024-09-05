@@ -1,9 +1,12 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from "vue";
 import { useDestinationStore } from "@/store/destination";
-const store = useDestinationStore();
 import { storeToRefs } from "pinia";
-import { formatDate } from '../../utils/date-conversion';
+import { formatDate } from "../../utils/date-conversion";
+
+const store = useDestinationStore();
 const { destination, fetchDestinations } = storeToRefs(store);
+
 const props = defineProps([
   "destinationID",
   "destination",
@@ -20,21 +23,43 @@ const props = defineProps([
   "tripComments",
 ]);
 
-const destinationParam = ref(props.destinationID)
+const destinationParam = ref(props.destinationID);
 const isOpen = ref(false);
+const daysRemainingForTrip = ref(props.daysRemainingForTrip); // Create a local ref for daysRemainingForTrip
 
-// onMounted(async () => {
-//   await fetchDestinations();
-// });
+// Function to calculate daysRemainingForTrip
+const calculateDaysRemaining = () => {
+  if (props.from) {
+    const fromDate = new Date(props.from);
+    const currentDate = new Date();
+    const remainingDays = (fromDate - currentDate) / (1000 * 60 * 60 * 24); // Calculate difference in days
+    daysRemainingForTrip.value =
+      remainingDays > 0 ? Math.ceil(remainingDays) : 0;
+  } else {
+    daysRemainingForTrip.value = 0;
+  }
+};
+
+// Automatically calculate daysRemainingForTrip on mount and update it daily
+onMounted(() => {
+  calculateDaysRemaining();
+
+  // Update daysRemainingForTrip every day at midnight
+  const interval = setInterval(calculateDaysRemaining, 86400000); // 86400000ms = 24 hours
+
+  // Cleanup interval on unmount
+  onUnmounted(() => {
+    clearInterval(interval);
+  });
+});
 </script>
 
 <template>
   <div class="destination-item">
-    
     <div class="item">
       <div class="destination">
-        {{props.destinationID}}
-   
+        {{ props.destinationID }}
+
         <h1 class="title">{{ props.destination }}</h1>
         <div class="destination-wrapper">
           <div class="section-one row">
@@ -50,20 +75,22 @@ const isOpen = ref(false);
             <div class="col section">
               <span class="title-section pb-2"> Budget </span>
               <h2>
-                $ <span class="highlight">{{ formatNumber(props.destinationBudget) }} </span>
+                $
+                <span class="highlight"
+                  >{{ formatNumber(props.destinationBudget) }}
+                </span>
               </h2>
 
               <span class="pb-2 title-section"> Days until trip </span>
               <h2>
-                
-                <span class="highlight">{{ props.daysRemainingForTrip  }} </span>
-              {{props.daysRemainingForTrip  > 1 ? 'Days' : 'Day'}}
+                <span class="highlight">{{ props.daysRemainingForTrip }} </span>
+                {{ props.daysRemainingForTrip <= 1 ? "Day" : "Days" }}
               </h2>
               <!-- if dates is equal to 0  or is passed then we are going torender the date "ago" instead -->
             </div>
             <div class="col section">
               <span class="pb-2 title-section">Date Planned</span>
-              <h2>{{ formatDate(props.date)}}</h2>
+              <h2>{{ formatDate(props.date) }}</h2>
               <span class="pb-2 title-section">Rating</span>
               <h2 v-if="props.tripRating < 4">
                 <span class="highlight">
@@ -135,7 +162,7 @@ const isOpen = ref(false);
                     :tripDuration="props.tripDuration"
                     :date="props.date"
                     :isTripCompleted="props.isTripCompleted"
-                    :daysRemainingForTrip="props.daysRemainingForTrip"
+                    :daysRemainingForTrip="daysRemainingForTrip"
                     :citiesIncludedOnTrip="props.citiesIncludedOnTrip"
                     :tripRating="props.tripRating"
                     :tripComments="props.tripComments"
