@@ -1,32 +1,74 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useExpenseStore } from "@/store/expenses";
 import { storeToRefs } from "pinia";
+
 const expenseStore = useExpenseStore();
 const { fetchExpenses, updateExpense } = expenseStore;
 
 const { expenses } = storeToRefs(expenseStore);
 
-const route = useRoute(); //route object
+const route = useRoute(); // route object
 
 const destId = route.params.destinationID;
 const cityId = route.params.cityID;
 const expenseID = route.params.expenseID;
+
 const expenseItem = computed(() => {
   return (
     expenseStore.expensesAsArray.find((item) => item.expenseID === expenseID) ||
     {}
   );
 });
+
+// Function to calculate duration
+const calculateDuration = (startTime, endTime) => {
+  const [startHours, startMinutes] = startTime.split(':').map(Number);
+  const [endHours, endMinutes] = endTime.split(':').map(Number);
+
+  const startDate = new Date();
+  const endDate = new Date();
+
+  startDate.setHours(startHours, startMinutes);
+  endDate.setHours(endHours, endMinutes);
+
+  // Calculate duration in minutes
+  const durationMinutes = (endDate - startDate) / (1000 * 60);
+  const isNegative = durationMinutes < 0;
+  const absoluteMinutes = Math.abs(durationMinutes);
+
+  // Convert minutes to hours and minutes
+  const durationHours = Math.floor(absoluteMinutes / 60);
+  const remainingMinutes = Math.round(absoluteMinutes % 60);
+
+  // Return in appropriate format
+  if (isNegative) {
+    return `-${durationHours} hour${durationHours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+  } else {
+    return `${durationHours} hour${durationHours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+  }
+};
+
+// Computed property for duration
+const duration = computed(() => {
+  if (expenseItem.value.startTime && expenseItem.value.endTime) {
+    return calculateDuration(expenseItem.value.startTime, expenseItem.value.endTime);
+  }
+  return '';
+});
+
+// Watch for changes in startTime or endTime and update duration accordingly
+watch([() => expenseItem.value.startTime, () => expenseItem.value.endTime], () => {
+  expenseItem.value.duration = duration.value;
+});
+
 const updateExpenseHandler = async () => {
   try {
     await updateExpense(expenseID, expenseItem.value);
     navigateTo("/destinations");
   } catch (error) {
-    console.error("Error updating city:", error);
-    alert(
-      "An error occurred while updating the expense. Please try again later."
-    );
+    console.error("Error updating expense:", error);
+    alert("An error occurred while updating the expense. Please try again later.");
   }
 };
 
@@ -39,9 +81,8 @@ onMounted(async () => {
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="updateExpenseHandler">
       <h3 class="mb-4">Update Expense</h3>
-      <!-- {{ expenseItem }} -->
-      {{ expenseItem }}
-      {{ expenseItem.expense }}
+      <!-- {{ expenseItem }}
+      {{ expenseItem.expense }} -->
 
       <div>
         <label for="inputPassword4" class="form-label">Expense</label>
@@ -55,7 +96,6 @@ onMounted(async () => {
 
       <div class="col-6">
         <label for="transportType" class="form-label">Expense Type</label>
-
         <select
           class="form-select"
           v-model="expenseItem.category"
@@ -94,7 +134,7 @@ onMounted(async () => {
         />
       </div>
       <div class="col-6">
-        <label for="inputPassword4" class="form-label">End time: </label>
+        <label for="inputPassword4" class="form-label">End Time: </label>
         <input
           type="time"
           v-model.trim="expenseItem.endTime"
@@ -106,16 +146,16 @@ onMounted(async () => {
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Duration</label>
         <input
-          type="number"
+          type="text"
           v-model.trim="expenseItem.duration"
           class="form-control"
           id="duration-input"
+          readonly
         />
       </div>
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Rating</label>
-
         <input
           type="number"
           v-model.trim="expenseItem.placeRating"
@@ -128,7 +168,6 @@ onMounted(async () => {
       </div>
       <div class="">
         <label for="transportType" class="form-label">Visit Priority</label>
-
         <select
           class="form-select"
           v-model="expenseItem.priority"
@@ -153,7 +192,6 @@ onMounted(async () => {
       </div>
       <div class="">
         <label for="transportType" class="form-label">Status</label>
-
         <select
           class="form-select"
           v-model="expenseItem.isCompleted"

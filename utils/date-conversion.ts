@@ -180,43 +180,26 @@ export function formatDate(date: any) {
 // const duration = calculateDuration(startTime, endTime);
 // console.log(duration); // Output: "1:12 PM"
 
-export function calculateTotalDuration(startTime: any, endTime: any) {
-  if (!startTime || !endTime) {
-    return "Invalid time input"; // Handle cases where input times are missing
-  }
-
-  // Parse the start and end times
+export function calculateTotalDuration(startTime, endTime) {
+  // Assuming startTime and endTime are strings in 'HH:mm' format
   const [startHours, startMinutes] = startTime.split(':').map(Number);
   const [endHours, endMinutes] = endTime.split(':').map(Number);
 
-  // Ensure parsed times are valid numbers
-  if (isNaN(startHours) || isNaN(startMinutes) || isNaN(endHours) || isNaN(endMinutes)) {
-    return "Invalid time format"; // Handle invalid time formats
-  }
+  const startDate = new Date();
+  const endDate = new Date();
 
-  // Calculate the total minutes for start and end times
-  const startTotalMinutes = startHours * 60 + startMinutes;
-  const endTotalMinutes = endHours * 60 + endMinutes;
+  startDate.setHours(startHours, startMinutes);
+  endDate.setHours(endHours, endMinutes);
 
-  // Calculate the difference in minutes
-  let diffMinutes = endTotalMinutes - startTotalMinutes;
+  // Calculate duration in minutes
+  const durationMinutes = (endDate - startDate) / (1000 * 60);
 
-  // If the difference is negative, it means the end time is on the next day
-  if (diffMinutes < 0) {
-    diffMinutes += 24 * 60;
-  }
+  // Convert minutes to hours (and round down)
+  const durationHours = Math.floor(durationMinutes / 60);
 
-  // Calculate the duration hours and minutes
-  const durationHours = Math.floor(diffMinutes / 60);
-  const durationMinutes = diffMinutes % 60;
-
-  // Return hours if more than 1 hour, else return minutes
-  if (durationHours >= 1) {
-    return `${durationHours} hours`;
-  } else {
-    return `${durationMinutes} minutes`;
-  }
+  return durationHours;
 }
+
 
 // Example usage:
 //   const startTime = '14:35';

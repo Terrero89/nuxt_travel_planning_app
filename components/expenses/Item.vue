@@ -1,10 +1,11 @@
-import { ColorScheme } from '../../.nuxt/components';
 <script setup>
+import { ref, onMounted, onUnmounted } from "vue";
+
 const props = defineProps([
   "expenseID",
   "destinationParentID",
   "cityParentID",
-  "expense", // food, landmarks, transport, uber, plane, hotel, attractions,
+  "expense",
   "category",
   "startTime",
   "endTime",
@@ -21,14 +22,42 @@ const props = defineProps([
   "priority",
   "comments",
 ]);
+
 const isOpen = ref(false);
+const daysRemainingForExpense = ref(props.daysRemainingForExpense); // Create a local ref for daysRemainingForExpense
+
+// Function to calculate daysRemainingForExpense
+const calculateDaysRemaining = () => {
+  if (props.from) {
+    const fromDate = new Date(props.from);
+    const currentDate = new Date();
+    const remainingDays = (fromDate - currentDate) / (1000 * 60 * 60 * 24); // Calculate difference in days
+    daysRemainingForExpense.value =
+      remainingDays > 0 ? Math.ceil(remainingDays) : 0;
+  } else {
+    daysRemainingForExpense.value = 0;
+  }
+};
+
+// Automatically calculate daysRemainingForExpense on mount and update it daily
+onMounted(() => {
+  calculateDaysRemaining();
+
+  // Update daysRemainingForExpense every day at midnight
+  const interval = setInterval(calculateDaysRemaining, 86400000); // 86400000ms = 24 hours
+
+  // Cleanup interval on unmount
+  onUnmounted(() => {
+    clearInterval(interval);
+  });
+});
 </script>
 
 <template>
   <div class="destination-item">
     <div class="item">
       <div class="destination">
-        {{ props.expenseID }}
+        <!-- {{ props.expenseID }} -->
         <h1 class="title">{{ props.expense }}</h1>
         <div class="destination-wrapper">
           <div class="section-one row">
@@ -37,7 +66,7 @@ const isOpen = ref(false);
               <h2>{{ props.category }}</h2>
               <span class="pb-2 title-section">Duration </span>
               <h2>
-                <span class="highlight">{{ props.duration }} </span> Hours
+                <span class="highlight">{{ props.duration }} </span>
               </h2>
             </div>
             <div class="col section">
@@ -54,7 +83,7 @@ const isOpen = ref(false);
             </div>
             <div class="col section">
               <span class="pb-2 title-section">Date Planned</span>
-              <h2>{{ props.date }}</h2>
+              <h2>{{ formatDate(props.date) }}</h2>
               <span class="pb-2 title-section">Rating</span>
               <h2 v-if="props.placeRating < 4">
                 <span class="highlight">
