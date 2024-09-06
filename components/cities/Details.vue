@@ -27,6 +27,7 @@ const props = defineProps([
   "daysRemainingForCity",
   "expenseIncludedOnCity",
   "cityComments",
+  "date"
 ]);
 // have to find a way to grab all the required fields now that i have both ids
 const removeItem = async (id) => {
@@ -119,19 +120,25 @@ onMounted( () => {
       <div class="details-row">
         <span class="detail-label">Dates: </span>
         <span class="detail-value space">
-          {{ props.from }} -{{ props.to }}</span
-        >
+        {{ formatDate(props.from) }} - {{ formatDate(props.to) }}</span
+      >
       </div>
 
       <div class="details-row">
         <span class="detail-label">Visit total Cost:</span>
-        <span class="detail-value space">${{ props.totalCost }}</span>
+        <span class="detail-value space">${{ formatNumber(props.totalCost)}}</span>
       </div>
 
       <div class="details-row">
-        <span class="detail-label">City Duration:</span>
-        <span class="detail-value space">{{ props.cityDuration }} Days</span>
-      </div>
+      <span class="detail-label">City Duration:</span>
+
+      <span class="detail-value space"
+        >{{ calculateDaysRangeDuration(props.from, props.to) }}
+        {{
+          calculateTotalDuration(props.from, props.to) >1 ? "day" : "days"
+        }}</span
+      >
+    </div>
 
       <div v-if="props.isThisCityVisited">
         <span>
@@ -226,6 +233,12 @@ onMounted( () => {
           <button>See Expenses</button>
         </NuxtLink>
       </div>
+      <div class="details-row d-block">
+      <span class="detail-label">Added on : </span>
+      <p class="d-block">
+        {{ formatDate(props.date) }}
+      </p>
+    </div>
 
       <div class="details-row d-block">
         <span class="detail-label">Trip Comments: </span>

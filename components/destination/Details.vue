@@ -43,7 +43,7 @@ const removeItem = async (id) => {
 <template>
   <div class="modal-details">
     <h3>Destination Details</h3>
-    {{ props.destinationID }}
+    <!-- {{ props.destinationID }} -->
     <hr />
     <h2>{{ props.destination }}</h2>
 
@@ -119,10 +119,7 @@ const removeItem = async (id) => {
       >
     </div>
 
-    <!-- <div class="details-row">
-      <span class="detail-label">Trip Rating: </span>
-      <span class="detail-value space"> {{ props.tripRating }}</span>
-    </div> -->
+
     <div v-if="props.tripRating < 4">
       <span class="mx-2">
         <span class="detail-label">Rating: </span>
@@ -175,13 +172,7 @@ const removeItem = async (id) => {
         {{ props.tripComments }}
       </p>
     </div>
-    <div class="details-row d-block">
-      <span class="detail-label">Added on : </span>
-      <p class="d-block">
-        {{ formatDate(props.date) }}
-      </p>
-    </div>
-
+    <span class="detail-value space"> {{ formatDate(props.date) }}</span>
     <div class="modal-actions">
       <UButton color="red" @click="removeItem(props.destinationID)"
         >Delete</UButton

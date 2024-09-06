@@ -52,18 +52,19 @@ onMounted(async () => {
     <hr />
     <h2>{{ props.expense }}</h2>
 
-   ds {{ props.expenseID }}
+   <!-- ds {{ props.expenseID }} -->
     <div class="details-row">
       <span class="detail-label">Category:</span>
       <span class="detail-value space">{{ props.category }}</span>
     </div>
-
+ 
     <div class="details-row" v-if="props.category !== 'Food'">
       <span class="detail-label">Start: </span>
       <span class="detail-value space">{{ props.startTime }}</span>
       <span class="detail-label">End time: </span>
       <span class="detail-value space">{{ props.endTime }}</span>
     </div>
+    
 
     <div class="details-row">
       <span class="detail-label">Cost:</span>
@@ -234,12 +235,18 @@ onMounted(async () => {
         >
       </span>
     </div>
+    <div class="details-row ">
+      <span class="detail-label">Category:</span>
+      <span class="detail-value space"> {{ formatDate(props.date) }}</span>
+       
+  
+    </div>
 
     <div class="details-row d-block">
       <span class="detail-label">Comments: </span>
-      <p class="d-block">
+      <span class="">
         {{ props.comments }}
-      </p>
+      </span>
     </div>
 
     <div class="modal-actions">

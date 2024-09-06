@@ -1,39 +1,56 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useCityStore } from "@/store/cities";
-const cityStore = useCityStore();
 import { storeToRefs } from "pinia";
+const cityStore = useCityStore();
 const { cities } = storeToRefs(cityStore);
 const { fetchCities, updateCity } = cityStore;
 const route = useRoute();
 const cityParamID = route.params.cityID;
 
-
+// Computed property to find the specific city
 const cityItem = computed(() => {
   return (
     cityStore.citiesAsArray.find((item) => item.cityID === cityParamID) || {}
   );
 });
 
-// const cityData = ref({
-//   city: cityItem.value.city,
-//   accommodation: cityItem.value.accommodation,
-//   accommodationType: cityItem.value.accommodationType,
-//   accommodationCost: cityItem.value.accommodationCost,
-//   accommodationAddress: cityItem.value.accommodationAddress,
-//   transportType: cityItem.value.transportType,
-//   destinationBudget: cityItem.value.destinationBudget,
-//   to: cityItem.value.to,
-//   from: cityItem.value.from,
-//   duration: cityItem.value.duration,
-//   cityRating: cityItem.value.cityRating,
-//   cityComments: cityItem.value.cityComments,
-// });
+// Computed property for trip duration
+const tripDuration = computed(() => {
+  if (cityItem.value.from && cityItem.value.to) {
+    const fromDate = new Date(cityItem.value.from);
+    const toDate = new Date(cityItem.value.to);
+    const duration = (toDate - fromDate) / (1000 * 60 * 60 * 24); // Calculate difference in days
+    return duration > 0 ? duration : 0; // Ensure non-negative duration
+  }
+  return 0;
+});
+
+// Computed property for days remaining for the trip
+const daysRemainingForTrip = computed(() => {
+  if (cityItem.value.from) {
+    const fromDate = new Date(cityItem.value.from);
+    const currentDate = new Date();
+    const remainingDays = (fromDate - currentDate) / (1000 * 60 * 60 * 24); // Calculate difference in days
+    return remainingDays > 0 ? Math.ceil(remainingDays) : 0; // Round up and ensure non-negative value
+  }
+  return 0;
+});
+
+// Watch for changes in from/to dates and update tripDuration and daysRemainingForTrip accordingly
+watch([() => cityItem.value.from, () => cityItem.value.to], () => {
+  cityItem.value.duration = tripDuration.value;
+  cityItem.value.daysRemainingForTrip = daysRemainingForTrip.value;
+});
 
 const updateCityHandler = async () => {
   try {
-    await updateCity(cityParamID, cityItem.value);
-    navigateTo('/destinations')
+    await updateCity(cityParamID, {
+      ...cityItem.value,
+      duration: tripDuration.value,
+      daysRemainingForTrip: daysRemainingForTrip.value,
+    });
+    navigateTo("/destinations");
   } catch (error) {
     console.error("Error updating city:", error);
     alert("An error occurred while updating the city. Please try again later.");
@@ -42,10 +59,6 @@ const updateCityHandler = async () => {
 
 onMounted(async () => {
   await fetchCities();
-  // const cityItem = cityStore.citiesAsArray.find((item) => item.cityID === cityParamID);
-  // if (cityItem) {
-  //   cityData.value = { ...cityItem };
-  // }
 });
 </script>
 

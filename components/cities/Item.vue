@@ -1,9 +1,7 @@
 <script setup>
-// import { useDestinationStore } from "@/store/destination";
-// const store = useDestinationStore();
-// import { storeToRefs } from "pinia";
+import { ref, onMounted, onUnmounted } from "vue";
+import { formatDate } from "../../utils/date-conversion"; // Assuming you have this utility for date formatting
 
-// const { cities } = storeToRefs(store);
 const props = defineProps([
   "cityID",
   "parentDestinationID",
@@ -17,17 +15,40 @@ const props = defineProps([
   "isThisCityVisited",
   "cityRating",
   "cityDuration",
-  "daysRemainingForCity",
-  "expenseIncludedOnCity",
+  "daysRemainingForCity", // Initial value from props
   "expenseIncludedOnCity",
   "cityComments",
   "date",
 ]);
-const route = useRoute(); //route object
-const destId = route.params.destinationID;
-
 
 const isOpen = ref(false);
+const daysRemainingForCity = ref(props.daysRemainingForCity); // Create a local ref for daysRemainingForCity
+
+// Function to calculate daysRemainingForCity
+const calculateDaysRemainingForCity = () => {
+  if (props.from) {
+    const fromDate = new Date(props.from);
+    const currentDate = new Date();
+    const remainingDays = (fromDate - currentDate) / (1000 * 60 * 60 * 24); // Calculate difference in days
+    daysRemainingForCity.value =
+      remainingDays > 0 ? Math.ceil(remainingDays) : 0;
+  } else {
+    daysRemainingForCity.value = 0;
+  }
+};
+
+// Automatically calculate daysRemainingForCity on mount and update it daily
+onMounted(() => {
+  calculateDaysRemainingForCity();
+
+  // Update daysRemainingForCity every day at midnight
+  const interval = setInterval(calculateDaysRemainingForCity, 86400000); // 86400000ms = 24 hours
+
+  // Cleanup interval on unmount
+  onUnmounted(() => {
+    clearInterval(interval);
+  });
+});
 </script>
 
 <template>
@@ -55,6 +76,7 @@ const isOpen = ref(false);
                   >{{ props.isAccommodationPaid ? "pending" : "reserved" }}
                 </span>
               </h2>
+            
             </div>
             <div class="col section">
               <span class="title-section pb-2"> Total Cost</span>
@@ -68,13 +90,13 @@ const isOpen = ref(false);
               </h2>
               <span class="pb-2 title-section"> Days until visit </span>
               <h2>
-                <span class="highlight">{{ props.daysRemainingForCity }} </span>
+                <span class="highlight">{{ daysRemainingForCity }} </span>
                 days
               </h2>
             </div>
             <div class="col section">
               <span class="pb-2 title-section">Date Planned</span>
-              <h2>{{ props.date }}</h2>
+              <h2>{{ formatDate(props.date) }}</h2>
               <span class="pb-2 title-section">Rating</span>
               <h2 v-if="props.cityRating < 4">
                 <span class="highlight">
@@ -147,7 +169,7 @@ const isOpen = ref(false);
                   :isThisCityVisited="props.isThisCityVisited"
                   :cityDuration="props.cityDuration"
                   :date="props.date"
-                  :daysRemainingForCity="props.daysRemainingForCity"
+                  :daysRemainingForCity="daysRemainingForCity" 
                   :expenseIncludedOnCity="props.expenseIncludedOnCity"
                   :cityRating="props.cityRating"
                   :cityComments="props.cityComments"

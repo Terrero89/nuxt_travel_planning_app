@@ -40,7 +40,7 @@ const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this
 
 <template>
   <div class="projects">
-    TITLE HERE
+
 
     <div class="container">
     

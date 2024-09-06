@@ -60,7 +60,9 @@ const updateDestinationHandler = async () => {
     navigateTo("/destinations");
   } catch (error) {
     console.error("Error updating destination:", error);
-    alert("An error occurred while updating the destination. Please try again later.");
+    alert(
+      "An error occurred while updating the destination. Please try again later."
+    );
   }
 };
 
@@ -72,7 +74,7 @@ onMounted(async () => {
   <div class="form-wrapper" v-if="Object.keys(dest).length > 0">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Update Destination</h3>
-      {{ dest.tripDuration }}
+      <!-- {{ dest.tripDuration }} -->
       <div>
         <label for="destinationName" class="form-label">Destination</label>
         <input
@@ -128,7 +130,7 @@ onMounted(async () => {
           id="toDate"
         />
       </div>
-{{dest.to}}
+      <!-- {{dest.to}} -->
       <div class="col-6">
         <label for="duration" class="form-label">Duration</label>
         <input
@@ -147,6 +149,9 @@ onMounted(async () => {
           v-model.trim="dest.tripRating"
           class="form-control"
           id="tripRating"
+          min="0"
+          max="5"
+          step="0.1"
         />
       </div>
 
@@ -158,7 +163,7 @@ onMounted(async () => {
           id="tripComments"
         />
       </div>
-      {{ dest.tripComments }}
+      <!-- {{ dest.tripComments }} -->
 
       <div>
         <button

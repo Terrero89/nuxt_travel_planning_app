@@ -26,11 +26,17 @@ const date = ref();
 const isCompleted = ref();
 const placeRating = ref();
 const comments = ref("");
+const duration = ref(0); // Store calculated duration
+const daysRemainingForExpense = ref(0); // Store calculated days remaining
 
+// Watch for changes in startTime and endTime
+watch([startTime, endTime], () => {
+  if (startTime.value && endTime.value) {
+    duration.value = calculateTotalDuration(startTime.value, endTime.value);
+  }
+}, { immediate: true });
 
-
-//COMPUTED PROPERTIES
-
+// COMPUTED PROPERTIES
 const submitForm = async () => {
   const expenseData = {
     parentCityID: cityId,
@@ -47,51 +53,36 @@ const submitForm = async () => {
     daysRemainingForExpense: daysRemainingForExpense.value,
     placeRating: placeRating.value,
     priority: priority.value,
-    date: formatDate(new Date()),
+    date: new Date(),
     comments: comments.value,
-
   };
 
-  await addExpense({ ...expenseData, parentCityID: cityId }); //add project to pinia
+  await addExpense({ ...expenseData, parentCityID: cityId });
   navigateTo(`/destinations/${destId}/cities-${cityId}`);
-  console.log({ ...expenseData, parentCityID: cityId, parentDestinationID: destId });
 };
 
-const duration = computed(() => {
-  if (!startTime.value || !endTime.value) {
-    return 0;
-  }
-  return calculateTotalDuration(startTime.value, endTime.value);
-});
-
-const daysRemainingForExpense = computed(() => {
-  return calculateDaysRemaining("11-07-2024");
-});
+// Automatically calculate days remaining based on a fixed date
+watch(date, () => {
+  daysRemainingForExpense.value = calculateDaysRemaining(date.value);
+}, { immediate: true });
 
 const showPrice = computed(() => {
-  if (category.value === 'N/A' || category.value === 'Landmarks' || category.value === 'Other') {
-    return false
-  } else {
-    return true
-  }
-})
+  return !["N/A", "Landmarks", "Other"].includes(category.value);
+});
 </script>
-
 <template>
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Add Expense</h3>
-      {{ cityID }}
 
       <div>
-        <label for="inputPassword4" class="form-label">Expense</label>
-        <input type="input" v-model.trim="expense" class="form-control" id="name-input" />
+        <label for="expense" class="form-label">Expense</label>
+        <input v-model="expense" class="form-control" id="expense" />
       </div>
 
       <div class="col-6">
-        <label for="transportType" class="form-label">Expense Type</label>
-
-        <select class="form-select" v-model="category" aria-label="Default select example">
+        <label for="category" class="form-label">Expense Type</label>
+        <select v-model="category" class="form-select" id="category">
           <option></option>
           <option>Food/Drinks</option>
           <option>Attractions</option>
@@ -106,56 +97,54 @@ const showPrice = computed(() => {
       </div>
 
       <div class="col-6" v-if="showPrice">
-        <label for="inputPassword4" class="form-label">Price</label>
-        <input type="number" v-model.trim="cost" class="form-control" id="name-input" />
+        <label for="cost" class="form-label">Price</label>
+        <input type="number" v-model="cost" class="form-control" id="cost" />
       </div>
 
       <div class="col-6">
-        <label for="inputPassword4" class="form-label">Start Time: </label>
-        <input type="time" v-model.trim="startTime" class="form-control" id="time-input" />
-      </div>
-      <div class="col-6">
-        <label for="inputPassword4" class="form-label">End time: </label>
-        <input type="time" v-model.trim="endTime" class="form-control" id="time-input" />
+        <label for="startTime" class="form-label">Start Time (AM/PM)</label>
+        <input type="time" v-model="startTime" class="form-control" />
+        <p>{{ formattedStartTime }}</p>
       </div>
 
       <div class="col-6">
-        <label for="inputPassword4" class="form-label">Duration</label>
-        <input type="number" v-model.trim="duration" class="form-control" id="duration-input" />
+        <label for="endTime" class="form-label">End Time (AM/PM)</label>
+        <input type="time" v-model="endTime" class="form-control" />
+        <p>{{ formattedEndTime }}</p>
       </div>
 
       <div class="col-6">
-        <label for="inputPassword4" class="form-label">Rating</label>
-
-        <input type="number" v-model.trim="placeRating" class="form-control" id="placeRating-input" min="0" max="5"
-          step="0.1" />
+        <label for="duration" class="form-label">Duration (hours)</label>
+        <input :value="duration" class="form-control" readonly />
       </div>
-      <div class="">
-        <label for="transportType" class="form-label">Visit Priority</label>
 
-        <select class="form-select" v-model="priority" aria-label="Default select example" placeholder="Priority">
+      <div class="col-6">
+        <label for="placeRating" class="form-label">Rating</label>
+        <input type="number" v-model="placeRating" class="form-control" min="0" max="5" step="0.1" />
+      </div>
+
+      <div class="col-6">
+        <label for="priority" class="form-label">Visit Priority</label>
+        <select v-model="priority" class="form-select" id="priority">
           <option></option>
           <option>Must visit</option>
           <option>Nice to visit</option>
           <option>Backup options</option>
           <option>Optional</option>
-
         </select>
       </div>
-      <div>
-        <label for="inputPassword4" class="form-label">Location</label>
-        <input type="input" v-model.trim="location"  class="form-control"
-          id="name-input" />
-      </div>
- 
-
 
       <div>
-        <textarea class="form-control" v-model.trim="comments" aria-label="With textarea" placeholder="Comments" />
+        <label for="location" class="form-label">Location</label>
+        <input v-model="location" class="form-control" />
       </div>
 
       <div>
-        <button type="submit" class="btn btn-primary py-2 px-4">Submit</button>
+        <textarea v-model="comments" class="form-control" placeholder="Comments"></textarea>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </form>
   </div>

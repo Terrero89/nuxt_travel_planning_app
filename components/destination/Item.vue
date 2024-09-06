@@ -58,7 +58,7 @@ onMounted(() => {
   <div class="destination-item">
     <div class="item">
       <div class="destination">
-        {{ props.destinationID }}
+        <!-- {{ props.destinationID }} -->
 
         <h1 class="title">{{ props.destination }}</h1>
         <div class="destination-wrapper">
