@@ -32,10 +32,6 @@ const props = defineProps([
 
 ]);
 
-// const filterByDest = () {
-//   return destination.filter(city => city.=== )
-// }
-
 </script>
 <template>
   <div class="projects">
