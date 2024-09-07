@@ -1,11 +1,8 @@
 <script setup>
 import { useExpenseStore } from "@/store/expenses";
-const expenseStore = useExpenseStore();
 import { storeToRefs } from "pinia";
-import {
-  calculateTotalDuration,
-  calculateDaysRemaining,
-} from "../../utils/date-conversion";
+import { calculateDaysRemaining } from "../../utils/date-conversion";
+const expenseStore = useExpenseStore();
 const {} = storeToRefs(expenseStore);
 const { addExpense } = expenseStore;
 
@@ -29,15 +26,15 @@ const daysRemainingForExpense = ref(0); // Store calculated days remaining
 const expectedExpenseDate = ref();
 
 // Watch for changes in startTime and endTime
-watch(
-  [startTime, endTime],
-  () => {
-    if (startTime.value && endTime.value) {
-      duration.value = calculateTotalDuration(startTime.value, endTime.value);
-    }
-  },
-  { immediate: true }
-);
+// watch(
+//   [startTime, endTime],
+//   () => {
+//     if (startTime.value && endTime.value) {
+//       duration.value = calculateTotalDuration(startTime.value, endTime.value);
+//     }
+//   },
+//   { immediate: true }
+// );
 
 // COMPUTED PROPERTIES
 const submitForm = async () => {
@@ -46,7 +43,7 @@ const submitForm = async () => {
     parentDestinationID: destId,
     expense: expense.value,
     category: category.value,
-    startTime: startTime.value,
+    // startTime: startTime.value,
     cost: cost.value,
     isExpensePaid: false,
     location: location.value,

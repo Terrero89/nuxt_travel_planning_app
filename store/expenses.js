@@ -22,35 +22,12 @@ export const useExpenseStore = defineStore({
       const expensesList = [];
 
       for (const key in this.expenses) {
-      //   const newExpense = {
-      //     expenseID: key,
-      //     parentDestinationID: parentDestinationID[key].parentDestinationID,
-      //     parentCityID: parentCityID[key].parentCityID,
-      //     expense: expense[key].expense,
-      //     category: category[key].category,
-      //     startTime: startTime[key].startTime,
-      //     endTime: endTime[key].endTime,
-      //     cost: cost[key].cost,
-      //     isExpensePaid: isExpensePaid[key].isExpensePaid,
-      //     location: location[key].location,
-      //     address: address[key].address,
-      //     duration: duration[key].duration,
-      //     date: date[key].date,
-      //     isCompleted: isCompleted[key].isCompleted,
-      //     daysRemainingForExpense:
-      //       daysRemainingForExpense[key].daysRemainingForExpense,
-      //     placeRating: placeRating[key].placeRating,
-      //     priority: priority[key].priority,
-      //     comments: comments[key].comments
-      //   };
-      //   cityList.push(newExpense);
-      // }
-      const newExpense = {
-        expenseID: key,
-        ...this.expenses[key],
-      };
-      expensesList.push(newExpense);
-    }
+        const newExpense = {
+          expenseID: key,
+          ...this.expenses[key],
+        };
+        expensesList.push(newExpense);
+      }
       this.expenses = expensesList;
     },
     async updateExpense(itemID, payload) {
@@ -60,18 +37,18 @@ export const useExpenseStore = defineStore({
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(payload),
       };
-    
+
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
           throw new Error("Failed to update city");
         }
-    
+
         // Ensure the response contains the updated data
         const updatedCity = await response.json();
-    
+
         // Update the local state after a successful update
-        const index = this.cities.findIndex(city => city.cityID === cityID);
+        const index = this.cities.findIndex((city) => city.cityID === cityID);
         if (index !== -1) {
           // Use the returned data from Firebase to ensure consistency
           this.cities[index] = { cityID, ...updatedCity };
@@ -109,21 +86,13 @@ export const useExpenseStore = defineStore({
   },
   getters: {
     expensesAsArray: (state) => {
-      // const expensesList = [];
-      // for (const key in state.expenses) {
-      //   const expenseData = {
-      //     expenseID: key,
-      //     ...state.expenses[key],
-      //   };
-      //   expensesList.push(expenseData);
-      // }
-      // return expensesList;
-      return state.expenses
+      return state.expenses;
     },
-   
+
     filterItemById(state) {
       const prj = this.expensesAsArray.filter((p) => p.parentCityID);
       return (id) => prj.filter((p) => p.parentCityID === id);
     },
+
   },
 });

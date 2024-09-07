@@ -9,11 +9,11 @@ const route = useRoute();
 const destId = route.params.destinationID;
 
 const city = ref("");
-const accommodation = ref("Hotel");
-const accommodationCost = ref(150);
+const accommodation = ref("");
+const accommodationCost = ref(0);
 const isAccommodationPaid = ref(false);
 const accommodationAddress = ref('');
-const totalCost = ref(550);
+const totalCost = ref(0);
 const from = ref("");
 const to = ref("");
 const cityRating = ref(0);
