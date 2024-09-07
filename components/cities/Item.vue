@@ -53,13 +53,12 @@ onMounted(() => {
 
 <template>
   <div class="destination-item">
- 
     <div class="item">
       <!-- <div class="status" :class="currStatus"></div> -->
       <div class="destination">
-        {{ props.parentDestinationID  }}
-    
-           <h1 class="title">{{ props.city }}</h1>
+        <!-- {{ props.parentDestinationID  }} -->
+
+        <h1 class="title">{{ props.city }}</h1>
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
@@ -76,7 +75,6 @@ onMounted(() => {
                   >{{ props.isAccommodationPaid ? "pending" : "reserved" }}
                 </span>
               </h2>
-            
             </div>
             <div class="col section">
               <span class="title-section pb-2"> Total Cost</span>
@@ -85,8 +83,14 @@ onMounted(() => {
               </h2>
               <span class="pb-2 title-section">Duration </span>
               <h2>
-                <span class="highlight">{{ props.cityDuration }} </span>
-                days
+                <span class="highlight"
+                  >{{ calculateDaysRangeDuration(props.from, props.to) }}
+                  {{
+                    calculateTotalDuration(props.from, props.to)>= 1 
+                      ? "day"
+                      : "days"
+                  }}</span
+                >
               </h2>
               <span class="pb-2 title-section"> Days until visit </span>
               <h2>
@@ -105,32 +109,30 @@ onMounted(() => {
                     variant="soft"
                     size="md"
                     color="red"
-                    >{{ props.cityRating}}</UBadge
+                    >{{ props.cityRating }}</UBadge
                   >
                 </span>
               </h2>
 
-              <h2
-                v-else-if="props.cityRating >= 4 && props.cityRating <= 4.5"
-              >
+              <h2 v-else-if="props.cityRating >= 4 && props.cityRating <= 4.5">
                 <span class="highlight">
                   <UBadge
                     v-if="props.cityRating >= 4 && props.cityRating <= 4.5"
                     variant="soft"
                     size="md"
                     color="yellow"
-                    >{{  props.cityRating}}</UBadge
+                    >{{ props.cityRating }}</UBadge
                   >
                 </span>
               </h2>
-              <h2 v-else-if=" props.cityRating > 4.5">
+              <h2 v-else-if="props.cityRating > 4.5">
                 <span class="highlight">
                   <UBadge
-                    v-if=" props.cityRating> 4.5"
+                    v-if="props.cityRating > 4.5"
                     variant="soft"
                     size="md"
                     color="green"
-                    >{{  props.cityRating }}</UBadge
+                    >{{ props.cityRating }}</UBadge
                   >
                 </span>
               </h2>
@@ -169,7 +171,7 @@ onMounted(() => {
                   :isThisCityVisited="props.isThisCityVisited"
                   :cityDuration="props.cityDuration"
                   :date="props.date"
-                  :daysRemainingForCity="daysRemainingForCity" 
+                  :daysRemainingForCity="daysRemainingForCity"
                   :expenseIncludedOnCity="props.expenseIncludedOnCity"
                   :cityRating="props.cityRating"
                   :cityComments="props.cityComments"

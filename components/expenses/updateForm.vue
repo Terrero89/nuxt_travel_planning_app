@@ -23,8 +23,8 @@ const expenseItem = computed(() => {
 
 // Function to calculate duration
 const calculateDuration = (startTime, endTime) => {
-  const [startHours, startMinutes] = startTime.split(':').map(Number);
-  const [endHours, endMinutes] = endTime.split(':').map(Number);
+  const [startHours, startMinutes] = startTime.split(":").map(Number);
+  const [endHours, endMinutes] = endTime.split(":").map(Number);
 
   const startDate = new Date();
   const endDate = new Date();
@@ -43,32 +43,46 @@ const calculateDuration = (startTime, endTime) => {
 
   // Return in appropriate format
   if (isNegative) {
-    return `-${durationHours} hour${durationHours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+    return `-${durationHours} hour${
+      durationHours !== 1 ? "s" : ""
+    } ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
   } else {
-    return `${durationHours} hour${durationHours !== 1 ? 's' : ''} ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+    return `${durationHours} hour${
+      durationHours !== 1 ? "s" : ""
+    } ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
   }
 };
 
 // Computed property for duration
 const duration = computed(() => {
   if (expenseItem.value.startTime && expenseItem.value.endTime) {
-    return calculateDuration(expenseItem.value.startTime, expenseItem.value.endTime);
+    return calculateDuration(
+      expenseItem.value.startTime,
+      expenseItem.value.endTime
+    );
   }
-  return '';
+  return "";
 });
 
 // Watch for changes in startTime or endTime and update duration accordingly
-watch([() => expenseItem.value.startTime, () => expenseItem.value.endTime], () => {
-  expenseItem.value.duration = duration.value;
-});
+watch(
+  [() => expenseItem.value.startTime, () => expenseItem.value.endTime],
+  () => {
+    expenseItem.value.duration = duration.value;
+  }
+);
 
 const updateExpenseHandler = async () => {
   try {
     await updateExpense(expenseID, expenseItem.value);
-    navigateTo("/destinations");
+    navigateTo(
+      `/destinations/${destId}/cities-${cityId}/expenses-${expenseID}`
+    );
   } catch (error) {
     console.error("Error updating expense:", error);
-    alert("An error occurred while updating the expense. Please try again later.");
+    alert(
+      "An error occurred while updating the expense. Please try again later."
+    );
   }
 };
 
@@ -83,6 +97,7 @@ onMounted(async () => {
       <h3 class="mb-4">Update Expense</h3>
       <!-- {{ expenseItem }}
       {{ expenseItem.expense }} -->
+      {{ expenseItem }}
 
       <div>
         <label for="inputPassword4" class="form-label">Expense</label>
@@ -166,7 +181,8 @@ onMounted(async () => {
           step="0.1"
         />
       </div>
-      <div class="">
+
+      <div class="col-6">
         <label for="transportType" class="form-label">Visit Priority</label>
         <select
           class="form-select"
@@ -180,6 +196,17 @@ onMounted(async () => {
           <option>Backup options</option>
           <option>Optional</option>
         </select>
+      </div>
+      {{ expenseItem.expectedExpenseDate }}-
+      {{ formatDate(expenseItem.expectedExpenseDate) }}
+      <div class="col-6">
+        <label for="inputPassword4" class="form-label">Date Booked: </label>
+        <input
+          type="date"
+          v-model.trim="expenseItem.expectedExpenseDate"
+          class="form-control"
+          id="date-input"
+        />
       </div>
       <div>
         <label for="inputPassword4" class="form-label">Location</label>
