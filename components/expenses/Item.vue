@@ -21,6 +21,7 @@ const props = defineProps([
   "placeRating",
   "priority",
   "comments",
+  "expectedExpenseDate"
 ]);
 
 const isOpen = ref(false);
@@ -74,10 +75,10 @@ onMounted(() => {
               <h2>
                 $ <span class="highlight">{{ props.cost }} </span>
               </h2>
-              <span class="pb-2 title-section"> Days until expense </span>
+              <span class="pb-2 title-section"> Reservation Date</span>
               <h2>
                 <span class="highlight"
-                  >{{ props.daysRemainingForExpense }}
+                  >{{formatDate(props.expectedExpenseDate) }}
                 </span>
               </h2>
             </div>
@@ -167,6 +168,7 @@ onMounted(() => {
                     :placeRating="props.placeRating"
                     :comments="props.comments"
                     :priority="props.priority"
+                    :expectedExpenseDate= "props.expectedExpenseDate"
                   />
                 </div>
               </UModal>

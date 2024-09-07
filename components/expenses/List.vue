@@ -7,7 +7,7 @@ const { expenses } = storeToRefs(expenseStore);
 const route = useRoute(); //route object
 const cityId = route.params.cityID;
 
-const {expensesAsArray} = expenseStore;
+const { expensesAsArray } = expenseStore;
 const props = defineProps([
   "expenseID",
   "destinationParentID",
@@ -27,26 +27,22 @@ const props = defineProps([
   "daysRemainingForExpense",
   "placeRating",
   "priority",
-  "comments"
+  "comments",
+  "expectedExpenseDate",
 ]);
-onMounted(async() => {
+onMounted(async () => {
   await fetchExpenses();
-  expenseStore.expensesAsArray.value
+  expenseStore.expensesAsArray.value;
 });
-
 
 const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this is working!
 </script>
 
 <template>
   <div class="projects">
+    <div class="container"></div>
 
-
-    <div class="container">
-    
-    </div>
-   
- <!-- <div v-for="expense in expenses">{{expense.expenseID}}</div> -->
+    <!-- <div v-for="expense in expenses">{{expense.expenseID}}</div> -->
     <ExpensesItem
       v-for="expense in getExpensesByCityID(cityId)"
       :key="expense.expenseID"
@@ -69,7 +65,7 @@ const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this
       :placeRating="expense.placeRating"
       :comments="expense.comments"
       :priority="expense.priority"
-     
+      :expectedExpenseDate="expense.expectedExpenseDate"
     />
   </div>
 </template>

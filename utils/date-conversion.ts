@@ -136,9 +136,24 @@ export function formatNumber(number: number) {
   return new Intl.NumberFormat('en-US').format(number);
 }
 
-export function formatDate(date: any) {
+// export function formatDate(date: any) {
+//   const options = { year: 'numeric', month: 'short', day: 'numeric' };
+//   return new Date(date).toLocaleDateString('en-US', options);
+// }
+export function formatDate(dateString) {
+  const date = new Date(dateString);
+
+  // If the date is invalid, return an empty string or handle the error appropriately
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+
+  // Add a day to the date
+  date.setDate(date.getDate() + 1);
+
   const options = { year: 'numeric', month: 'short', day: 'numeric' };
-  return new Date(date).toLocaleDateString('en-US', options);
+  return date.toLocaleDateString('en-US', options);   
+
 }
 
 // Example usage:

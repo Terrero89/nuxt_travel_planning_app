@@ -64,11 +64,11 @@ onMounted(async () => {
 
 <template>
   <div class="form-wrapper">
-    {{ cityItem.city }}
+    <!-- {{ cityItem.city }} -->
     <form class="row g-3" @submit.prevent="updateCityHandler">
       <h3 class="mb-4">Update City</h3>
 
-      {{ cityItem }}
+      <!-- {{ cityItem }} -->
 
       <div>
         <label for="inputPassword4" class="form-label">City</label>
@@ -108,7 +108,7 @@ onMounted(async () => {
             class="form-control"
             id="name-input"
           />
-          {{ cityItem.accommodationAddress }}
+          <!-- {{ cityItem.accommodationAddress }} -->
           <div>
             <label for="inputPassword4" class="form-label">Address</label>
             <input

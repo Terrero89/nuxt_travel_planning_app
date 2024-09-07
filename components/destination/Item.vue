@@ -83,8 +83,8 @@ onMounted(() => {
 
               <span class="pb-2 title-section"> Days until trip </span>
               <h2>
-                <span class="highlight">{{ props.daysRemainingForTrip }} </span>
-                {{ props.daysRemainingForTrip <= 1 ? "Day" : "Days" }}
+                <span class="highlight">{{ daysRemainingForTrip }} </span>
+                {{ pdaysRemainingForTrip <= 1 ? "Day" : "Days" }}
               </h2>
               <!-- if dates is equal to 0  or is passed then we are going torender the date "ago" instead -->
             </div>

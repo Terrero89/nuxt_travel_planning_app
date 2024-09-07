@@ -7,6 +7,7 @@ const route = useRoute(); //route object
 const { expensesAsArray , fetchExpenses, deleteExpense} = expenseStore;
 const cityParamID = route.params.cityID;
 const expenseParamID = route.params.expenseID;
+const destinationParamID = route.params.destinationID
 const props = defineProps([
   "expenseID",
   "destinationParentID",
@@ -27,6 +28,7 @@ const props = defineProps([
   "placeRating",
   "priority",
   "comments",
+  "expectedExpenseDate"
 ]);
 const removeItem = async (id) => {
   console.log(id);
@@ -36,13 +38,13 @@ const removeItem = async (id) => {
 };
 const updateExpensesLink = computed(
   () =>
-    `/destinations/${props.destinationID}/cities-${cityParamID}/expense-${props.expenseID}/updateExpense`
+    `/destinations/${destinationParamID}/cities-${cityParamID}/expense-${props.expenseID}/updateExpense`
 );
 
 onMounted(async () => {
   await fetchExpenses();
   expenseStore.expensesAsArray.value;
-  navigateTo( `/destinations/${props.destinationID}/cities-${cityParamID}`);
+
 });
 </script>
 
@@ -58,7 +60,7 @@ onMounted(async () => {
       <span class="detail-value space">{{ props.category }}</span>
     </div>
  
-    <div class="details-row" v-if="props.category !== 'Food'">
+    <div class="details-row" v-if="props.category !== 'Food' && props.startTime && props.endTime === ''">
       <span class="detail-label">Start: </span>
       <span class="detail-value space">{{ props.startTime }}</span>
       <span class="detail-label">End time: </span>
@@ -236,10 +238,14 @@ onMounted(async () => {
       </span>
     </div>
     <div class="details-row ">
-      <span class="detail-label">Category:</span>
+      <span class="detail-label">Date added:</span>
       <span class="detail-value space"> {{ formatDate(props.date) }}</span>
        
   
+    </div>
+    <div class="details-row">
+      <span class="detail-label">Reservation date:</span>
+      <span class="detail-value space">{{ formatDate(props.expectedExpenseDate)}}</span>
     </div>
 
     <div class="details-row d-block">

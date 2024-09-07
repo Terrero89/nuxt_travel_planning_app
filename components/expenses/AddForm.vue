@@ -1,12 +1,9 @@
 <script setup>
 import { useExpenseStore } from "@/store/expenses";
-const expenseStore = useExpenseStore();
 import { storeToRefs } from "pinia";
-import {
-  calculateTotalDuration,
-  calculateDaysRemaining,
-} from "../../utils/date-conversion";
-const { } = storeToRefs(expenseStore);
+import { calculateDaysRemaining } from "../../utils/date-conversion";
+const expenseStore = useExpenseStore();
+const {} = storeToRefs(expenseStore);
 const { addExpense } = expenseStore;
 
 const route = useRoute(); //route object
@@ -17,8 +14,6 @@ const cityId = route.params.cityID;
 // initiate
 const expense = ref("");
 const category = ref("");
-const startTime = ref("");
-const endTime = ref("");
 const cost = ref();
 const location = ref("");
 const priority = ref("");
@@ -28,13 +23,18 @@ const placeRating = ref();
 const comments = ref("");
 const duration = ref(0); // Store calculated duration
 const daysRemainingForExpense = ref(0); // Store calculated days remaining
+const expectedExpenseDate = ref();
 
 // Watch for changes in startTime and endTime
-watch([startTime, endTime], () => {
-  if (startTime.value && endTime.value) {
-    duration.value = calculateTotalDuration(startTime.value, endTime.value);
-  }
-}, { immediate: true });
+// watch(
+//   [startTime, endTime],
+//   () => {
+//     if (startTime.value && endTime.value) {
+//       duration.value = calculateTotalDuration(startTime.value, endTime.value);
+//     }
+//   },
+//   { immediate: true }
+// );
 
 // COMPUTED PROPERTIES
 const submitForm = async () => {
@@ -43,8 +43,7 @@ const submitForm = async () => {
     parentDestinationID: destId,
     expense: expense.value,
     category: category.value,
-    startTime: startTime.value,
-    endTime: endTime.value,
+    // startTime: startTime.value,
     cost: cost.value,
     isExpensePaid: false,
     location: location.value,
@@ -55,6 +54,7 @@ const submitForm = async () => {
     priority: priority.value,
     date: new Date(),
     comments: comments.value,
+    expectedExpenseDate: expectedExpenseDate.value,
   };
 
   await addExpense({ ...expenseData, parentCityID: cityId });
@@ -62,9 +62,13 @@ const submitForm = async () => {
 };
 
 // Automatically calculate days remaining based on a fixed date
-watch(date, () => {
-  daysRemainingForExpense.value = calculateDaysRemaining(date.value);
-}, { immediate: true });
+watch(
+  date,
+  () => {
+    daysRemainingForExpense.value = calculateDaysRemaining(date.value);
+  },
+  { immediate: true }
+);
 
 const showPrice = computed(() => {
   return !["N/A", "Landmarks", "Other"].includes(category.value);
@@ -101,7 +105,7 @@ const showPrice = computed(() => {
         <input type="number" v-model="cost" class="form-control" id="cost" />
       </div>
 
-      <div class="col-6">
+      <!-- <div class="col-6">
         <label for="startTime" class="form-label">Start Time (AM/PM)</label>
         <input type="time" v-model="startTime" class="form-control" />
         <p>{{ formattedStartTime }}</p>
@@ -116,11 +120,18 @@ const showPrice = computed(() => {
       <div class="col-6">
         <label for="duration" class="form-label">Duration (hours)</label>
         <input :value="duration" class="form-control" readonly />
-      </div>
+      </div> -->
 
       <div class="col-6">
         <label for="placeRating" class="form-label">Rating</label>
-        <input type="number" v-model="placeRating" class="form-control" min="0" max="5" step="0.1" />
+        <input
+          type="number"
+          v-model="placeRating"
+          class="form-control"
+          min="0"
+          max="5"
+          step="0.1"
+        />
       </div>
 
       <div class="col-6">
@@ -133,6 +144,15 @@ const showPrice = computed(() => {
           <option>Optional</option>
         </select>
       </div>
+      <div class="col-6">
+        <label for="inputPassword4" class="form-label">Date Booked: </label>
+        <input
+          type="date"
+          v-model.trim="expectedExpenseDate"
+          class="form-control"
+          id="date-input"
+        />
+      </div>
 
       <div>
         <label for="location" class="form-label">Location</label>
@@ -140,7 +160,11 @@ const showPrice = computed(() => {
       </div>
 
       <div>
-        <textarea v-model="comments" class="form-control" placeholder="Comments"></textarea>
+        <textarea
+          v-model="comments"
+          class="form-control"
+          placeholder="Comments"
+        ></textarea>
       </div>
 
       <div>
