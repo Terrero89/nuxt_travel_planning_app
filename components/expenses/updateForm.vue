@@ -76,7 +76,7 @@ const updateExpenseHandler = async () => {
   try {
     await updateExpense(expenseID, expenseItem.value);
     navigateTo(
-      `/destinations/${destId}/cities-${cityId}/expenses-${expenseID}`
+      `/destinations/${destId}/cities-${cityId}`
     );
   } catch (error) {
     console.error("Error updating expense:", error);
@@ -97,7 +97,7 @@ onMounted(async () => {
       <h3 class="mb-4">Update Expense</h3>
       <!-- {{ expenseItem }}
       {{ expenseItem.expense }} -->
-      {{ expenseItem }}
+      <!-- {{ expenseItem }} -->
 
       <div>
         <label for="inputPassword4" class="form-label">Expense</label>
@@ -197,8 +197,8 @@ onMounted(async () => {
           <option>Optional</option>
         </select>
       </div>
-      {{ expenseItem.expectedExpenseDate }}-
-      {{ formatDate(expenseItem.expectedExpenseDate) }}
+      <!-- {{ expenseItem.expectedExpenseDate }}-
+      {{ formatDate(expenseItem.expectedExpenseDate) }} -->
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Date Booked: </label>
         <input
