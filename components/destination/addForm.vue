@@ -15,6 +15,8 @@ const from = ref("");
 const to = ref("");
 const tripRating = ref(10);
 const tripComments = ref("");
+const numOfPeople = ref(0);
+
 
 // Computed property for trip duration
 const tripDuration = computed(() => {
@@ -49,6 +51,7 @@ const submitForm = () => {
     tripRating: tripRating.value,
     tripComments: tripComments.value,
     date: new Date(),
+    numOfPeople: numOfPeople.value  ,
   };
 
   addDestination(tripData);
@@ -71,6 +74,15 @@ const submitForm = () => {
         />
       </div>
 
+      <div>
+        <label for="destinationName" class="form-label">Number of people</label>
+        <input
+          type="number"
+          v-model.trim="numOfPeople"
+          class="form-control"
+          id="destinationTravelers"
+        />
+      </div>
       <div>
         <label for="transportType" class="form-label">Transportation Type</label>
         <select

@@ -21,6 +21,7 @@ const props = defineProps([
   "citiesIncludedOnTrip",
   "tripRating",
   "tripComments",
+  "numOfPeople",
 ]);
 
 const destinationParam = ref(props.destinationID);
@@ -40,6 +41,28 @@ const calculateDaysRemaining = () => {
   }
 };
 
+
+
+const tripStatus = computed(() => {
+  if (props.isTripCompleted === "Completed") {
+    return "Completed";
+  } else if (props.isTripCompleted === "Pending") {
+    return "Pending";
+  } else if (props.isTripCompleted === "In progress") {
+    return "In progress";
+  }
+})
+
+const ratingStatus = computed(() => {
+  if (props.tripRating >= 4.5) {
+    return {rating: props.tripRating, color: "green"};
+  } else if (props.tripRating >= 4 && props.tripRating < 4.5) {
+    return {rating: props.tripRating, color: "yellow"};
+  } else if (props.tripRating < 4) {
+    return {rating: props.tripRating, color: "red"};
+  }
+  
+})
 // Automatically calculate daysRemainingForTrip on mount and update it daily
 onMounted(() => {
   calculateDaysRemaining();
@@ -59,7 +82,6 @@ onMounted(() => {
     <div class="item">
       <div class="destination">
         <!-- {{ props.destinationID }} -->
-
         <h1 class="title">{{ props.destination }}</h1>
         <div class="destination-wrapper">
           <div class="section-one row">
@@ -84,7 +106,7 @@ onMounted(() => {
               <span class="pb-2 title-section"> Days until trip </span>
               <h2>
                 <span class="highlight">{{ daysRemainingForTrip }} </span>
-                {{ pdaysRemainingForTrip <= 1 ? "Day" : "Days" }}
+                {{ daysRemainingForTrip <= 1 ? "Day" : "Days" }}
               </h2>
               <!-- if dates is equal to 0  or is passed then we are going torender the date "ago" instead -->
             </div>
@@ -92,58 +114,57 @@ onMounted(() => {
               <span class="pb-2 title-section">Date Planned</span>
               <h2>{{ formatDate(props.date) }}</h2>
               <span class="pb-2 title-section">Rating</span>
-              <h2 v-if="props.tripRating < 4">
+              <h2>
                 <span class="highlight">
                   <UBadge
-                    v-if="props.tripRating < 4"
-                    variant="soft"
+                    v-if="ratingStatus.rating < 4"
+                    variant="solid"
                     size="md"
                     color="red"
-                    >{{ props.tripRating }}</UBadge
+                    >{{ props.tripRating.toFixed(1)}}</UBadge
                   >
+                  <UBadge
+                    v-if="ratingStatus.rating >= 4 && ratingStatus.rating  <= 4.5"
+                    variant="solid"
+                    size="md"
+                    color="yellow"
+                    >{{ props.tripRating.toFixed(1)}}</UBadge
+                  >
+                  <UBadge
+                    v-if="ratingStatus.rating >= 4.5"
+                    variant="solid"
+                    size="md"
+                    color="green"
+                    >{{ props.tripRating.toFixed(1) }}</UBadge>
                 </span>
               </h2>
 
-              <h2 v-else-if="props.tripRating >= 4 && props.tripRating <= 4.5">
-                <span class="highlight">
-                  <UBadge
-                    v-if="props.tripRating >= 4 && props.tripRating <= 4.5"
-                    variant="soft"
-                    size="md"
-                    color="yellow"
-                    >{{ props.tripRating }}</UBadge
-                  >
-                </span>
-              </h2>
-              <h2 v-else-if="props.tripRating > 4.5">
-                <span class="highlight">
-                  <UBadge
-                    v-if="props.tripRating > 4.5"
-                    variant="soft"
-                    size="md"
-                    color="green"
-                    >{{ props.tripRating.toFixed(1) }}</UBadge
-                  >
-                </span>
-              </h2>
+          
 
               <UButton color="blue" label="Details" @click="isOpen = true" />
             </div>
             <div>
               <span class="mr-auto">
                 <UBadge
-                  v-if="!props.isTripCompleted"
+                  v-if="tripStatus === 'Completed'"
+                  variant="outline"
+                  size="md"
+                  color="green"
+                  >Completed</UBadge
+                >
+                <UBadge
+                v-if="tripStatus === 'Pending'"
                   variant="outline"
                   size="md"
                   color="red"
-                  >In progress</UBadge
+                  >Pending</UBadge
                 >
                 <UBadge
-                  v-if="props.isTripCompleted"
+                v-if="tripStatus === 'In progress'"
                   variant="outline"
                   size="md"
-                  color="primary"
-                  >Complete</UBadge
+                  color="yellow"
+                  >In progress</UBadge
                 >
               </span>
             </div>
@@ -166,6 +187,7 @@ onMounted(() => {
                     :citiesIncludedOnTrip="props.citiesIncludedOnTrip"
                     :tripRating="props.tripRating"
                     :tripComments="props.tripComments"
+                    :numOfPeople="props.numOfPeople"
                   />
                 </div>
               </UModal>

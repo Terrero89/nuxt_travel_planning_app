@@ -64,9 +64,9 @@ const visitStatus = computed(() => {
 })
 
 const ratingStatus = computed(() => {
-  if (props.cityRating >4.5) {
+  if (props.cityRating >= 4.5) {
     return {rating: props.cityRating, color: "green"};
-  } else if (props.cityRating >= 4 && props.cityRating <= 4.5) {
+  } else if (props.cityRating >= 4 && props.cityRating < 4.5) {
     return {rating: props.cityRating, color: "yellow"};
   } else if (props.cityRating < 4) {
     return {rating: props.cityRating, color: "red"};
@@ -157,10 +157,10 @@ onMounted(() => {
       <div v-if="props.cityRating">
         <span class="">
           <span class="detail-label">Rating: </span>
-          <UBadge class="mx-3" v-if="ratingStatus.rating < 4" size="md" :color="rating.color">{{ ratingStatus.rating }}</UBadge>
-          <UBadge class="mx-3" v-if="props.cityRating >= 4 && props.cityRating <= 4.5" size="md" color="yellow">{{
+          <UBadge class="mx-3" v-if="ratingStatus.rating < 4" size="md" color="red">{{ ratingStatus.rating }}</UBadge>
+          <UBadge class="mx-3" v-if="props.cityRating >= 4 && props.cityRating < 4.5" size="md" color="yellow">{{
             ratingStatus.rating }}</UBadge>
-                  <UBadge class="mx-3" v-if="props.cityRating > 4.5" size="md" color="green">{{ ratingStatus.rating}}</UBadge>
+                  <UBadge class="mx-3" v-if="props.cityRating >= 4.5" size="md" color="green">{{ ratingStatus.rating}}</UBadge>
 
         </span>
       </div>

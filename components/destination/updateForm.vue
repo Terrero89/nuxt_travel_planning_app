@@ -84,6 +84,15 @@ onMounted(async () => {
           id="destinationName"
         />
       </div>
+      <div>
+        <label for="destinationName" class="form-label">Number of people</label>
+        <input
+          type="number"
+          v-model.trim="dest.numOfPeople"
+          class="form-control"
+          id="destinationTravelers"
+        />
+      </div>
 
       <div>
         <label for="transportType" class="form-label"

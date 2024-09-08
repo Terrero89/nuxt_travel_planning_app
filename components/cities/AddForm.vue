@@ -98,7 +98,7 @@ const submitForm = async () => {
       <div class="">
           <label for="transportType" class="form-label">Reservation status</label>
 
-          <select class="form-select" v-model="cityItem.accommodation" aria-label="Default select example">
+          <select class="form-select" v-model="accommodation" aria-label="Default select example">
             <option></option>
             <option>Reserved</option>
             <option>Half reserved</option>

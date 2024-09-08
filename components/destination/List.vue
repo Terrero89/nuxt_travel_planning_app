@@ -28,7 +28,8 @@ const props = defineProps([
   "daysRemainingForTrip",
   "citiesIncludedOnTrip",
   "tripRating",
-  "tripComments"
+  "tripComments",
+  "numOfPeople"
 
 ]);
 
@@ -76,6 +77,7 @@ const props = defineProps([
           :citiesIncludedOnTrip="trip.citiesIncludedOnTrip"
           :tripRating="trip.tripRating"
           :tripComments="trip.tripComments"
+          :numOfPeople="trip.numOfPeople"
         />
       </div>
     </UIContainer>

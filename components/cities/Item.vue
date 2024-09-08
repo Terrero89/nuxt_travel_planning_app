@@ -56,6 +56,16 @@ const visitStatus = computed(() => {
   }
 })
 
+const ratingStatus = computed(() => {
+  if (props.cityRating >4.5) {
+    return {rating: props.cityRating, color: "green"};
+  } else if (props.cityRating >= 4 && props.cityRating <= 4.5) {
+    return {rating: props.cityRating, color: "yellow"};
+  } else if (props.cityRating < 4) {
+    return {rating: props.cityRating, color: "red"};
+  }
+  
+})
 // Automatically calculate daysRemainingForCity on mount and update it daily
 onMounted(() => {
   calculateDaysRemainingForCity();
@@ -121,33 +131,24 @@ onMounted(() => {
               <span class="pb-2 title-section">Date Planned</span>
               <h2>{{ formatDate(props.date) }}</h2>
               <span class="pb-2 title-section">Rating</span>
-              <h2 v-if="props.cityRating < 4">
+              <h2 >
                 <span class="highlight">
                   <UBadge
-                    v-if="props.cityRating < 4"
+                    v-if="ratingStatus.rating < 4"
                     variant="solid"
                     size="md"
                     color="red"
                     >{{ props.cityRating }}</UBadge
                   >
-                </span>
-              </h2>
-
-              <h2 v-else-if="props.cityRating >= 4 && props.cityRating <= 4.5">
-                <span class="highlight">
                   <UBadge
-                    v-if="props.cityRating >= 4 && props.cityRating <= 4.5"
+                    v-if="ratingStatus.rating >= 4 && ratingStatus.rating <= 4.4"
                     variant="solid"
                     size="md"
                     color="yellow"
                     >{{ props.cityRating }}</UBadge
                   >
-                </span>
-              </h2>
-              <h2 v-else-if="props.cityRating > 4.5">
-                <span class="highlight">
                   <UBadge
-                    v-if="props.cityRating > 4.5"
+                    v-if="ratingStatus.rating >= 4.5"
                     variant="solid"
                     size="md"
                     color="green"
@@ -155,7 +156,6 @@ onMounted(() => {
                   >
                 </span>
               </h2>
-
               <UButton color="blue" variant="outline" label="Details" @click="isOpen = true" />
             </div>
     
