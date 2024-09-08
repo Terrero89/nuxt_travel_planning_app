@@ -10,7 +10,7 @@ const destId = route.params.destinationID;
 
 <template>
   <div>
-    <div>CITIES BASED ON ID HERE</div>
+    
     <UButton :to="`/destinations/${destId}/createCity`"
       >Create New City</UButton
     >

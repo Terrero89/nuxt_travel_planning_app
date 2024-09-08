@@ -40,7 +40,19 @@ const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this
 
 <template>
   <div class="projects">
-    <div class="container"></div>
+    <UICard class="mt-5 mb-1 py-4">
+      <div class="row">
+        <div class="col">
+      
+          <UButton class="mx-2" label="Add Expense" variant="outline" color="indigo":to="createCityLink"></UButton>
+        </div>
+        <div class="col">
+          Filter or other features
+        </div>
+      </div>
+
+
+    </UICard>
 
     <!-- <div v-for="expense in expenses">{{expense.expenseID}}</div> -->
     <ExpensesItem

@@ -48,7 +48,19 @@ const getCitiesByDestinationID = computed(() => cityStore.filterItemById); // th
 
 <template>
   <div class="projects">
-TITLE HERE
+    <UICard class="mt-5 mb-1 py-4">
+      <div class="row">
+        <div class="col">
+       
+          <UButton class="mx-2" label="Add City" variant="outline" color="indigo":to="createCityLink"></UButton>
+        </div>
+        <div class="col">
+          Filter or other features
+        </div>
+      </div>
+
+
+    </UICard>
     <div>
     
   
