@@ -123,7 +123,7 @@ onMounted(() => {
                 </span>
               </h2>
 
-              <UButton color="blue" label="Details" @click="isOpen = true" />
+              <UButton color="blue" variant="outline" label="Details" @click="isOpen = true" />
             </div>
             <div>
               <span class="mr-auto">

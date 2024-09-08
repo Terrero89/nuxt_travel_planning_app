@@ -105,22 +105,7 @@ const showPrice = computed(() => {
         <input type="number" v-model="cost" class="form-control" id="cost" />
       </div>
 
-      <!-- <div class="col-6">
-        <label for="startTime" class="form-label">Start Time (AM/PM)</label>
-        <input type="time" v-model="startTime" class="form-control" />
-        <p>{{ formattedStartTime }}</p>
-      </div>
-
-      <div class="col-6">
-        <label for="endTime" class="form-label">End Time (AM/PM)</label>
-        <input type="time" v-model="endTime" class="form-control" />
-        <p>{{ formattedEndTime }}</p>
-      </div>
-
-      <div class="col-6">
-        <label for="duration" class="form-label">Duration (hours)</label>
-        <input :value="duration" class="form-control" readonly />
-      </div> -->
+   
 
       <div class="col-6">
         <label for="placeRating" class="form-label">Rating</label>

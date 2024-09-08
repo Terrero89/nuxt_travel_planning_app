@@ -41,6 +41,39 @@ const updateExpensesLink = computed(
     `/destinations/${destinationParamID}/cities-${cityParamID}/expense-${props.expenseID}/updateExpense`
 );
 
+const visitStatus = computed(() => {
+  if (props.isThisCityVisited === "Visited") {
+    return "Visited";
+  } else if (props.isThisCityVisited === "Not visited") {
+    return "Not visited";
+  } else if (props.isThisCityVisivisitStatusted === "In progress") {
+    return "In progress";
+  }
+})
+
+const ratingStatus = computed(() => {
+  if (props.cityRating >= 4.5) {
+    return {rating: props.cityRating, color: "green"};
+  } else if (props.cityRating >= 4 && props.cityRating < 4.5) {
+    return {rating: props.cityRating, color: "yellow"};
+  } else if (props.cityRating < 4) {
+    return {rating: props.cityRating, color: "red"};
+  }
+  
+})
+
+const priorityStatus = computed(() => {
+  if (props.priority === "Must visit") {
+    return "Must visit";
+  } else if (props.priority === "Nice to visit") {
+    return "Nice to visit";
+  } else if (props.priority === "Backup option") {
+    return "Backup option";
+  } else if (props.priority === "Optional") {
+    return "Optional";
+  }
+})
+
 onMounted(async () => {
   await fetchExpenses();
   expenseStore.expensesAsArray.value;
@@ -183,9 +216,9 @@ onMounted(async () => {
       </span>
     </div>
  
-    <div v-if="props.priority === 'Must visit'">
+    <div v-if="props.priority === 'Must visit' ">
       <span class="" v-if="(props.priority = 'Must visit')">
-        <span class="detail-label">Priority</span>
+        <span class="detail-label">Priority:</span>
         <UBadge
           class="mx-3"
           v-if="props.priority === 'Must visit'"
@@ -199,7 +232,7 @@ onMounted(async () => {
 
     <div v-else-if="props.priority === 'Nice to visit'">
       <span class="" v-if="(props.priority = 'Nice to visit')">
-        <span class="detail-label">Priority</span>
+        <span class="detail-label">Priority:</span>
         <UBadge
           class="mx-3"
           v-if="props.priority === 'Nice to visit'"
@@ -212,7 +245,7 @@ onMounted(async () => {
     </div>
     <div v-else-if="props.priority === 'Backup option'">
       <span class="" v-if="(props.priority = 'Backup option')">
-        <span class="detail-label">Priority</span>
+        <span class="detail-label">Priority:</span>
         <UBadge
           class="mx-3"
           v-if="props.priority === 'Backup option'"
@@ -226,7 +259,7 @@ onMounted(async () => {
 
     <div v-else-if="props.priority === 'Optional'">
       <span class="" v-if="(props.priority = 'Optional')">
-        <span class="detail-label">Priority</span>
+        <span class="detail-label">Priority:</span>
         <UBadge
           class="mx-3"
           v-if="props.priority === 'Optional'"
