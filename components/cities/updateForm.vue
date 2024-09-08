@@ -48,7 +48,7 @@ const updateCityHandler = async () => {
     await updateCity(cityParamID, {
       ...cityItem.value,
       duration: tripDuration.value,
-      daysRemainingForTrip: daysRemainingForTrip.value,
+      daysRemainingForCity: daysRemainingForTrip.value,
     });
     navigateTo("/destinations");
   } catch (error) {
@@ -72,24 +72,13 @@ onMounted(async () => {
 
       <div>
         <label for="inputPassword4" class="form-label">City</label>
-        <input
-          type="input"
-          v-model.trim="cityItem.city"
-          class="form-control"
-          id="name-input"
-        />
+        <input type="input" v-model.trim="cityItem.city" class="form-control" id="name-input" />
       </div>
       <div>
         <div class="">
-          <label for="transportType" class="form-label"
-            >Accommodation Type</label
-          >
+          <label for="transportType" class="form-label">Accommodation Type</label>
 
-          <select
-            class="form-select"
-            v-model="cityItem.accommodation"
-            aria-label="Default select example"
-          >
+          <select class="form-select" v-model="cityItem.accommodation" aria-label="Default select example">
             <option>Airbnb</option>
             <option>Hotel</option>
             <option>Hostel</option>
@@ -98,36 +87,31 @@ onMounted(async () => {
             <option>N/A</option>
           </select>
         </div>
-        <div class="+">
-          <label for="inputPassword4" class="form-label"
-            >Accommodation Price</label
-          >
-          <input
-            type="number"
-            v-model.trim="cityItem.accommodationCost"
-            class="form-control"
-            id="name-input"
-          />
+        <div class="">
+          <label for="inputPassword4" class="form-label">Accommodation Price</label>
+          <input type="number" v-model.trim="cityItem.accommodationCost" class="form-control" id="name-input" />
           <!-- {{ cityItem.accommodationAddress }} -->
-          <div>
-            <label for="inputPassword4" class="form-label">Address</label>
-            <input
-              type="input"
-              v-model.trim="cityItem.accommodationAddress"
-              class="form-control"
-              id="name-input"
-            />
-          </div>
-        </div>
-        <label for="transportType" class="form-label"
-          >Transportation Type</label
-        >
 
-        <select
-          class="form-select"
-          v-model="cityItem.transportType"
-          aria-label="Default select example"
-        >
+        </div>
+        <div class="">
+          <label for="transportType" class="form-label">Reservation status</label>
+
+          <select class="form-select" v-model="cityItem.isAccommodationPaid" aria-label="Default select example">
+            <option></option>
+            <option>Reserved</option>
+            <option>Half reserved</option>
+            <option>Pending</option>
+
+          </select>
+        </div>
+
+        <div>
+          <label for="inputPassword4" class="form-label">Address</label>
+          <input type="input" v-model.trim="cityItem.accommodationAddress" class="form-control" id="name-input" />
+        </div>
+        <label for="transportType" class="form-label">Transportation Type</label>
+
+        <select class="form-select" v-model="cityItem.transportType" aria-label="Default select example">
           <option>Plane</option>
           <option>Train</option>
           <option>Car</option>
@@ -138,73 +122,48 @@ onMounted(async () => {
 
       <div>
         <label for="inputPassword4" class="form-label">Budget</label>
-        <input
-          type="number"
-          v-model.trim="cityItem.destinationBudget"
-          class="form-control"
-          id="name-input"
-        />
+        <input type="number" v-model.trim="cityItem.destinationBudget" class="form-control" id="name-input" />
       </div>
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">From: </label>
-        <input
-          type="date"
-          v-model.trim="cityItem.from"
-          class="form-control"
-          id="name-input"
-        />
+        <input type="date" v-model.trim="cityItem.from" class="form-control" id="name-input" />
       </div>
       <!-- {{formatDate(from)}} -->
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">To: </label>
-        <input
-          type="date"
-          v-model.trim="cityItem.to"
-          class="form-control"
-          id="name-input"
-        />
+        <input type="date" v-model.trim="cityItem.to" class="form-control" id="name-input" />
       </div>
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Duration</label>
-        <input
-          type="number"
-          v-model.trim="cityItem.duration"
-          class="form-control"
-          id="name-input"
-        />
+        <input type="number" v-model.trim="cityItem.duration" class="form-control" id="name-input" />
       </div>
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Rating</label>
 
-        <input
-          type="number"
-          v-model.trim="cityItem.cityRating"
-          class="form-control"
-          id="name-input"
-          min="0"
-          max="5"
-          step="0.1"
-        />
+        <input type="number" v-model.trim="cityItem.cityRating" class="form-control" id="name-input" min="0" max="5"
+          step="0.1" />
+      </div>
+      <div class="">
+          <label for="transportType" class="form-label">Visit status</label>
+
+          <select class="form-select" v-model="cityItem.isThisCityVisited" aria-label="Default select example">
+            <option></option>
+            <option>Visited</option>
+            <option>In progress</option>
+            <option>Not visited</option>
+
+          </select>
+        </div>
+      <div>
+        <textarea class="form-control" v-model="cityItem.tripComments" aria-label="With textarea"
+          placeholder="Comments" />
       </div>
 
       <div>
-        <textarea
-          class="form-control"
-          v-model="cityItem.tripComments"
-          aria-label="With textarea"
-          placeholder="Comments"
-        />
-      </div>
-
-      <div>
-        <button
-          type="submit"
-          class="btn btn-primary py-2 px-4"
-          @click="updateCityHandler"
-        >
+        <button type="submit" class="btn btn-primary py-2 px-4" @click="updateCityHandler">
           Submit
         </button>
       </div>

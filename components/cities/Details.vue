@@ -5,7 +5,7 @@ const cityStore = useCityStore();
 import { storeToRefs } from "pinia";
 const { cities } = storeToRefs(cityStore);
 
-const { fetchCities, updateCity, citiesAsArray , deleteCity} = cityStore;
+const { fetchCities, updateCity, citiesAsArray, deleteCity } = cityStore;
 const route = useRoute(); //route object
 const destinationParamID = route.params.destinationID;
 const cityParamID = route.params.cityID;
@@ -34,7 +34,7 @@ const removeItem = async (id) => {
   console.log(id);
 
   deleteCity(id);
-  navigateTo( `/destinations/${destId}`);
+  navigateTo(`/destinations/${destId}`);
 };
 const citiesLink = computed(
   () => `/destinations/${destId}/cities-${props.cityID}`
@@ -43,9 +43,39 @@ const updateCitiesLink = computed(
   () => `/destinations/${destId}/cities-${props.cityID}/updateCity`
 );
 
-onMounted( () => {
- fetchCities()
- cityStore.citiesAsArray.value
+const accommodationStatus = computed(() => {
+  if (props.isAccommodationPaid === "Reserved") {
+    return "Reserved";
+  } else if (props.isAccommodationPaid === "Half reserved") {
+    return "Half reserved";
+  } else if (props.isAccommodationPaid === "Pending") {
+    return "Pending";
+  }
+})
+
+const visitStatus = computed(() => {
+  if (props.isThisCityVisited === "Visited") {
+    return "Visited";
+  } else if (props.isThisCityVisited === "Not visited") {
+    return "Not visited";
+  } else if (props.isThisCityVisited === "In progress") {
+    return "In progress";
+  }
+})
+
+const ratingStatus = computed(() => {
+  if (props.cityRating >4.5) {
+    return {rating: props.cityRating, color: "green"};
+  } else if (props.cityRating >= 4 && props.cityRating <= 4.5) {
+    return {rating: props.cityRating, color: "yellow"};
+  } else if (props.cityRating < 4) {
+    return {rating: props.cityRating, color: "red"};
+  }
+  
+})
+onMounted(() => {
+  fetchCities()
+  cityStore.citiesAsArray.value
 });
 </script>
 
@@ -62,111 +92,53 @@ onMounted( () => {
         <span class="detail-value space"> {{ props.accommodation }}</span>
       </div>
 
-      <div v-if="props.isAccommodationPaid">
+      <div v-if="accommodationStatus">
         <span>
           <span class="detail-label">Booking Status </span>
-          <UBadge
-            class="mx-3"
-            v-if="props.isThisCityVisited"
-            size="md"
-            color="green"
-            variant="soft"
-            >{{ props.isThisCityVisited ? "Booked" : "" }}</UBadge
-          >
+          <UBadge class="mx-3" v-if="accommodationStatus === 'Reserved'" size="md" color="green" variant="soft">{{
+            accommodationStatus
+          }}</UBadge>
+          <UBadge class="mx-3" v-if="accommodationStatus === 'Half reserved'" size="md" color="yellow" variant="soft">{{
+            accommodationStatus }}</UBadge>
+          <UBadge class="mx-3" v-if="accommodationStatus === 'Pending'" size="md" color="red" variant="soft">{{
+            accommodationStatus }}</UBadge>
         </span>
       </div>
 
-      <div v-if="!props.isAccommodationPaid">
-        <span class="">
-          <span class="detail-label">Booking Status</span>
-          <UBadge
-            class="mx-3"
-            v-if="!props.isAccommodationPaid"
-            size="md"
-            color="red"
-            variant="soft"
-            >{{ !props.isAccommodationPaid ? "Pending" : "" }}</UBadge
-          >
-        </span>
-      </div>
 
-      <div v-if="props.isThisCityVisited">
+      <div v-if="visitStatus">
         <span class="">
           <span class="detail-label">Visit Status</span>
-          <UBadge
-            class="mx-3"
-            v-if="props.isThisCityVisited"
-            size="md"
-            color="green"
-            variant="soft"
-            >{{ props.isThisCityVisited ? "Visited" : "" }}</UBadge
-          >
+          <UBadge class="mx-3" v-if="visitStatus === 'Visited'" size="md" color="green" variant="soft">{{
+            visitStatus }}</UBadge>
+          <UBadge class="mx-3" v-if="visitStatus === 'Not visited'" size="md" color="red" variant="soft">{{
+            visitStatus }}</UBadge>
+          <UBadge class="mx-3" v-if="visitStatus === 'In progress'" size="md" color="yellow" variant="soft">{{
+            visitStatus }}</UBadge>
         </span>
       </div>
 
-      <div v-else-if="!props.isThisCityVisited">
-        <span class="">
-          <span class="detail-label">Visit Status</span>
-          <UBadge
-            class="mx-3"
-            v-if="!props.isThisCityVisited"
-            size="md"
-            color="red"
-            variant="soft"
-            >{{ !props.isThisCityVisited ? "Not visited" : "" }}</UBadge
-          >
-        </span>
-      </div>
       <div class="details-row">
         <span class="detail-label">Dates: </span>
         <span class="detail-value space">
-        {{ formatDate(props.from) }} - {{ formatDate(props.to) }}</span
-      >
+          {{ formatDate(props.from) }} - {{ formatDate(props.to) }}</span>
       </div>
 
       <div class="details-row">
         <span class="detail-label">Visit total Cost:</span>
-        <span class="detail-value space">${{ formatNumber(props.totalCost)}}</span>
+        <span class="detail-value space">${{ formatNumber(props.totalCost) }}</span>
       </div>
 
       <div class="details-row">
-      <span class="detail-label">City Duration:</span>
+        <span class="detail-label">City Duration:</span>
 
-      <span class="detail-value space"
-        >{{ calculateDaysRangeDuration(props.from, props.to) }}
-        {{
-          calculateTotalDuration(props.from, props.to) >1 ? "day" : "days"
-        }}</span
-      >
-    </div>
-
-      <div v-if="props.isThisCityVisited">
-        <span>
-          <span class="detail-label">Visit Status </span>
-          <UBadge
-            class="mx-3"
-            v-if="props.isThisCityVisited"
-            size="md"
-            color="green"
-            variant="soft"
-            >{{ props.isThisCityVisited ? "Visited" : "Pending" }}</UBadge
-          >
-        </span>
+        <span class="detail-value space">{{ calculateDaysRangeDuration(props.from, props.to) }}
+          {{
+            calculateTotalDuration(props.from, props.to) > 1 ? "day" : "days"
+          }}</span>
       </div>
 
-      <div v-if="!props.isThisCityVisited">
-        <span class="">
-          <span class="detail-label">Visit Status:</span>
-          <UBadge
-            class="mx-3"
-            v-if="!props.isThisCityVisited"
-            size="md"
-            color="red"
-            variant="soft"
-            >{{ props.isThisCityVisited ? "Visited" : "Pending" }}</UBadge
-          >
-        </span>
-      </div>
+
 
       <div>
         <div class="details-row">
@@ -179,54 +151,25 @@ onMounted( () => {
 
       <div class="details-row">
         <span class="detail-label">Expenses: </span>
-        <span class="detail-value space"
-          >{{ props.expenseIncludedOnCity }} Expenses</span
-        >
+        <span class="detail-value space">{{ props.expenseIncludedOnCity }} Expenses</span>
       </div>
 
-      <div v-if="props.cityRating < 4">
-        <span class="mx-2">
+      <div v-if="props.cityRating">
+        <span class="">
           <span class="detail-label">Rating: </span>
-          <UBadge
-            class="mx-3"
-            v-if="props.cityRating < 4"
-            size="md"
-            color="red"
-            >{{ props.cityRating }}</UBadge
-          >
+          <UBadge class="mx-3" v-if="ratingStatus.rating < 4" size="md" :color="rating.color">{{ ratingStatus.rating }}</UBadge>
+          <UBadge class="mx-3" v-if="props.cityRating >= 4 && props.cityRating <= 4.5" size="md" color="yellow">{{
+            ratingStatus.rating }}</UBadge>
+                  <UBadge class="mx-3" v-if="props.cityRating > 4.5" size="md" color="green">{{ ratingStatus.rating}}</UBadge>
+
         </span>
       </div>
 
-      <div v-else-if="props.cityRating >= 4 && props.cityRating <= 4.5">
-        <span>
-          <span class="detail-label">Rating: </span>
-          <UBadge
-            class="mx-3"
-            v-if="props.cityRating >= 4 && props.cityRating <= 4.5"
-            size="md"
-            color="yellow"
-            >{{ props.cityRating }}</UBadge
-          >
-        </span>
-      </div>
-
-      <div v-else-if="props.cityRating > 4.5">
-        <span>
-          <span class="detail-label">Rating: </span>
-          <UBadge
-            class="mx-3"
-            v-if="props.cityRating > 4.5"
-            size="md"
-            color="green"
-            >{{ props.cityRating }}</UBadge
-          >
-        </span>
-      </div>
       <div class="details-row">
         <span class="detail-label">Address:</span>
         <span class="detail-value space">{{ props.accommodationAddress }}</span>
       </div>
-      
+
       <div>
         <span class="detail-label">See Cities to visit </span>
         <NuxtLink class="space dr-button" :to="citiesLink">
@@ -234,22 +177,22 @@ onMounted( () => {
         </NuxtLink>
       </div>
       <div class="details-row d-block">
-      <span class="detail-label">Added on : </span>
-      <p class="d-block">
-        {{ formatDate(props.date) }}
-      </p>
-    </div>
+        <span class="detail-label">Added on : </span>
+        <p class="d-block">
+          {{ formatDate(props.date) }}
+        </p>
+      </div>
 
       <div class="details-row d-block">
         <span class="detail-label">Trip Comments: </span>
         <p class="d-block">
-     {{ props.comments }}
+          {{ props.comments }}
         </p>
       </div>
 
       <div class="modal-actions">
         <UButton variant="solid" color="red" @click="removeItem(props.cityID)">Delete</UButton>
-        <UButton :to="updateCitiesLink" >Update City</UButton>
+        <UButton :to="updateCitiesLink">Update City</UButton>
       </div>
     </div>
   </div>
@@ -263,18 +206,22 @@ onMounted( () => {
 
   color: rgb(43, 41, 41) !important;
 }
+
 .dr-button {
   padding: 3px 13px;
   border-radius: 5px;
   background: rgb(223, 222, 222);
   cursor: pointer;
 }
+
 .dr-button:hover {
   background-color: rgb(136, 134, 134);
 }
+
 .space {
   margin: 0 0.5rem;
 }
+
 .modal-details {
   padding: 20px;
   border-radius: 5px;
@@ -298,7 +245,7 @@ onMounted( () => {
 
 .detail-label {
   font-weight: bold;
-  
+
 }
 
 .detail-value {
