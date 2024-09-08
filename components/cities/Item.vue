@@ -37,6 +37,25 @@ const calculateDaysRemainingForCity = () => {
   }
 };
 
+const accommodationStatus = computed(() => {
+  if (props.isAccommodationPaid === "Reserved") {
+    return "Reserved";
+  } else if (props.isAccommodationPaid === "Half reserved") {
+    return "Half reserved";
+  } else if (props.isAccommodationPaid === "Pending" || false) {
+    return "Pending";
+  }
+})
+const visitStatus = computed(() => {
+  if (props.isThisCityVisited === "Visited") {
+    return "Visited";
+  } else if (props.isThisCityVisited === "Not visited") {
+    return "Not visited";
+  } else if (props.isThisCityVisited === "In progress") {
+    return "In progress";
+  }
+})
+
 // Automatically calculate daysRemainingForCity on mount and update it daily
 onMounted(() => {
   calculateDaysRemainingForCity();
@@ -72,7 +91,7 @@ onMounted(() => {
               <span class="pb-2 title-section">Booking Status </span>
               <h2>
                 <span class="highlight"
-                  >{{ props.isAccommodationPaid ? "pending" : "reserved" }}
+                  >{{ accommodationStatus}}
                 </span>
               </h2>
             </div>
@@ -106,7 +125,7 @@ onMounted(() => {
                 <span class="highlight">
                   <UBadge
                     v-if="props.cityRating < 4"
-                    variant="soft"
+                    variant="solid"
                     size="md"
                     color="red"
                     >{{ props.cityRating }}</UBadge
@@ -118,7 +137,7 @@ onMounted(() => {
                 <span class="highlight">
                   <UBadge
                     v-if="props.cityRating >= 4 && props.cityRating <= 4.5"
-                    variant="soft"
+                    variant="solid"
                     size="md"
                     color="yellow"
                     >{{ props.cityRating }}</UBadge
@@ -129,7 +148,7 @@ onMounted(() => {
                 <span class="highlight">
                   <UBadge
                     v-if="props.cityRating > 4.5"
-                    variant="soft"
+                    variant="solid"
                     size="md"
                     color="green"
                     >{{ props.cityRating }}</UBadge
@@ -137,24 +156,10 @@ onMounted(() => {
                 </span>
               </h2>
 
-              <UButton color="blue" label="Details" @click="isOpen = true" />
+              <UButton color="blue" variant="outline" label="Details" @click="isOpen = true" />
             </div>
-            <span class="mr-auto">
-              <UBadge
-                v-if="!props.isCompleted"
-                variant="soft"
-                size="md"
-                color="red"
-                >In progress</UBadge
-              >
-              <UBadge
-                v-if="props.isCompleted"
-                variant="soft"
-                size="md"
-                color="primary"
-                >Complete</UBadge
-              >
-            </span>
+    
+
           </div>
           <div>
             <UModal v-model="isOpen">

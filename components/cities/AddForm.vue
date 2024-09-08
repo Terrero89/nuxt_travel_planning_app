@@ -11,7 +11,7 @@ const destId = route.params.destinationID;
 const city = ref("");
 const accommodation = ref("");
 const accommodationCost = ref(0);
-const isAccommodationPaid = ref(false);
+const isAccommodationPaid = ref('');
 const accommodationAddress = ref('');
 const totalCost = ref(0);
 const from = ref("");
@@ -77,9 +77,12 @@ const submitForm = async () => {
         <label for="accommodation" class="form-label">Accommodation Type</label>
         <select class="form-select" v-model="accommodation" id="accommodation">
           <option>Airbnb</option>
-          <option>Hotel</option>
-          <option>Hostel</option>
-          <option>Home</option>
+            <option>Hotel</option>
+            <option>Hostel</option>
+            <option>Home</option>
+            <option>Other</option>
+            <option>N/A</option>
+
         </select>
       </div>
 
@@ -92,6 +95,18 @@ const submitForm = async () => {
         <label for="totalCost" class="form-label">Total Cost</label>
         <input type="number" v-model.trim="totalCost" class="form-control" id="totalCost" />
       </div>
+      <div class="">
+          <label for="transportType" class="form-label">Reservation status</label>
+
+          <select class="form-select" v-model="cityItem.accommodation" aria-label="Default select example">
+            <option></option>
+            <option>Reserved</option>
+            <option>Half reserved</option>
+            <option>Pending</option>
+
+          </select>
+        </div>
+
 
       <div>
         <label for="accommodationAddress" class="form-label">Address</label>
