@@ -179,6 +179,7 @@ onMounted(() => {
               </h2>
 
               <UButton
+              class="my-2"
                 color="blue"
                 variant="outline"
                 label="Details"

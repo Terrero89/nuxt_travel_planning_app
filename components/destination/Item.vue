@@ -171,7 +171,7 @@ onMounted(() => {
 
           
 
-              <UButton color="blue" label="Details" @click="isOpen = true" />
+              <UButton class="my-2" color="blue" label="Details" @click="isOpen = true" />
             </div>
          
           </div>

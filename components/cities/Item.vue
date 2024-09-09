@@ -184,7 +184,7 @@ onMounted(() => {
                   >
                 </span>
               </h2>
-              <UButton color="blue" variant="outline" label="Details" @click="isOpen = true" />
+              <UButton class="my-2" color="blue" variant="outline" label="Details" @click="isOpen = true" />
             </div>
     
 

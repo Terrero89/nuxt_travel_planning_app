@@ -8,7 +8,7 @@ const destStore = useDestinationStore();
 
 import { storeToRefs } from "pinia";
 
-const { fetchCities,filterItemById} = cityStore;
+const { fetchCities, filterItemById } = cityStore;
 const { fetchDestinations } = destStore;
 const { cities } = storeToRefs(cityStore);
 const { destination } = storeToRefs(destStore);
@@ -36,37 +36,92 @@ const props = defineProps([
   "cityComments",
 ]);
 
-onMounted(async() => {
+onMounted(async () => {
   await fetchCities();
- await  fetchDestinations();
-
+  await fetchDestinations();
 });
 
+const filter = ref("All");
 
+const filteredData = () => {
+  if (filter.value === "All") {
+    return cities.value.filter((data) => data.isThisCityVisited);
+  }
+  return cities.value.filter((data) => data.isThisCityVisited === filter.value);
+};
 const getCitiesByDestinationID = computed(() => cityStore.filterItemById); // this is working!
 </script>
 
 <template>
   <div class="projects">
-    <UICard class="mt-5 mb-1 py-4">
+    <UICard class="mt-5 mb-1 py-4 ">
       <div class="row">
         <div class="col">
-       
-          <UButton class="mx-2" label="Add City" variant="outline" color="indigo":to="createCityLink"></UButton>
+          <UButton
+            class="mx-2"
+            label="Add City"
+            variant="outline"
+            color="indigo"
+            :to="createCityLink"
+          ></UButton>
         </div>
-        <div class="col">
-          Filter or other features
-        </div>
+        <div class="col">Filter or other features</div>
       </div>
-
-
     </UICard>
-    <div>
-    
-  
-    </div>
+
+    <UICard class="mb-1 py-4 px-2">
+      <div class="row">
+        
+        
+      
+        <div class="col-md-2 col-2-sm col-3-lg">
+          <div>
+            <label for="transportType" class="form-label"
+              >Filter by status</label
+            >
+            <select class="form-select" id="transportType" v-model="filter">
+              <option>All</option>
+              <option>Visited</option>
+              <option>Not visited</option>
+              <option>In progress</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2 col-2-sm col-3-lg">
+          <div>
+            <label for="transportType" class="form-label"
+              > By </label
+            >
+            <select class="form-select" id="transportType" v-model="filter">
+              <option>Further Date</option>
+              <option>Closest Date</option>
+              <option>Highest Rating</option>
+              <option>Lowest Rating</option>
+              <option>Highest Cost</option>
+              <option>Lowest Cost</option>
+             
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2 col-4-sm col-3-lg">
+          <div>
+            <label for="transportType" class="form-label"
+              > By Booking status</label
+            >
+            <select class="form-select" id="transportType" v-model="filter">
+              <option>All</option>
+              <option>Booked</option>
+              <option>Not Booked</option>
+              
+            </select>
+          </div>
+        </div>
+        
+      </div>
+    </UICard>
+    <div></div>
     <CitiesItem
-      v-for="city in getCitiesByDestinationID(destId)"
+      v-for="city in filteredData(getCitiesByDestinationID(destId))"
       :key="city.cityID"
       :cityID="city.cityID"
       :parentDestinationID="destId"
