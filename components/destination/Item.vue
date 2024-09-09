@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useDestinationStore } from "@/store/destination";
 import { storeToRefs } from "pinia";
 import { formatDate } from "../../utils/date-conversion";
+import { calculateDaysSpent } from '../../../travel_planning_app/utils/date-convertion';
 
 const store = useDestinationStore();
 const { destination, fetchDestinations } = storeToRefs(store);
@@ -82,7 +83,36 @@ onMounted(() => {
     <div class="item">
       <div class="destination">
         <!-- {{ props.destinationID }} -->
-        <h1 class="title">{{ props.destination }}</h1>
+        <div class="d-flex align-items-center">
+          <h1 class="title">{{ props.destination }}</h1>
+        <div class="status">
+              <span class="mr-0">
+                <UBadge
+                  v-if="tripStatus === 'Completed'"
+                  variant="outline"
+                  size="md"
+                  color="green"
+                  >Completed</UBadge
+                >
+                <UBadge
+                v-if="tripStatus === 'Pending'"
+                  variant="outline"
+                  size="md"
+                  color="red"
+                  >Pending</UBadge
+                >
+                <UBadge
+                v-if="tripStatus === 'In progress'"
+                  variant="outline"
+                  size="md"
+                  color="yellow"
+                  >In progress</UBadge
+                >
+              </span>
+            </div>
+        </div>
+   
+        
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
@@ -143,31 +173,7 @@ onMounted(() => {
 
               <UButton color="blue" label="Details" @click="isOpen = true" />
             </div>
-            <div>
-              <span class="mr-auto">
-                <UBadge
-                  v-if="tripStatus === 'Completed'"
-                  variant="outline"
-                  size="md"
-                  color="green"
-                  >Completed</UBadge
-                >
-                <UBadge
-                v-if="tripStatus === 'Pending'"
-                  variant="outline"
-                  size="md"
-                  color="red"
-                  >Pending</UBadge
-                >
-                <UBadge
-                v-if="tripStatus === 'In progress'"
-                  variant="outline"
-                  size="md"
-                  color="yellow"
-                  >In progress</UBadge
-                >
-              </span>
-            </div>
+         
           </div>
           <div>
             <div>
@@ -212,6 +218,7 @@ onMounted(() => {
 .title {
   font-weight: bold;
   color: rgb(78, 77, 77);
+  margin-right: auto;
 }
 .section span {
   font-weight: bold;

@@ -81,13 +81,41 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="destination-item">
+  <div class="destination-item"  >
     <div class="item">
       <!-- <div class="status" :class="currStatus"></div> -->
       <div class="destination">
         <!-- {{ props.parentDestinationID  }} -->
 
-        <h1 class="title">{{ props.city }}</h1>
+       
+        <div class="d-flex align-items-center">
+          <h1 class="title">{{ props.city }}</h1>
+        <div class="status">
+              <span class="mr-0">
+                <UBadge
+                  v-if="visitStatus === 'Visited'"
+                  variant="outline"
+                  size="md"
+                  color="green"
+                  >Completed</UBadge
+                >
+                <UBadge
+                v-if="visitStatus === 'Not visited'"
+                  variant="outline"
+                  size="md"
+                  color="red"
+                  >Pending</UBadge
+                >
+                <UBadge
+                v-if="visitStatus === 'In progress'"
+                  variant="outline"
+                  size="md"
+                  color="yellow"
+                  >In progress</UBadge
+                >
+              </span>
+            </div>
+        </div>
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
@@ -203,6 +231,7 @@ onMounted(() => {
 .title {
   font-weight: bold;
   color: rgb(78, 77, 77);
+  margin-right: auto;
 }
 .section span {
   font-weight: bold;

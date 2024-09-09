@@ -22,55 +22,55 @@ const expenseItem = computed(() => {
 });
 
 // Function to calculate duration
-const calculateDuration = (startTime, endTime) => {
-  const [startHours, startMinutes] = startTime.split(":").map(Number);
-  const [endHours, endMinutes] = endTime.split(":").map(Number);
+// const calculateDuration = (startTime, endTime) => {
+//   const [startHours, startMinutes] = startTime.split(":").map(Number);
+//   const [endHours, endMinutes] = endTime.split(":").map(Number);
 
-  const startDate = new Date();
-  const endDate = new Date();
+//   const startDate = new Date();
+//   const endDate = new Date();
 
-  startDate.setHours(startHours, startMinutes);
-  endDate.setHours(endHours, endMinutes);
+//   startDate.setHours(startHours, startMinutes);
+//   endDate.setHours(endHours, endMinutes);
 
-  // Calculate duration in minutes
-  const durationMinutes = (endDate - startDate) / (1000 * 60);
-  const isNegative = durationMinutes < 0;
-  const absoluteMinutes = Math.abs(durationMinutes);
+//   // Calculate duration in minutes
+//   const durationMinutes = (endDate - startDate) / (1000 * 60);
+//   const isNegative = durationMinutes < 0;
+//   const absoluteMinutes = Math.abs(durationMinutes);
 
-  // Convert minutes to hours and minutes
-  const durationHours = Math.floor(absoluteMinutes / 60);
-  const remainingMinutes = Math.round(absoluteMinutes % 60);
+//   // Convert minutes to hours and minutes
+//   const durationHours = Math.floor(absoluteMinutes / 60);
+//   const remainingMinutes = Math.round(absoluteMinutes % 60);
 
-  // Return in appropriate format
-  if (isNegative) {
-    return `-${durationHours} hour${
-      durationHours !== 1 ? "s" : ""
-    } ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
-  } else {
-    return `${durationHours} hour${
-      durationHours !== 1 ? "s" : ""
-    } ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
-  }
-};
+//   // Return in appropriate format
+//   if (isNegative) {
+//     return `-${durationHours} hour${
+//       durationHours !== 1 ? "s" : ""
+//     } ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
+//   } else {
+//     return `${durationHours} hour${
+//       durationHours !== 1 ? "s" : ""
+//     } ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}`;
+//   }
+// };
 
 // Computed property for duration
-const duration = computed(() => {
-  if (expenseItem.value.startTime && expenseItem.value.endTime) {
-    return calculateDuration(
-      expenseItem.value.startTime,
-      expenseItem.value.endTime
-    );
-  }
-  return "";
-});
+// const duration = computed(() => {
+//   if (expenseItem.value.startTime && expenseItem.value.endTime) {
+//     return calculateDuration(
+//       expenseItem.value.startTime,
+//       expenseItem.value.endTime
+//     );
+//   }
+//   return "";
+// });
 
-// Watch for changes in startTime or endTime and update duration accordingly
-watch(
-  [() => expenseItem.value.startTime, () => expenseItem.value.endTime],
-  () => {
-    expenseItem.value.duration = duration.value;
-  }
-);
+// // Watch for changes in startTime or endTime and update duration accordingly
+// watch(
+//   [() => expenseItem.value.startTime, () => expenseItem.value.endTime],
+//   () => {
+//     expenseItem.value.duration = duration.value;
+//   }
+// );
 
 const updateExpenseHandler = async () => {
   try {
@@ -139,33 +139,15 @@ onMounted(async () => {
         />
       </div>
 
-      <div class="col-6">
-        <label for="inputPassword4" class="form-label">Start Time: </label>
-        <input
-          type="time"
-          v-model.trim="expenseItem.startTime"
-          class="form-control"
-          id="time-input"
-        />
-      </div>
-      <div class="col-6">
-        <label for="inputPassword4" class="form-label">End Time: </label>
-        <input
-          type="time"
-          v-model.trim="expenseItem.endTime"
-          class="form-control"
-          id="time-input"
-        />
-      </div>
-
+  
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Duration</label>
         <input
-          type="text"
+          type="number"
           v-model.trim="expenseItem.duration"
           class="form-control"
           id="duration-input"
-          readonly
+        
         />
       </div>
 
