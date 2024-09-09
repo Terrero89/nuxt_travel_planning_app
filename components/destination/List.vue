@@ -8,7 +8,7 @@ const store = useDestinationStore();
 const { destination, isLoading } = storeToRefs(store); // Include isLoading state
 
 // Fetch destinations when the component is mounted
-const { fetchDestinations } = store;
+const { fetchDestinations, filteredD } = store;
 
 onMounted(async () => {
   await fetchDestinations();

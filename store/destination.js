@@ -108,7 +108,7 @@ export const useDestinationStore = defineStore({
     destinationsAsArray: (state) => {
       return state.destination;
     },
-    filteredData: (state) => {
+    filteredD: (state) => {
       return (selectedItem) => {
         if(selectedItem === "All"){
           return state.destination.filter((item) => item.isTripCompleted);
