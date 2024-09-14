@@ -45,36 +45,12 @@ const filter = ref("");
 const filterByStatus = ref("");
 const filterByCategory = ref("");
 const filterByBookingStatus = ref("");
-
-const categories = ["Visited", "Not visited", "In progress"];
-const sortingBy = [
-  "Furthest Date",
-  "Closes Date",
-  "Highest Rating",
-  "Lowest Rating",
-  "Highest Cost",
-  "Lowest Cost",
-];
-
-const filteredData = () => {
-  if (!filter.value)
-    return cities.value.filter((data) => data.isThisCityVisited);
-  else
-    return cities.value.filter(
-      (data) => data.isThisCityVisited === filter.value
-    );
-};
-const getCitiesByDestinationID = computed(() => cityStore.filterItemById); // this is working!
-
-//   filteredCities(id, filter, sortBy)
 </script>
 
 <template>
   <div class="projects">
-    filtering: {{ filtering(destId, filterByStatus, filterByCategory, filterByBookingStatus) }}
+  
     <UICard class="mt-5">
-      {{ filterByStatus }}ddddd {{ filterByCategory }}
-      {{ filterByStatus === "Visited" }}
       <UICityFilter
         v-model="filter"
         v-model:filter2="filterByStatus"
@@ -83,17 +59,23 @@ const getCitiesByDestinationID = computed(() => cityStore.filterItemById); // th
       />
     </UICard>
     <UICard class="py-4">
-      <div class="row">
+      <div class="row mx-3">
         <div class="col">Filter or other features</div>
         <div class="col">
           <div>total spent | total time | attractions visited | ETC..</div>
+          
         </div>
       </div>
     </UICard>
-    {{ getCitiesByDestinationID(destId)[1] }}
+    <!-- {{ getCitiesByDestinationID(destId)[1] }} -->
 
     <CitiesItem
-      v-for="city in filtering(destId, filterByStatus, filterByCategory)"
+      v-for="city in filtering(
+        destId,
+        filterByStatus,
+        filterByCategory,
+        filterByBookingStatus
+      )"
       :key="city.cityID"
       :cityID="city.cityID"
       :parentDestinationID="destId"

@@ -28,7 +28,7 @@ const createCityLink = computed(() => `/destinations/create`);
   <!-- search bar starts here -->
   <div>
     <div>
-      <div class="row py-2">
+      <div class="row py-2 mx-3">
         <div class="col-lg-6 col-md-6 col-sm-6 col-7  my-auto">
           <!-- search button here, emit event soon to be set up -->
           <div class="input-group">
@@ -58,7 +58,7 @@ const createCityLink = computed(() => `/destinations/create`);
 
         <!--  -->
 
-        <div class="col-lg-4 col-md-4 col-sm-7 col-5">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-3 ml-auto ">
           <nuxt-link
             type="button"
             class="d-flex justify-content-end button-color"

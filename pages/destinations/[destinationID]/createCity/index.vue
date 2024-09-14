@@ -10,7 +10,7 @@ const destId = route.params.destinationID;
 <template>
 
     <div>
-        <h3>CREATING  A CITY : {{ destId }}</h3>
+
         <CitiesAddForm />
     </div>
 </template>

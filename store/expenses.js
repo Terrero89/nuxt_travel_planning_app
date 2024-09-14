@@ -94,5 +94,7 @@ export const useExpenseStore = defineStore({
       return (id) => prj.filter((p) => p.parentCityID === id);
     },
 
+    // ! Adding the filtering functionality here....
+
   },
 });

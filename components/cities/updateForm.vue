@@ -99,7 +99,7 @@ onMounted(async () => {
           <select class="form-select" v-model="cityItem.isAccommodationPaid" aria-label="Default select example">
             <option></option>
             <option>Reserved</option>
-            <option>Half reserved</option>
+            <option>Half Reserved</option>
             <option>Pending</option>
 
           </select>

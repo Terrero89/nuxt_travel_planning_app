@@ -19,18 +19,16 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
   <!-- search bar starts here -->
   <div>
     <div>
-      <div class="row py-2">
+      <div class="row py-2 mx-3">
       
 
         <!--  -->
         <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
             <div>
-            <!-- <label for="transportType" class="form-label"
-              >Filter by status</label
-            > -->
-            {{ filterByStatus}}
-            <select class="form-select" id="transportType" v-model="filterByStatus"  @change="$emit('update:filter2', filterByStatus)">
-              <option>All</option>
+                <label for="transportType" class="form-label"
+              > By Status </label
+            >
+            <select class="form-select" id="transportType" v-model="filterByStatus"  @change="$emit('update:filter2', filterByStatus)" placeholder="Filter by status">
               <option>Visited</option>
               <option>Not visited</option>
               <option>In progress</option>
@@ -43,10 +41,10 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
 
         <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
             <div>
-            <!-- <label for="transportType" class="form-label"
-              > By </label
-            > -->
-            {{ filterByCategory }}
+            <label for="transportType" class="form-label"
+              > By Type </label
+            >
+        
             <select class="form-select" id="category-selection" v-model="filterByCategory" @change="$emit('update:filter3', filterByCategory)">
               <option>Further Date</option>
               <option>Closest Date</option>
@@ -64,6 +62,9 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
             <!-- <label for="transportType" class="form-label"
               > By Booking status</label
             > -->
+            <label for="transportType" class="form-label"
+              > By Booking </label
+            >
             {{ filterByBookingStatus }}
             <select class="form-select" id="booking-selection" v-model=" filterByBookingStatus " @change="$emit('update:filter4',  filterByBookingStatus )">
               <option>Reserved</option>
@@ -74,7 +75,7 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
           </div>
         </div>
         <!--  -->
-        <div class="col-lg-2 col-md-2 col-sm-2 col-3  ">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-3 ml-auto ">
           <nuxt-link
             type="button"
             class="d-flex justify-content-end button-color"
