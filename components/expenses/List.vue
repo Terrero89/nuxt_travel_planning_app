@@ -8,6 +8,8 @@ const route = useRoute(); //route object
 const cityId = route.params.cityID;
 
 const { expensesAsArray } = expenseStore;
+
+
 const props = defineProps([
   "expenseID",
   "destinationParentID",
@@ -30,6 +32,11 @@ const props = defineProps([
   "comments",
   "expectedExpenseDate",
 ]);
+
+const filter = ref("");
+const filterByStatus = ref("");
+const filterByCategory = ref("");
+const filterByBookingStatus = ref("");
 onMounted(async () => {
   await fetchExpenses();
   expenseStore.expensesAsArray.value;
@@ -40,7 +47,27 @@ const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this
 
 <template>
   <div class="projects">
-    <div class="container"></div>
+    <UICard class="mt-5">
+      <UIExpensesFilter
+        v-model="filter"
+        v-model:filter2="filterByStatus"
+        v-model:filter3="filterByCategory"
+        v-model:filter4="filterByBookingStatus"
+      />
+    </UICard>
+    <UICard class="mt-5 mb-1 py-4">
+      <div class="row">
+        <div class="col">
+      
+          <UButton class="mx-2" label="Add Expense" variant="outline" color="indigo" :to="createCityLink"></UButton>
+        </div>
+        <div class="col">
+          Filter or other features
+        </div>
+      </div>
+
+
+    </UICard>
 
     <!-- <div v-for="expense in expenses">{{expense.expenseID}}</div> -->
     <ExpensesItem

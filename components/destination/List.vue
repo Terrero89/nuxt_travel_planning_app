@@ -8,11 +8,18 @@ const store = useDestinationStore();
 const { destination, isLoading } = storeToRefs(store); // Include isLoading state
 
 // Fetch destinations when the component is mounted
-const { fetchDestinations } = store;
+const {
+  fetchDestinations,
+  filterItemByName,
+  // filterByStatusPending,
+  // filterByStatusComplete,
+} = store;
 
 onMounted(async () => {
   await fetchDestinations();
 });
+
+const filter = ref("");
 
 const props = defineProps([
   "destinationID",
@@ -28,25 +35,35 @@ const props = defineProps([
   "daysRemainingForTrip",
   "citiesIncludedOnTrip",
   "tripRating",
-  "tripComments"
-
+  "tripComments",
+  "numOfPeople",
 ]);
+// const filteredData = () =>{
 
+const createCityLink = computed(() => `/destinations/create`);
+
+onMounted(async () => {
+  filterItemByName.value;
+  // filterByStatusPending.value;
+  // filterByStatusComplete.value;
+  // await filteredData(destination)
+});
 </script>
 <template>
   <div class="projects">
-  
-    <UICard class="mt-5 mb-1 py-4">
-      <UButton label="Go To Cities" to="/destinations/trips1"></UButton>
-      <UButton
-        label="Create Destination"
-        variant="outline"
-        color="indigo"
-        to="/destinations/create"
-      ></UButton>
+    <UICard class="mt-5 py-2">
+      <UISearchFilter v-model="filter" />
     </UICard>
-
-    <UIContainer >
+    <UICard class="py-4">
+      <div class="row">
+        <div class="col">
+          <div>total spent | total time | attractions visited | ETC..</div>
+        </div>
+      </div>
+    </UICard>
+    <!-- {{ filterByStatusPending }}
+    {{ filterByStatusComplete }} -->
+    <UIContainer>
       <!-- Display loading message or spinner while data is being fetched -->
       <div v-if="isLoading" class="flex items-center space-x-4 mx-auto">
         <div class="space-y-2 mx-auto">
@@ -58,10 +75,8 @@ const props = defineProps([
       </div>
 
       <div v-else>
-   
-    
         <DestinationItem
-          v-for="trip in destination"
+          v-for="trip in filterItemByName(filter)"
           :key="trip.destinationID"
           :destinationID="trip.destinationID"
           :destination="trip.destination"
@@ -76,6 +91,7 @@ const props = defineProps([
           :citiesIncludedOnTrip="trip.citiesIncludedOnTrip"
           :tripRating="trip.tripRating"
           :tripComments="trip.tripComments"
+          :numOfPeople="trip.numOfPeople"
         />
       </div>
     </UIContainer>
@@ -84,4 +100,8 @@ const props = defineProps([
 
 <style scoped>
 /* You can style the loading message here if needed */
+.links {
+  text-decoration: none;
+  list-style: none;
+}
 </style>

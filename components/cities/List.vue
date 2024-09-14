@@ -8,7 +8,7 @@ const destStore = useDestinationStore();
 
 import { storeToRefs } from "pinia";
 
-const { fetchCities,filterItemById} = cityStore;
+const { fetchCities, filterItemById, filterItemByName, filtering } = cityStore;
 const { fetchDestinations } = destStore;
 const { cities } = storeToRefs(cityStore);
 const { destination } = storeToRefs(destStore);
@@ -36,25 +36,46 @@ const props = defineProps([
   "cityComments",
 ]);
 
-onMounted(async() => {
+onMounted(async () => {
   await fetchCities();
- await  fetchDestinations();
-
+  await fetchDestinations();
 });
 
-
-const getCitiesByDestinationID = computed(() => cityStore.filterItemById); // this is working!
+const filter = ref("");
+const filterByStatus = ref("");
+const filterByCategory = ref("");
+const filterByBookingStatus = ref("");
 </script>
 
 <template>
   <div class="projects">
-TITLE HERE
-    <div>
-    
   
-    </div>
+    <UICard class="mt-5">
+      <UICityFilter
+        v-model="filter"
+        v-model:filter2="filterByStatus"
+        v-model:filter3="filterByCategory"
+        v-model:filter4="filterByBookingStatus"
+      />
+    </UICard>
+    <UICard class="py-4">
+      <div class="row mx-3">
+        <div class="col">Filter or other features</div>
+        <div class="col">
+          <div>total spent | total time | attractions visited | ETC..</div>
+          
+        </div>
+      </div>
+    </UICard>
+    <!-- {{ getCitiesByDestinationID(destId)[1] }} -->
+
     <CitiesItem
-      v-for="city in getCitiesByDestinationID(destId)"
+      v-for="city in filtering(
+        destId,
+        filterByStatus,
+        filterByCategory,
+        filterByBookingStatus
+      )"
       :key="city.cityID"
       :cityID="city.cityID"
       :parentDestinationID="destId"

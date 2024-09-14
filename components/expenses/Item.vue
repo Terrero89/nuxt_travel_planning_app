@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 const props = defineProps([
   "expenseID",
@@ -21,7 +21,7 @@ const props = defineProps([
   "placeRating",
   "priority",
   "comments",
-  "expectedExpenseDate"
+  "expectedExpenseDate",
 ]);
 
 const isOpen = ref(false);
@@ -39,6 +39,15 @@ const calculateDaysRemaining = () => {
     daysRemainingForExpense.value = 0;
   }
 };
+const expenseStatus = computed(() => {
+  if (props.isCompleted === "Completed") {
+    return "Completed";
+  } else if (props.isCompleted === "Pending") {
+    return "Pending";
+  } else if (props.isCompleted === "In progress") {
+    return "In progress";
+  }
+});
 
 // Automatically calculate daysRemainingForExpense on mount and update it daily
 onMounted(() => {
@@ -59,7 +68,35 @@ onMounted(() => {
     <div class="item">
       <div class="destination">
         <!-- {{ props.expenseID }} -->
-        <h1 class="title">{{ props.expense }}</h1>
+
+        <div class="d-flex align-items-center">
+          <h1 class="title">{{ props.expense }}</h1>
+          <div class="status">
+            <span class="mr-0">
+              <UBadge
+                v-if="expenseStatus === 'Completed'"
+                variant="outline"
+                size="md"
+                color="green"
+                >Completed</UBadge
+              >
+              <UBadge
+                v-if="expenseStatus === 'Pending'"
+                variant="outline"
+                size="md"
+                color="red"
+                >Pending</UBadge
+              >
+              <UBadge
+                v-if="expenseStatus === 'In progress'"
+                variant="outline"
+                size="md"
+                color="yellow"
+                >In progress</UBadge
+              >
+            </span>
+          </div>
+        </div>
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
@@ -69,6 +106,24 @@ onMounted(() => {
               <h2>
                 <span class="highlight">{{ props.duration }} </span>
               </h2>
+              <!-- <div>
+                <span class="">
+                  <UBadge
+                    v-if="!props.isCompleted"
+                    variant="soft"
+                    size="md"
+                    color="red"
+                    >In progress</UBadge
+                  >
+                  <UBadge
+                    v-if="props.isCompleted"
+                    variant="soft"
+                    size="md"
+                    color="primary"
+                    >Complete</UBadge
+                  >
+                </span>
+              </div> -->
             </div>
             <div class="col section">
               <span class="title-section pb-2"> Price </span>
@@ -78,7 +133,7 @@ onMounted(() => {
               <span class="pb-2 title-section"> Reservation Date</span>
               <h2>
                 <span class="highlight"
-                  >{{formatDate(props.expectedExpenseDate) }}
+                  >{{ formatDate(props.expectedExpenseDate) }}
                 </span>
               </h2>
             </div>
@@ -90,7 +145,7 @@ onMounted(() => {
                 <span class="highlight">
                   <UBadge
                     v-if="props.placeRating < 4"
-                    variant="soft"
+                    variant="solid"
                     size="md"
                     color="red"
                     >{{ props.placeRating }}</UBadge
@@ -104,7 +159,7 @@ onMounted(() => {
                 <span class="highlight">
                   <UBadge
                     v-if="props.placeRating >= 4 && props.placeRating <= 4.5"
-                    variant="soft"
+                    variant="solid"
                     size="md"
                     color="yellow"
                     >{{ props.placeRating }}</UBadge
@@ -115,7 +170,7 @@ onMounted(() => {
                 <span class="highlight">
                   <UBadge
                     v-if="props.placeRating > 4.5"
-                    variant="soft"
+                    variant="solid"
                     size="md"
                     color="green"
                     >{{ props.placeRating }}</UBadge
@@ -123,25 +178,13 @@ onMounted(() => {
                 </span>
               </h2>
 
-              <UButton color="blue" label="Details" @click="isOpen = true" />
-            </div>
-            <div>
-              <span class="mr-auto">
-                <UBadge
-                  v-if="!props.isCompleted"
-                  variant="soft"
-                  size="md"
-                  color="red"
-                  >In progress</UBadge
-                >
-                <UBadge
-                  v-if="props.isCompleted"
-                  variant="soft"
-                  size="md"
-                  color="primary"
-                  >Complete</UBadge
-                >
-              </span>
+              <UButton
+              class="my-2"
+                color="blue"
+                variant="outline"
+                label="Details"
+                @click="isOpen = true"
+              />
             </div>
           </div>
           <div>
@@ -168,7 +211,7 @@ onMounted(() => {
                     :placeRating="props.placeRating"
                     :comments="props.comments"
                     :priority="props.priority"
-                    :expectedExpenseDate= "props.expectedExpenseDate"
+                    :expectedExpenseDate="props.expectedExpenseDate"
                   />
                 </div>
               </UModal>
@@ -193,6 +236,7 @@ onMounted(() => {
 .title {
   color: rgb(78, 77, 77);
   font-weight: bold;
+  margin-right: auto;
 }
 .section span {
   font-weight: bold;

@@ -84,6 +84,15 @@ onMounted(async () => {
           id="destinationName"
         />
       </div>
+      <div>
+        <label for="destinationName" class="form-label">Number of people</label>
+        <input
+          type="number"
+          v-model.trim="dest.numOfPeople"
+          class="form-control"
+          id="destinationTravelers"
+        />
+      </div>
 
       <div>
         <label for="transportType" class="form-label"
@@ -154,7 +163,21 @@ onMounted(async () => {
           step="0.1"
         />
       </div>
-
+      <div>
+        <label for="transportType" class="form-label"
+          >Trip Status</label
+        >
+        <select
+          class="form-select"
+          v-model="dest.isTripCompleted"
+          id="transportType"
+        >
+          <option>Completed</option>
+          <option>Pending</option>
+          <option>In Progress</option>
+        
+        </select>
+      </div>
       <div>
         <label for="tripComments" class="form-label">Comments</label>
         <textarea
