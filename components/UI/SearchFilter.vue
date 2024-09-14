@@ -3,7 +3,7 @@ import { onMounted } from "vue";
 import { useDestinationStore } from "@/store/destination";
 import { storeToRefs } from "pinia";
 
-const props = defineProps(["modelValue", "link"]);
+const props = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue"]);
 
 // Access the store
@@ -29,7 +29,7 @@ const createCityLink = computed(() => `/destinations/create`);
   <div>
     <div>
       <div class="row py-2">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-7">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-7  my-auto">
           <!-- search button here, emit event soon to be set up -->
           <div class="input-group">
             <span class="input-group-text" id="basic-addon1">
