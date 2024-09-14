@@ -48,12 +48,12 @@ const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this
 <template>
   <div class="projects">
     <UICard class="mt-5">
-      <UIExpensesFilter
+      <!-- <UIExpensesFilter
         v-model="filter"
         v-model:filter2="filterByStatus"
         v-model:filter3="filterByCategory"
         v-model:filter4="filterByBookingStatus"
-      />
+      /> -->
     </UICard>
     <UICard class="mt-5 mb-1 py-4">
       <div class="row">
