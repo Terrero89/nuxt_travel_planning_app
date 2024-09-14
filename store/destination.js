@@ -1,4 +1,3 @@
-import axios from "axios";
 import { defineStore } from "pinia";
 
 export const useDestinationStore = defineStore({
@@ -108,13 +107,18 @@ export const useDestinationStore = defineStore({
     destinationsAsArray: (state) => {
       return state.destination;
     },
-    filteredD: (state) => {
-      return (selectedItem) => {
-        if(selectedItem === "All"){
-          return state.destination.filter((item) => item.isTripCompleted);
-        }
-        return state.destination.filter((item) => item.isTripCompleted === selectedItem);
-      };
+    //? FILTERS DESTINATIONS BASED ON STATUS OF COMPLETION
+    filterByStatusComplete: (state) => state.destination.filter((data)=> data.isTripCompleted === "Completed" ),
+    filterByStatusPending: (state) => state.destination.filter((data)=> data.isTripCompleted === "Pending" ),
+    filterByStatusInProgress: (state) => state.destination.filter((data)=> data.isTripCompleted === "In Progress" ),
+
+
+    // ? will search and item by its name
+    filterItemByName: (state) => (filter) => {
+      if (!filter) return state.destination; // Return all if no filter
+      return state.destination.filter((item) =>
+      item.destination.toLowerCase().includes(filter.toLowerCase())
+      );
     },
   },
 });

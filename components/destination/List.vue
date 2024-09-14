@@ -8,13 +8,18 @@ const store = useDestinationStore();
 const { destination, isLoading } = storeToRefs(store); // Include isLoading state
 
 // Fetch destinations when the component is mounted
-const { fetchDestinations, filteredD } = store;
+const {
+  fetchDestinations,
+  filterItemByName,
+  // filterByStatusPending,
+  // filterByStatusComplete,
+} = store;
 
 onMounted(async () => {
   await fetchDestinations();
 });
 
-const filter = ref('All');
+const filter = ref("");
 
 const props = defineProps([
   "destinationID",
@@ -33,55 +38,31 @@ const props = defineProps([
   "tripComments",
   "numOfPeople",
 ]);
-const filteredData = () =>{
-  if(filter.value === 'All'){
- return  destination.value.filter((data) => data.isTripCompleted);
-}
-return destination.value.filter((data) => data.isTripCompleted === filter.value);
-}
+// const filteredData = () =>{
 
-const createCityLink = computed(() => `/destinations/${props.destinationID}`);
+const createCityLink = computed(() => `/destinations/create`);
 
-onMounted(async ()=>{
-  await filteredData(destination)
-})
+onMounted(async () => {
+  filterItemByName.value;
+  // filterByStatusPending.value;
+  // filterByStatusComplete.value;
+  // await filteredData(destination)
+});
 </script>
 <template>
   <div class="projects">
-    <UIContainer class="mt-5 py-4">
+    <UICard class="mt-5 py-2">
+      <UISearchFilter v-model="filter" />
+    </UICard>
+    <UICard class="py-4">
       <div class="row">
-        <div class="col-6 col-6-sm">
-          <UButton
-            class="mx-2 links"
-            label="Add Destination"
-            variant="outline"
-            color="indigo"
-            :to="createCityLink"
-          ></UButton>
-        </div>
-        <div class="col-6">Filter or other features</div>
-      </div>
-    </UIContainer>
-
-    <UICard class="mb-1 py-2">
-      <div class="row">
-     
-        <div class="col-md-2 col-4-sm col-3-lg">
-          <div>
-            <label for="transportType" class="form-label"
-              >Filter by trip Status</label
-            >
-            <select class="form-select" id="transportType" v-model="filter">
-              <option>All</option>
-              <option>Completed</option>
-              <option>Pending</option>
-              <option>In Progress</option>
-            </select>
-          </div>
+        <div class="col">
+          <div>total spent | total time | attractions visited | ETC..</div>
         </div>
       </div>
     </UICard>
-  
+    <!-- {{ filterByStatusPending }}
+    {{ filterByStatusComplete }} -->
     <UIContainer>
       <!-- Display loading message or spinner while data is being fetched -->
       <div v-if="isLoading" class="flex items-center space-x-4 mx-auto">
@@ -92,10 +73,10 @@ onMounted(async ()=>{
           <USkeleton class="h-10 w-[600px]" />
         </div>
       </div>
-      
+
       <div v-else>
         <DestinationItem
-          v-for="trip in filteredData(destination)"
+          v-for="trip in filterItemByName(filter)"
           :key="trip.destinationID"
           :destinationID="trip.destinationID"
           :destination="trip.destination"
