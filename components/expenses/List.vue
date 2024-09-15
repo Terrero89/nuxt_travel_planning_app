@@ -60,7 +60,8 @@ const addExpenseLink = computed(
       />
 
       <!-- highest type of category | how many in priority | total cost | no. of booked items| rating average from all of ratings | total duration |  -->
-    <UIDisplayCard   :highestCategory="'Food/Drinks'"
+    <UIDisplayCard   
+    :highestCategory="'Food/Drinks'"
     :priorityCount="4"
     :totalCost="1500"
     :bookedItems="2"

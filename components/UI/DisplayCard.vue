@@ -1,8 +1,38 @@
+  
+  <script setup>
+  const props = defineProps({
+    highestCategory: {
+      type: String,
+      required: true,
+    },
+    priorityCount: {
+      type: Number,
+      required: true,
+    },
+    totalCost: {
+      type: Number,
+      required: true,
+    },
+    bookedItems: {
+      type: Number,
+      required: true,
+    },
+    averageRating: {
+      type: Number,
+      required: true,
+    },
+    totalDuration: {
+      type: Number,
+      required: true,
+    },
+  });
+  </script>
+
 <template>
     <UICard>
       <div class="card-body">
         <div class="card-item">
-          <label>Highest Category:</label>
+          <label>No. of items:</label>
           <span>{{ highestCategory }}</span>
         </div>
   
@@ -33,35 +63,7 @@
       </div>
     </UICard>
   </template>
-  
-  <script setup>
-  const props = defineProps({
-    highestCategory: {
-      type: String,
-      required: true,
-    },
-    priorityCount: {
-      type: Number,
-      required: true,
-    },
-    totalCost: {
-      type: Number,
-      required: true,
-    },
-    bookedItems: {
-      type: Number,
-      required: true,
-    },
-    averageRating: {
-      type: Number,
-      required: true,
-    },
-    totalDuration: {
-      type: Number,
-      required: true,
-    },
-  });
-  </script>
+
   
   <style scoped>
 
