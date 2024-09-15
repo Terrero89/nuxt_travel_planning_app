@@ -5,7 +5,9 @@ export const useCityStore = defineStore({
   state: () => ({
     URL: "https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities.json",
     cities: [],
-    editedData: {},
+    citiesTotalCost: 0,
+    citiesTotalDuration: 0,
+    citiesTotalRating: 0,
   }),
   actions: {
     async addCity(data) {
@@ -95,6 +97,7 @@ export const useCityStore = defineStore({
     citiesAsArray: (state) => {
       return state.cities;
     },
+
     //finds item based on parentDestinationID
     filterItemById(state) {
       const prj = this.citiesAsArray.filter((item) => item.parentDestinationID);
@@ -141,7 +144,7 @@ export const useCityStore = defineStore({
       }
       if (byCategory === "Closest Date") {
         let city = cities.sort(
-          (a, b) => a.daysRemainingForCity - b.daysRemainingForCity
+          (a, b) => b.daysRemainingForCity - b.daysRemainingForCity
         );
         filteredCities = city;
       }
@@ -176,6 +179,7 @@ export const useCityStore = defineStore({
     },
     // here to capture all the stats from the findings above we can take the above cities to update as selected
   },
+
   // ? will search and item by its name
   filterItemByName: (state) => (filter) => {
     if (!filter) return state.destination; // Return all if no filter
@@ -184,4 +188,17 @@ export const useCityStore = defineStore({
     );
   },
 
+  // numOfExpensesByCities: (state) => {
+  //   const filteredCities = this.filtering;
+  //   const expenseCount = {};
+
+  //   filteredCities.forEach((city) => {
+  //     expenseCount[city.cityID] = city.expenses ? city.expenses.length : 0;
+  //   });
+
+  //   return expenseCount;
+  // },
+  coding: (state) => {
+    return "coding";
+  },
 });

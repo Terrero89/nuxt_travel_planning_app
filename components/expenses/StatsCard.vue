@@ -51,6 +51,7 @@ const props = defineProps({
         <label>Total Duration:</label>
         <span>{{ totalDuration }} hours</span>
       </div>
+ 
     </div>
   </UICard>
 </template>

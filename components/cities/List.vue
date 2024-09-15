@@ -8,7 +8,14 @@ const destStore = useDestinationStore();
 
 import { storeToRefs } from "pinia";
 
-const { fetchCities, filterItemById, filterItemByName, filtering } = cityStore;
+const {
+  fetchCities,
+  filterItemById,
+  filterItemByName,
+  filtering,
+  numOfExpensesByCities,
+  coding,
+} = cityStore;
 const { fetchDestinations } = destStore;
 const { cities } = storeToRefs(cityStore);
 const { destination } = storeToRefs(destStore);
@@ -45,11 +52,12 @@ const filter = ref("");
 const filterByStatus = ref("");
 const filterByCategory = ref("");
 const filterByBookingStatus = ref("");
+
+
 </script>
 
 <template>
   <div class="projects">
-  
     <UICard class="mt-5">
       <UICityFilter
         v-model="filter"
@@ -58,13 +66,14 @@ const filterByBookingStatus = ref("");
         v-model:filter4="filterByBookingStatus"
       />
     </UICard>
-    <UIDisplayCard   
-    :highestCategory="'Food/Drinks'"
-    :priorityCount="4"
-    :totalCost="1500"
-    :bookedItems="2"
-    :averageRating="4.5"
-    :totalDuration="48"/>
+
+    <CitiesStatsCard
+      :numOfExpenses="9"
+      :totalCost="991"
+      :bookedItems="2"
+      :averageRating="4.5"
+      :totalDuration="48"
+    />
     <!-- {{ getCitiesByDestinationID(destId)[1] }} -->
 
     <CitiesItem

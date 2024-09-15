@@ -2,6 +2,7 @@
 import { useExpenseStore } from "@/store/expenses";
 const expenseStore = useExpenseStore();
 import { storeToRefs } from "pinia";
+
 const { fetchExpenses, getDataFilter } = expenseStore;
 const { expenses } = storeToRefs(expenseStore);
 const route = useRoute(); //route object
@@ -60,15 +61,14 @@ const addExpenseLink = computed(
       />
 
       <!-- highest type of category | how many in priority | total cost | no. of booked items| rating average from all of ratings | total duration |  -->
-    <UIDisplayCard   
-    :highestCategory="'Food/Drinks'"
-    :priorityCount="4"
-    :totalCost="1500"
-    :bookedItems="2"
-    :averageRating="4.5"
-    :totalDuration="48"/>
-  
-
+    <ExpensesStatsCard  
+ 
+      :numOfExpenses="9"
+      :totalCost="991"
+      :bookedItems="2"
+      :averageRating="4.5"
+      :totalDuration="48"
+    />
     <ExpensesItem
       v-for="expense in getDataFilter(
         cityId,
