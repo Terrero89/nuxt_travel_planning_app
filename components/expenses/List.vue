@@ -6,9 +6,9 @@ const { fetchExpenses } = expenseStore;
 const { expenses } = storeToRefs(expenseStore);
 const route = useRoute(); //route object
 const cityId = route.params.cityID;
+const destId = route.params.destinationID;
 
 const { expensesAsArray } = expenseStore;
-
 
 const props = defineProps([
   "expenseID",
@@ -43,30 +43,38 @@ onMounted(async () => {
 });
 
 const getExpensesByCityID = computed(() => expenseStore.filterItemById); // this is working!
+const addExpenseLink = computed(
+  () => `/destinations/${destId}/cities-${cityId}/createExpense`
+);
 </script>
 
 <template>
   <div class="projects">
     <UICard class="mt-5">
-      <!-- <UIExpensesFilter
+      <UIExpensesFilter
+    
         v-model="filter"
+          v-model:filter1="filterByStatus"
         v-model:filter2="filterByStatus"
         v-model:filter3="filterByCategory"
         v-model:filter4="filterByBookingStatus"
-      /> -->
+      />
+      
     </UICard>
-    <UICard class="mt-5 mb-1 py-4">
+    <UICard class="mt-1 mb-1 py-4">
       <div class="row">
         <div class="col">
-      
-          <UButton class="mx-2" label="Add Expense" variant="outline" color="indigo" :to="createCityLink"></UButton>
+          <UButton
+            class="mx-2"
+            label="Add Expense"
+            variant="outline"
+            color="indigo"
+            to=""
+          ></UButton>
         </div>
-        <div class="col">
-          Filter or other features
-        </div>
+        <div class="col">Filter or other features</div>
       </div>
-
-
+  
     </UICard>
 
     <!-- <div v-for="expense in expenses">{{expense.expenseID}}</div> -->

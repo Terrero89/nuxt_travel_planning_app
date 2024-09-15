@@ -25,6 +25,9 @@ const duration = ref(0); // Store calculated duration
 const daysRemainingForExpense = ref(0); // Store calculated days remaining
 const expectedExpenseDate = ref();
 
+
+const props = defineProps(["cityID"])
+
 // Watch for changes in startTime and endTime
 // watch(
 //   [startTime, endTime],
@@ -73,11 +76,13 @@ watch(
 const showPrice = computed(() => {
   return !["N/A", "Landmarks", "Other"].includes(category.value);
 });
+
 </script>
 <template>
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Add Expense</h3>
+      {{props.cityID}}-{{destId}}
 
       <div>
         <label for="expense" class="form-label">Expense</label>
@@ -105,8 +110,6 @@ const showPrice = computed(() => {
         <input type="number" v-model="cost" class="form-control" id="cost" />
       </div>
 
-   
-
       <div class="col-6">
         <label for="placeRating" class="form-label">Rating</label>
         <input
@@ -127,6 +130,16 @@ const showPrice = computed(() => {
           <option>Nice to visit</option>
           <option>Backup options</option>
           <option>Optional</option>
+        </select>
+      </div>
+      <div class="col-6">
+        <label for="priority" class="form-label">Status</label>
+        <select v-model="priority" class="form-select" id="priority">
+          <option value="" disabled selected hidden>Status</option>
+          <option>Complete</option>
+          <option>In progress</option>
+          <option>Pending</option>
+        
         </select>
       </div>
       <div class="col-6">
@@ -160,6 +173,8 @@ const showPrice = computed(() => {
 </template>
 
 <style scoped>
+
+
 .form-wrapper {
   background-color: white;
   max-width: 32rem;

@@ -95,6 +95,79 @@ export const useExpenseStore = defineStore({
     },
 
     // ! Adding the filtering functionality here....
+    getDataFilter: (state) => (id, byStatus, byCategory, byBooking) => {
+      // Step 1: Filter by destination ID (parentDestinationID)
+      let expense = state.expenses;
+     expense = expense.filter((city) => city.parentDestinationID === id);
+
+      // if (byStatus === "Visited") {
+      //   cities = cities.filter((data) => data.isThisCityVisited === "Visited");
+      // }
+      // if (byStatus === "Not visited") {
+      //   cities = cities.filter(
+      //     (data) => data.isThisCityVisited === "Not visited"
+      //   );
+      // }
+
+      // if (byStatus === "In progress") {
+      //   cities = cities.filter(
+      //     (data) => data.isThisCityVisited === "In progress"
+      //   );
+      // }
+
+      let filteredCities = cities;
+
+      if (byCategory === "Highest Rating") {
+        let city = cities.sort((a, b) => b.cityRating - a.cityRating);
+        filteredCities = city;
+      }
+      if (byCategory === "Lowest Rating") {
+        let city = cities.sort((a, b) => a.cityRating - b.cityRating);
+        filteredCities = city;
+      }
+      if (byCategory === "Highest Cost") {
+        let city = cities.sort((a, b) => b.totalCost - a.totalCost);
+        filteredCities = city;
+      }
+      if (byCategory === "Lowest Cost") {
+        let city = cities.sort((a, b) => a.totalCost - b.totalCost);
+        filteredCities = city;
+      }
+      if (byCategory === "Closest Date") {
+        let city = cities.sort(
+          (a, b) => a.daysRemainingForCity - b.daysRemainingForCity
+        );
+        filteredCities = city;
+      }
+      if (byCategory === "Further Date") {
+        let city = cities.sort(
+          (a, b) => b.daysRemainingForCity - a.daysRemainingForCity
+        );
+        filteredCities = city;
+      }
+
+      let citiesBooked = filteredCities;
+
+      if (byBooking === "Reserved") {
+        let booking = citiesBooked.filter(
+          (data) => data.isAccommodationPaid === "Reserved"
+        );
+        citiesBooked = booking;
+      }
+      if (byBooking === "Half Reserved") {
+        let booking = citiesBooked.filter(
+          (data) => data.isAccommodationPaid === "Half Reserved"
+        );
+        citiesBooked = booking;
+      }
+      if (byBooking === "Pending") {
+        let booking = citiesBooked.filter(
+          (data) => data.isAccommodationPaid === "Pending"
+        );
+        citiesBooked = booking;
+      }
+      return citiesBooked;
+    },
 
   },
 });
