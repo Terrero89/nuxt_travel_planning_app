@@ -58,7 +58,8 @@ const filterByBookingStatus = ref("");
         v-model:filter4="filterByBookingStatus"
       />
     </UICard>
-    <UIDisplayCard   :highestCategory="'Food/Drinks'"
+    <UIDisplayCard   
+    :highestCategory="'Food/Drinks'"
     :priorityCount="4"
     :totalCost="1500"
     :bookedItems="2"
