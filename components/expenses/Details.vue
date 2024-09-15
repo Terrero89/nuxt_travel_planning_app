@@ -41,15 +41,15 @@ const updateExpensesLink = computed(
     `/destinations/${destinationParamID}/cities-${cityParamID}/expense-${props.expenseID}/updateExpense`
 );
 
-const visitStatus = computed(() => {
-  if (props.isThisCityVisited === "Visited") {
-    return "Visited";
-  } else if (props.isThisCityVisited === "Not visited") {
-    return "Not visited";
-  } else if (props.isThisCityVisivisitStatusted === "In progress") {
-    return "In progress";
-  }
-})
+// const visitStatus = computed(() => {
+//   if (props.isThisCityVisited === "Visited") {
+//     return "Visited";
+//   } else if (props.isThisCityVisited === "Not visited") {
+//     return "Not visited";
+//   } else if (props.isThisCityVisited === "In progress") {
+//     return "In progress";
+//   }
+// })
 
 const ratingStatus = computed(() => {
   if (props.cityRating >= 4.5) {

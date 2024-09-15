@@ -12,7 +12,7 @@ const cityId = route.params.cityID;
   <div>
     <!-- destinationID: {{ destId }}
     cityID: {{ cityId }} -->
-    <UButton :to="`/destinations/${destId}/cities-${cityId}/createExpense`">Create New Expense</UButton>
+    <!-- <UButton :to="`/destinations/${destId}/cities-${cityId}/createExpense`">Create New Expense</UButton> -->
 
      <ExpensesList/>
    

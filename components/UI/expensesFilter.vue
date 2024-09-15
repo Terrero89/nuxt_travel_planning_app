@@ -13,9 +13,7 @@ const emit = defineEmits([
   
 ]);
 
-const filter = ref("");
 const filterByPriority = ref("");
-
 const filterByCategory = ref("");
 const filterByMisc = ref("");
 const filterByStatus = ref("");
@@ -29,18 +27,19 @@ const addExpenseLink = computed(
 <template>
   <!-- search bar starts here -->
   <div>
-    <div>
+    <UICard class="mt-5">
       <div class="row py-2 mx-3">
         <!--  -->
-        <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-6 my-auto item">
           <div>
             <!-- <label for="transportType" class="form-label"> Priority </label> -->
+         
             <select
               class="form-select"
               id="transportType"
-              v-model="filterByStatus"
-              @change="$emit('update:filter2', filterByStatus)"
-              placeholder="Filter by status"
+              v-model="filterByPriority"
+              @change="$emit('update:filter1', filterByPriority)"
+              placeholder="Filter by priority"
             >
               <option value="" disabled selected hidden>By Priority</option>
               <option>Must visit</option>
@@ -52,7 +51,7 @@ const addExpenseLink = computed(
           <!-- <button class="btn btn-md btn-primary">Add Destination</button> -->
         </div>
 
-        <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-6 my-auto item">
           <div>
             <!-- <label for="transportType" class="form-label"
               > By Booking status</label
@@ -62,8 +61,8 @@ const addExpenseLink = computed(
             <select
               class="form-select"
               id="booking-selection"
-              v-model="filterByBookingStatus"
-              @change="$emit('update:filter3', filterByBookingStatus)"
+              v-model="filterByCategory"
+              @change="$emit('update:filter2', filterByCategory)"
             >
               <option value="" disabled selected hidden>Category</option>
               <option>Food/Drinks</option>
@@ -80,15 +79,15 @@ const addExpenseLink = computed(
         </div>
         <!--  -->
 
-        <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-6 my-auto item">
           <div>
             <!-- <label for="transportType" class="form-label"> By Misc </label> -->
 
             <select
               class="form-select"
               id="category-selection"
-              v-model="filterByCategory"
-              @change="$emit('update:filter3', filterByCategory)"
+              v-model="filterByMisc"
+              @change="$emit('update:filter3', filterByMisc)"
             >
               <option value="" disabled selected hidden>Misc</option>
               <option>Further Date</option>
@@ -101,7 +100,7 @@ const addExpenseLink = computed(
           </div>
         </div>
         <!--  -->
-        <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-6 my-auto item">
           <div>
             <!-- <label for="transportType" class="form-label"
               > By Booking status</label
@@ -111,8 +110,8 @@ const addExpenseLink = computed(
             <select
               class="form-select"
               id="booking-selection"
-              v-model="filterByBookingStatus"
-              @change="$emit('update:filter4', filterByBookingStatus)"
+              v-model="filterByStatus"
+              @change="$emit('update:filter4', filterByStatus)"
             >
               <option value="" disabled selected hidden>Status</option>
               <option>Completed</option>
@@ -125,20 +124,21 @@ const addExpenseLink = computed(
         <div class="col-lg-2 col-md-2 col-sm-2 col-3 ml-auto">
             <nuxt-link
             type="button"
-            class="d-flex justify-content-end button-color"
-            :to="addExpenseLink"
+            class="d-flex justify-content-end "
+           
           >
             <UButton
               class="my-2 button-color"
               color="blue"
               size="lg"
               label="Add Expense"
+               :to="addExpenseLink"
             />
             <!-- <button class="btn btn-md btn-primary">Add Destination</button> -->
           </nuxt-link>
         </div>
       </div>
-    </div>
+    </UICard>
   </div>
 </template>
 
@@ -146,4 +146,12 @@ const addExpenseLink = computed(
 .button-color {
   text-decoration: none;
 }
+
+ @media (max-width: 768px) {
+    select{
+      margin:  0.3rem 0;
+    }
+  
+  
+  }
 </style>

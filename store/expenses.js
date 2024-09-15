@@ -95,79 +95,179 @@ export const useExpenseStore = defineStore({
     },
 
     // ! Adding the filtering functionality here....
-    getDataFilter: (state) => (id, byStatus, byCategory, byBooking) => {
+    // getDataFilter:
+    //   (state) => (id, byPriority, byCategory, byMisc, byStatus) => {
+    //     // Step 1: Filter by destination ID (parentDestinationID)
+    //     let expense = state.expenses;
+    //     expense = expense.filter((city) => city.parentCityID === id);
+
+    //     // filter by priority first
+    //     if (byPriority === "Must visit") {
+    //       expense = expense.filter((data) => data.priority === "Must visit");
+    //     }
+    //     if (byPriority === "Nice to visit") {
+    //       expense = expense.filter((data) => data.priority === "Nice to visit");
+    //     }
+    //     if (byPriority === "Backup options") {
+    //       expense = expense.filter(
+    //         (data) => data.priority === "Backup options"
+    //       );
+    //     }
+    //     if (byPriority === "Optional") {
+    //       expense = expense.filter((data) => data.priority === "Optional");
+    //     }
+
+    //     //filter by categories
+    //     let filteredByCategories = expense;
+
+    //     if (byCategory === "Food/Drinks") {
+    //       let expenseType = expense.filter(
+    //         (data) => data.category === "Food/Drinks"
+    //       );
+    //       filteredByCategories = expenseType;
+    //       //   let city = cities.sort((a, b) => b.cityRating - a.cityRating);
+    //       //   filteredCities = city;
+    //     }
+    //     if (byCategory === "Attractions") {
+    //       let expenseType = expense.filter(
+    //         (data) => data.category === "Attractions"
+    //       );
+    //       filteredByCategories = expenseType;
+    //     }
+    //     if (byCategory === "Souvenirs") {
+    //       let expenseType = expense.filter(
+    //         (data) => data.category === "Souvenirs"
+    //       );
+    //       filteredByCategories = expenseType;
+    //     }
+    //     if (byCategory === "Other") {
+    //       let expenseType = expense.filter((data) => data.category === "Other");
+    //       filteredByCategories = expenseType;
+    //     }
+    //     if (byCategory === "Store purchase") {
+    //       let expenseType = expense.filter(
+    //         (data) => data.category === "Store purchase"
+    //       );
+    //       filteredByCategories = expenseType;
+    //       if (byCategory === "Landmarks") {
+    //         let expenseType = expense.filter(
+    //           (data) => data.category === "Landmarks"
+    //         );
+    //         filteredByCategories = expenseType;
+    //       }
+    //       if (byCategory === "Transportation") {
+    //         let expenseType = expense.filter(
+    //           (data) => data.category === "Transportation"
+    //         );
+    //         filteredByCategories = expenseType;
+    //       }
+    //       if (byCategory === "Rentals") {
+    //         let expenseType = expense.filter(
+    //           (data) => data.category === "Rentals"
+    //         );
+    //         filteredByCategories = expenseType;
+    //       }
+    //       if (byCategory === "N/A") {
+    //         let expenseType = expense.filter((data) => data.category === "N/A");
+    //         filteredByCategories = expenseType;
+    //       }
+    //     }
+
+    //     // filter by misc
+
+    //     let filteredByMisc = filteredByCategories;
+
+    //     if (byMisc === "Highest Rating") {
+    //       let miscType = expense.sort((a, b) => b.placeRating - a.placeRating);
+    //       filteredByMisc = miscType.slice(0,4);
+    //     }
+    //     if (byMisc === "Lowest Rating") {
+    //       let miscType = expense.sort((a, b) => a.placeRating - b.placeRating);
+    //       filteredByMisc = miscType.slice(0,4);
+    //     }
+    //     if (byMisc === "Highest Cost") {
+    //       let miscType = expense.sort((a, b) => b.cost - a.cost);
+    //       filteredByMisc = miscType.slice(0,4);
+    //     }
+    //     if (byMisc === "Lowest Cost") {
+    //       let miscType = expense.sort((a, b) => a.cost - b.cost);
+    //       filteredByMisc = miscType.slice(0,4);
+    //     }
+    //     if (byMisc === "Closest Date") {
+    //       let miscType = expense.sort(
+    //         (a, b) => a.expectedExpenseDate - b.expectedExpenseDate
+    //       );
+    //       filteredByMisc = miscType;
+    //     }
+    //     if (byMisc === "Further Date") {
+    //       let miscType = expense.sort(
+    //         (a, b) => b.expectedExpenseDate - a.expectedExpenseDate
+    //       );
+    //       filteredByMisc = miscType;
+    //     }
+
+    //     if (byStatus === "Completed") {
+    //       cities = cities.filter((data) => data.isComplete === "Completed");
+    //     }
+    //     if (byStatus === "Pending") {
+    //       cities = cities.filter((data) => data.isComplete === "Pending");
+    //       if (byStatus === "In Progress") {
+    //         cities = cities.filter((data) => data.isComplete === "In Progress");
+    //       }
+    //     }
+
+
+    //     return filteredByMisc;
+    //   },
+    getDataFilter: (state) => (id, byPriority, byCategory, byMisc, byStatus) => {
       // Step 1: Filter by destination ID (parentDestinationID)
-      let expense = state.expenses;
-     expense = expense.filter((city) => city.parentDestinationID === id);
-
-      // if (byStatus === "Visited") {
-      //   cities = cities.filter((data) => data.isThisCityVisited === "Visited");
-      // }
-      // if (byStatus === "Not visited") {
-      //   cities = cities.filter(
-      //     (data) => data.isThisCityVisited === "Not visited"
-      //   );
-      // }
-
-      // if (byStatus === "In progress") {
-      //   cities = cities.filter(
-      //     (data) => data.isThisCityVisited === "In progress"
-      //   );
-      // }
-
-      let filteredCities = cities;
-
-      if (byCategory === "Highest Rating") {
-        let city = cities.sort((a, b) => b.cityRating - a.cityRating);
-        filteredCities = city;
+      let expense = state.expenses.filter((city) => city.parentCityID === id);
+    
+      // Step 2: Filter by priority
+      if (byPriority) {
+        expense = expense.filter((data) => data.priority === byPriority);
       }
-      if (byCategory === "Lowest Rating") {
-        let city = cities.sort((a, b) => a.cityRating - b.cityRating);
-        filteredCities = city;
+    
+      // Step 3: Filter by categories
+      if (byCategory) {
+        const validCategories = [
+          "Food/Drinks", "Attractions", "Souvenirs", "Other", 
+          "Store purchase", "Landmarks", "Transportation", "Rentals", "N/A"
+        ];
+        if (validCategories.includes(byCategory)) {
+          expense = expense.filter((data) => data.category === byCategory);
+        }
       }
-      if (byCategory === "Highest Cost") {
-        let city = cities.sort((a, b) => b.totalCost - a.totalCost);
-        filteredCities = city;
+    
+      // Step 4: Filter by misc
+      if (byMisc) {
+        if (byMisc === "Highest Rating") {
+          expense = expense.sort((a, b) => b.placeRating - a.placeRating).slice(0, 4);
+        } else if (byMisc === "Lowest Rating") {
+          expense = expense.sort((a, b) => a.placeRating - b.placeRating).slice(0, 4);
+        } else if (byMisc === "Highest Cost") {
+          expense = expense.sort((a, b) => b.cost - a.cost).slice(0, 4);
+        } else if (byMisc === "Lowest Cost") {
+          expense = expense.sort((a, b) => a.cost - b.cost).slice(0, 4);
+        } else if (byMisc === "Closest Date") {
+          expense = expense.sort((a, b) => new Date(b.expectedExpenseDate) - new Date(a.expectedExpenseDate));
+        } else if (byMisc === "Further Date") {
+          expense = expense.sort((a, b) => new Date(a.expectedExpenseDate) - new Date(b.expectedExpenseDate));
+        }
       }
-      if (byCategory === "Lowest Cost") {
-        let city = cities.sort((a, b) => a.totalCost - b.totalCost);
-        filteredCities = city;
-      }
-      if (byCategory === "Closest Date") {
-        let city = cities.sort(
-          (a, b) => a.daysRemainingForCity - b.daysRemainingForCity
-        );
-        filteredCities = city;
-      }
-      if (byCategory === "Further Date") {
-        let city = cities.sort(
-          (a, b) => b.daysRemainingForCity - a.daysRemainingForCity
-        );
-        filteredCities = city;
-      }
-
-      let citiesBooked = filteredCities;
-
-      if (byBooking === "Reserved") {
-        let booking = citiesBooked.filter(
-          (data) => data.isAccommodationPaid === "Reserved"
-        );
-        citiesBooked = booking;
-      }
-      if (byBooking === "Half Reserved") {
-        let booking = citiesBooked.filter(
-          (data) => data.isAccommodationPaid === "Half Reserved"
-        );
-        citiesBooked = booking;
-      }
-      if (byBooking === "Pending") {
-        let booking = citiesBooked.filter(
-          (data) => data.isAccommodationPaid === "Pending"
-        );
-        citiesBooked = booking;
-      }
-      return citiesBooked;
-    },
-
+    
+      // Step 5: Filter by status
+  
+        if (byStatus === "Completed") {
+          expense = expense.filter((data) => data.isCompleted === "Completed");
+        }
+        if (byStatus === "Pending") {
+          expense = expense.filter((data) => data.isCompleted === "Pending");
+        }
+        if (byStatus === "In Progress") {
+          expense = expense.filter((data) => data.isCompleted === "In Progress");
+        }
+      return expense;
+    }
   },
 });

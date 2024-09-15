@@ -44,8 +44,8 @@ const expenseStatus = computed(() => {
     return "Completed";
   } else if (props.isCompleted === "Pending") {
     return "Pending";
-  } else if (props.isCompleted === "In progress") {
-    return "In progress";
+  } else if (props.isCompleted === "In Progress") {
+    return "In Progress";
   }
 });
 
@@ -88,7 +88,7 @@ onMounted(() => {
                 >Pending</UBadge
               >
               <UBadge
-                v-if="expenseStatus === 'In progress'"
+                v-if=" expenseStatus === 'In Progress'"
                 variant="outline"
                 size="md"
                 color="yellow"

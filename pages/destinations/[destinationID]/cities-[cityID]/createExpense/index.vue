@@ -9,7 +9,7 @@ const cityId = route.params.cityID;
 
 <template>
   <div>
-    {{cityId}}
-    <ExpensesAddForm :cityID="cityId"/>
+    
+    <ExpensesAddForm />
   </div>
 </template>

@@ -2,7 +2,7 @@
 import { useExpenseStore } from "@/store/expenses";
 const expenseStore = useExpenseStore();
 import { storeToRefs } from "pinia";
-const { fetchExpenses } = expenseStore;
+const { fetchExpenses, getDataFilter } = expenseStore;
 const { expenses } = storeToRefs(expenseStore);
 const route = useRoute(); //route object
 const cityId = route.params.cityID;
@@ -33,10 +33,11 @@ const props = defineProps([
   "expectedExpenseDate",
 ]);
 
-const filter = ref("");
-const filterByStatus = ref("");
+const filterByPriority = ref("");
 const filterByCategory = ref("");
-const filterByBookingStatus = ref("");
+const filterByMisc = ref("");
+const filterByStatus = ref("");
+
 onMounted(async () => {
   await fetchExpenses();
   expenseStore.expensesAsArray.value;
@@ -50,36 +51,31 @@ const addExpenseLink = computed(
 
 <template>
   <div class="projects">
-    <UICard class="mt-5">
-      <UIExpensesFilter
-    
-        v-model="filter"
-          v-model:filter1="filterByStatus"
-        v-model:filter2="filterByStatus"
-        v-model:filter3="filterByCategory"
-        v-model:filter4="filterByBookingStatus"
-      />
-      
-    </UICard>
-    <UICard class="mt-1 mb-1 py-4">
-      <div class="row">
-        <div class="col">
-          <UButton
-            class="mx-2"
-            label="Add Expense"
-            variant="outline"
-            color="indigo"
-            to=""
-          ></UButton>
-        </div>
-        <div class="col">Filter or other features</div>
-      </div>
-  
-    </UICard>
 
-    <!-- <div v-for="expense in expenses">{{expense.expenseID}}</div> -->
+      <UIExpensesFilter
+        v-model:filter1="filterByPriority"
+        v-model:filter2="filterByCategory"
+        v-model:filter3="filterByMisc"
+        v-model:filter4="filterByStatus"
+      />
+
+      <!-- highest type of category | how many in priority | total cost | no. of booked items| rating average from all of ratings | total duration |  -->
+    <UIDisplayCard   :highestCategory="'Food/Drinks'"
+    :priorityCount="4"
+    :totalCost="1500"
+    :bookedItems="2"
+    :averageRating="4.5"
+    :totalDuration="48"/>
+  
+
     <ExpensesItem
-      v-for="expense in getExpensesByCityID(cityId)"
+      v-for="expense in getDataFilter(
+        cityId,
+        filterByPriority,
+        filterByCategory,
+        filterByMisc,
+        filterByStatus
+      )"
       :key="expense.expenseID"
       :expenseID="expense.expenseID"
       :destinationParentID="expense.destinationParentID"
