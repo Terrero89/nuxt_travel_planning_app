@@ -232,7 +232,7 @@ export const useExpenseStore = defineStore({
       if (byCategory) {
         const validCategories = [
           "Food/Drinks", "Attractions", "Souvenirs", "Other", 
-          "Store purchase", "Landmarks", "Transportation", "Rentals", "N/A"
+          "Store Purchase", "Landmarks", "Transportation", "Rentals", "N/A"
         ];
         if (validCategories.includes(byCategory)) {
           expense = expense.filter((data) => data.category === byCategory);

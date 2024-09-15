@@ -54,13 +54,13 @@ onMounted(async () => {
     <UICard class="mt-5 py-2">
       <UISearchFilter v-model="filter" />
     </UICard>
-    <UICard class="py-4">
-      <div class="row">
-        <div class="col">
-          <div>total spent | total time | attractions visited | ETC..</div>
-        </div>
-      </div>
-    </UICard>
+    <UIDisplayCard   :highestCategory="'Food/Drinks'"
+    :priorityCount="4"
+    :totalCost="1500"
+    :bookedItems="2"
+    :averageRating="4.5"
+    :totalDuration="48"/>
+    <!-- will be about no. people | no. cities| no. of days, no. of expenses, total cost of trip average | rating  -->
     <!-- {{ filterByStatusPending }}
     {{ filterByStatusComplete }} -->
     <UIContainer>
