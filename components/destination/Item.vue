@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useDestinationStore } from "@/store/destination";
 import { storeToRefs } from "pinia";
 import { formatDate } from "../../utils/date-conversion";
-import { calculateDaysSpent } from '../../../travel_planning_app/utils/date-convertion';
+
 
 const store = useDestinationStore();
 const { destination, fetchDestinations } = storeToRefs(store);

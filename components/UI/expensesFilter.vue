@@ -1,4 +1,4 @@
-// <script setup>
+//  <script setup>
 
 // const route = useRoute(); //route object
 // const destId = route.params.destinationID;
