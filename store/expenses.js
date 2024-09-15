@@ -127,9 +127,9 @@ export const useExpenseStore = defineStore({
         } else if (byMisc === "Lowest Cost") {
           expense = expense.sort((a, b) => a.cost - b.cost).slice(0, 4);
         } else if (byMisc === "Closest Date") {
-          expense = expense.sort((a, b) => new Date(b.expectedExpenseDate) - new Date(a.expectedExpenseDate));
-        } else if (byMisc === "Further Date") {
           expense = expense.sort((a, b) => new Date(a.expectedExpenseDate) - new Date(b.expectedExpenseDate));
+        } else if (byMisc === "Further Date") {
+          expense = expense.sort((a, b) => new Date(b.expectedExpenseDate) - new Date(a.expectedExpenseDate));
         }
       }
     
@@ -147,4 +147,8 @@ export const useExpenseStore = defineStore({
       return expense;
     }
   },
+  coding: (state)=>{
+    return 'coding'
+  }
+
 });

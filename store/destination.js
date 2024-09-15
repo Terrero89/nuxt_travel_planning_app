@@ -7,6 +7,9 @@ export const useDestinationStore = defineStore({
     destination: [],
     editedData: {},
     isLoading: false, // Add loading state
+    destinationsTotalCost: 0,
+    destinationsTotalDuration: 0,
+    destinationsTotalRating: 0,
   }),
   actions: {
     async fetchDestinations() {
