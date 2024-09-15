@@ -65,8 +65,8 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
             <label for="transportType" class="form-label"
               > By Booking </label
             >
-            {{ filterByBookingStatus }}
-            <select class="form-select" id="booking-selection" v-model="filterByBookingStatus " @change="$emit('update:filter4',  filterByBookingStatus )">
+      
+            <select class="form-select" id="booking-selection" v-model="filterByBookingStatus" @change="$emit('update:filter4',  filterByBookingStatus )">
               <option>Reserved</option>
               <option>Half Reserved</option>
               <option>Pending</option>
