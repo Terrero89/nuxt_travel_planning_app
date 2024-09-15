@@ -82,7 +82,6 @@ const showPrice = computed(() => {
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Add Expense</h3>
-      {{props.cityID}}-{{destId}}
 
       <div>
         <label for="expense" class="form-label">Expense</label>

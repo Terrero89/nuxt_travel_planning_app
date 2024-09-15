@@ -13,9 +13,7 @@ const emit = defineEmits([
   
 ]);
 
-const filter = ref("");
 const filterByPriority = ref("");
-
 const filterByCategory = ref("");
 const filterByMisc = ref("");
 const filterByStatus = ref("");
@@ -35,12 +33,13 @@ const addExpenseLink = computed(
         <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
           <div>
             <!-- <label for="transportType" class="form-label"> Priority </label> -->
+         
             <select
               class="form-select"
               id="transportType"
-              v-model="filterByStatus"
-              @change="$emit('update:filter2', filterByStatus)"
-              placeholder="Filter by status"
+              v-model="filterByPriority"
+              @change="$emit('update:filter1', filterByPriority)"
+              placeholder="Filter by priority"
             >
               <option value="" disabled selected hidden>By Priority</option>
               <option>Must visit</option>
@@ -62,8 +61,8 @@ const addExpenseLink = computed(
             <select
               class="form-select"
               id="booking-selection"
-              v-model="filterByBookingStatus"
-              @change="$emit('update:filter3', filterByBookingStatus)"
+              v-model="filterByCategory"
+              @change="$emit('update:filter2', filterByCategory)"
             >
               <option value="" disabled selected hidden>Category</option>
               <option>Food/Drinks</option>
@@ -83,12 +82,12 @@ const addExpenseLink = computed(
         <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
           <div>
             <!-- <label for="transportType" class="form-label"> By Misc </label> -->
-
+{{filterByMisc}}
             <select
               class="form-select"
               id="category-selection"
-              v-model="filterByCategory"
-              @change="$emit('update:filter3', filterByCategory)"
+              v-model="filterByMisc"
+              @change="$emit('update:filter3', filterByMisc)"
             >
               <option value="" disabled selected hidden>Misc</option>
               <option>Further Date</option>
@@ -107,12 +106,12 @@ const addExpenseLink = computed(
               > By Booking status</label
             > -->
             <!-- <label for="transportType" class="form-label"> By status </label> -->
-
+{{filterByStatus}}
             <select
               class="form-select"
               id="booking-selection"
-              v-model="filterByBookingStatus"
-              @change="$emit('update:filter4', filterByBookingStatus)"
+              v-model="filterByStatus"
+              @change="$emit('update:filter4', filterByStatus)"
             >
               <option value="" disabled selected hidden>Status</option>
               <option>Completed</option>

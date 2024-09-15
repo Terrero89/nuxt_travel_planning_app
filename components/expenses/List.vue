@@ -2,7 +2,7 @@
 import { useExpenseStore } from "@/store/expenses";
 const expenseStore = useExpenseStore();
 import { storeToRefs } from "pinia";
-const { fetchExpenses } = expenseStore;
+const { fetchExpenses, getDataFilter } = expenseStore;
 const { expenses } = storeToRefs(expenseStore);
 const route = useRoute(); //route object
 const cityId = route.params.cityID;
@@ -33,10 +33,11 @@ const props = defineProps([
   "expectedExpenseDate",
 ]);
 
-const filter = ref("");
-const filterByStatus = ref("");
+const filterByPriority = ref("");
 const filterByCategory = ref("");
-const filterByBookingStatus = ref("");
+const filterByMisc = ref("");
+const filterByStatus = ref("");
+
 onMounted(async () => {
   await fetchExpenses();
   expenseStore.expensesAsArray.value;
@@ -50,16 +51,37 @@ const addExpenseLink = computed(
 
 <template>
   <div class="projects">
+    LENGTH:
+    {{
+      getDataFilter(
+        cityId,
+        filterByPriority,
+        filterByCategory,
+        filterByMisc,
+        filterByStatus
+      ).length
+    }}
+    {{
+      getDataFilter(
+        cityId,
+        filterByPriority,
+        filterByCategory,
+        filterByMisc,
+        filterByStatus
+      )
+    }}
+    {{ filterByCategory }}
     <UICard class="mt-5">
+      {{ filterByPriority }}-
+      {{ filterByCategory }}
+      {{ filterByMisc }}-
+      {{ filterByStatus }}
       <UIExpensesFilter
-    
-        v-model="filter"
-          v-model:filter1="filterByStatus"
-        v-model:filter2="filterByStatus"
-        v-model:filter3="filterByCategory"
-        v-model:filter4="filterByBookingStatus"
+        v-model:filter1="filterByPriority"
+        v-model:filter2="filterByCategory"
+        v-model:filter3="filterByMisc"
+        v-model:filter4="filterByStatus"
       />
-      
     </UICard>
     <UICard class="mt-1 mb-1 py-4">
       <div class="row">
@@ -74,12 +96,16 @@ const addExpenseLink = computed(
         </div>
         <div class="col">Filter or other features</div>
       </div>
-  
     </UICard>
 
-    <!-- <div v-for="expense in expenses">{{expense.expenseID}}</div> -->
     <ExpensesItem
-      v-for="expense in getExpensesByCityID(cityId)"
+      v-for="expense in getDataFilter(
+        cityId,
+        filterByPriority,
+        filterByCategory,
+        filterByMisc,
+        filterByStatus
+      )"
       :key="expense.expenseID"
       :expenseID="expense.expenseID"
       :destinationParentID="expense.destinationParentID"
