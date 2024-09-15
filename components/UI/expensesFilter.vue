@@ -27,10 +27,10 @@ const addExpenseLink = computed(
 <template>
   <!-- search bar starts here -->
   <div>
-    <div>
+    <UICard class="mt-5">
       <div class="row py-2 mx-3">
         <!--  -->
-        <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-6 my-auto item">
           <div>
             <!-- <label for="transportType" class="form-label"> Priority </label> -->
          
@@ -51,7 +51,7 @@ const addExpenseLink = computed(
           <!-- <button class="btn btn-md btn-primary">Add Destination</button> -->
         </div>
 
-        <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-6 my-auto item">
           <div>
             <!-- <label for="transportType" class="form-label"
               > By Booking status</label
@@ -79,10 +79,10 @@ const addExpenseLink = computed(
         </div>
         <!--  -->
 
-        <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-6 my-auto item">
           <div>
             <!-- <label for="transportType" class="form-label"> By Misc </label> -->
-{{filterByMisc}}
+
             <select
               class="form-select"
               id="category-selection"
@@ -100,13 +100,13 @@ const addExpenseLink = computed(
           </div>
         </div>
         <!--  -->
-        <div class="col-lg-2 col-md-2 col-sm-2 col-3 my-auto">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-6 my-auto item">
           <div>
             <!-- <label for="transportType" class="form-label"
               > By Booking status</label
             > -->
             <!-- <label for="transportType" class="form-label"> By status </label> -->
-{{filterByStatus}}
+
             <select
               class="form-select"
               id="booking-selection"
@@ -137,7 +137,7 @@ const addExpenseLink = computed(
           </nuxt-link>
         </div>
       </div>
-    </div>
+    </UICard>
   </div>
 </template>
 
@@ -145,4 +145,12 @@ const addExpenseLink = computed(
 .button-color {
   text-decoration: none;
 }
+
+ @media (max-width: 768px) {
+    select{
+      margin:  0.3rem 0;
+    }
+  
+  
+  }
 </style>

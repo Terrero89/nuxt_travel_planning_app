@@ -58,15 +58,12 @@ const filterByBookingStatus = ref("");
         v-model:filter4="filterByBookingStatus"
       />
     </UICard>
-    <UICard class="py-4">
-      <div class="row mx-3">
-        <div class="col">Filter or other features</div>
-        <div class="col">
-          <div>total spent | total time | attractions visited | ETC..</div>
-          
-        </div>
-      </div>
-    </UICard>
+    <UIDisplayCard   :highestCategory="'Food/Drinks'"
+    :priorityCount="4"
+    :totalCost="1500"
+    :bookedItems="2"
+    :averageRating="4.5"
+    :totalDuration="48"/>
     <!-- {{ getCitiesByDestinationID(destId)[1] }} -->
 
     <CitiesItem

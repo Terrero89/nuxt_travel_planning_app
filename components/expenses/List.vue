@@ -51,52 +51,22 @@ const addExpenseLink = computed(
 
 <template>
   <div class="projects">
-    LENGTH:
-    {{
-      getDataFilter(
-        cityId,
-        filterByPriority,
-        filterByCategory,
-        filterByMisc,
-        filterByStatus
-      ).length
-    }}
-    {{
-      getDataFilter(
-        cityId,
-        filterByPriority,
-        filterByCategory,
-        filterByMisc,
-        filterByStatus
-      )
-    }}
-    {{ filterByCategory }}
-    <UICard class="mt-5">
-      {{ filterByPriority }}-
-      {{ filterByCategory }}
-      {{ filterByMisc }}-
-      {{ filterByStatus }}
+
       <UIExpensesFilter
         v-model:filter1="filterByPriority"
         v-model:filter2="filterByCategory"
         v-model:filter3="filterByMisc"
         v-model:filter4="filterByStatus"
       />
-    </UICard>
-    <UICard class="mt-1 mb-1 py-4">
-      <div class="row">
-        <div class="col">
-          <UButton
-            class="mx-2"
-            label="Add Expense"
-            variant="outline"
-            color="indigo"
-            to=""
-          ></UButton>
-        </div>
-        <div class="col">Filter or other features</div>
-      </div>
-    </UICard>
+
+      <!-- highest type of category | how many in priority | total cost | no. of booked items| rating average from all of ratings | total duration |  -->
+    <UIDisplayCard   :highestCategory="'Food/Drinks'"
+    :priorityCount="4"
+    :totalCost="1500"
+    :bookedItems="2"
+    :averageRating="4.5"
+    :totalDuration="48"/>
+  
 
     <ExpensesItem
       v-for="expense in getDataFilter(
