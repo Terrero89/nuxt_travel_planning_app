@@ -29,6 +29,7 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
               > By Status </label
             > -->
             <select class="form-select" id="transportType" v-model="filterByStatus"  @change="$emit('update:filter2', filterByStatus)" placeholder="Filter by status">
+              <option value="" disabled selected hidden>Filter by status</option>
               <option>Visited</option>
               <option>Not visited</option>
               <option>In progress</option>
@@ -46,6 +47,7 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
             >
          -->
             <select class="form-select" id="category-selection" v-model="filterByCategory" @change="$emit('update:filter3', filterByCategory)">
+              <option value="" disabled selected hidden>Filter by type</option>
               <option>Further Date</option>
               <option>Closest Date</option>
               <option>Highest Rating</option>
@@ -67,6 +69,7 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
             > -->
       
             <select class="form-select" id="booking-selection" v-model="filterByBookingStatus" @change="$emit('update:filter4',  filterByBookingStatus )">
+              <option value="" disabled selected hidden>Filter by status</option>
               <option>Reserved</option>
               <option>Half Reserved</option>
               <option>Pending</option>
@@ -78,14 +81,15 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
         <div class="col-lg-2 col-md-2 col-sm-2 col-8 ml-auto item ">
           <nuxt-link
             type="button"
-            class="d-flex justify-content-end button-color"
-            :to="createCityLink"
+            class="d-flex justify-content-end "
+      
           >
             <UButton
               class="my-2 button-color"
               color="blue"
               size="lg"
               label="Add New City"
+                :to="createCityLink"
             />
             <!-- <button class="btn btn-md btn-primary">Add Destination</button> -->
           </nuxt-link>

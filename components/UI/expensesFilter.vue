@@ -124,14 +124,15 @@ const addExpenseLink = computed(
         <div class="col-lg-2 col-md-2 col-sm-2 col-3 ml-auto">
             <nuxt-link
             type="button"
-            class="d-flex justify-content-end button-color"
-            :to="addExpenseLink"
+            class="d-flex justify-content-end "
+           
           >
             <UButton
               class="my-2 button-color"
               color="blue"
               size="lg"
               label="Add Expense"
+               :to="addExpenseLink"
             />
             <!-- <button class="btn btn-md btn-primary">Add Destination</button> -->
           </nuxt-link>
