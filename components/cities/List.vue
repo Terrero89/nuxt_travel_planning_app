@@ -17,7 +17,7 @@ const {
   coding,
 } = cityStore;
 const { fetchDestinations } = destStore;
-const { cities } = storeToRefs(cityStore);
+const { cities, filteredCitiesStats } = storeToRefs(cityStore);
 const { destination } = storeToRefs(destStore);
 const { expenses } = useExpenseStore();
 
@@ -53,6 +53,15 @@ const filterByStatus = ref("");
 const filterByCategory = ref("");
 const filterByBookingStatus = ref("");
 
+const filteredData = computed(( )=> filteredCitiesStats(destId, filterByStatus, filterByCategory, filterByBookingStatus)) 
+const filtered = computed(() => {
+  return cityStore.filteredCitiesStats(
+    destId,
+    filterByStatus.value,
+    filterByCategory.value,
+    filterByBookingStatus.value
+  );
+});
 
 </script>
 
@@ -69,13 +78,16 @@ const filterByBookingStatus = ref("");
 
     <CitiesStatsCard
       :numOfExpenses="9"
-      :totalCost="991"
-      :bookedItems="2"
-      :averageRating="4.5"
+      :totalCost="filtered.totalAccommodationCost + filtered.totalCost"
+      :bookedItems="filtered.numberOfItems"
+      :averageRating="filtered.avgRating"
       :totalDuration="48"
+      :accommodationCost="filtered.totalAccommodationCost"
     />
-    <!-- {{ getCitiesByDestinationID(destId)[1] }} -->
+  
+   DATA {{filtered}}
 
+<!-- {{ filtering(destId, filterByStatus, filterByCategory, filterByBookingStatus) }} -->
     <CitiesItem
       v-for="city in filtering(
         destId,

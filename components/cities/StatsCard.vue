@@ -4,6 +4,10 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  accommodationCost: {
+    type: Number,
+    required: true,
+  },
 
   totalCost: {
     type: Number,
@@ -31,7 +35,10 @@ const props = defineProps({
         <label>No. of expenses:</label>
         <span>{{ numOfExpenses }}</span>
       </div>
-
+      <div class="card-item">
+        <label>Total Duration:</label>
+        <span>$ {{ accommodationCost }} </span>
+      </div>
       <div class="card-item">
         <label>Total Cost:</label>
         <span>$ {{ totalCost }} </span>
@@ -47,10 +54,7 @@ const props = defineProps({
         <span>{{ averageRating }} / 5</span>
       </div>
 
-      <div class="card-item">
-        <label>Total Duration:</label>
-        <span>{{ totalDuration }} hours</span>
-      </div>
+   
     </div>
   </UICard>
 </template>
