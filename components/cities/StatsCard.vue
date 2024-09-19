@@ -40,7 +40,7 @@ const props = defineProps({
         <span>{{ bookedItems }}</span>
       </div>
       <div class="card-item">
-        <label>Accomomodation totals:</label>
+        <label>Stay totals:</label>
         <span>$ {{ accommodationCost }} </span>
       </div>
       <div class="card-item">
