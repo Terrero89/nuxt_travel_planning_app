@@ -53,7 +53,6 @@ const filterByStatus = ref("");
 const filterByCategory = ref("");
 const filterByBookingStatus = ref("");
 
-const filteredData = computed(( )=> filteredCitiesStats(destId, filterByStatus, filterByCategory, filterByBookingStatus)) 
 const filtered = computed(() => {
   return cityStore.filteredCitiesStats(
     destId,
