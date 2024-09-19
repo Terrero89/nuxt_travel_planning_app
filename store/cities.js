@@ -94,6 +94,8 @@ export const useCityStore = defineStore({
     },
   },
   getters: {
+
+
     citiesAsArray: (state) => {
       return state.cities;
     },
@@ -177,28 +179,45 @@ export const useCityStore = defineStore({
       }
       return citiesBooked;
     },
+
+    coding:() => (id, byStatus, byCategory, byBooking) => { 
+      return this.filtering(id, byStatus, byCategory, byBooking);
+    },
+    filteredCitiesStats: (state) => (id, byStatus, byCategory, byBooking) => {
+      // Filter cities based on the provided filters
+      const filteredCities = state.filtering(id, byStatus, byCategory, byBooking);
+    
+      // Calculate total cost, total duration, and total ratings
+      const totalCost = filteredCities.reduce((sum, city) => sum + city.totalCost, 0);
+      const totalDuration = filteredCities.reduce((sum, city) => sum + city.totalDuration, 0);
+      const totalRatings = filteredCities.reduce((sum, city) => sum + (city.cityRating || 0), 0);
+      const avgRating =
+        filteredCities.length > 0 ? totalRatings / filteredCities.length : 0;
+    
+      // Calculate total accommodation cost
+      const totalAccommodationCost = filteredCities.reduce(
+        (sum, city) => sum + (city.accommodationCost || 0),
+        0
+      );
+    
+      return {
+        totalCost,
+        totalDuration,
+        totalAccommodationCost, // Add this to the returned object
+        numberOfItems: filteredCities.length,
+        avgRating,
+      };
+    },
+    // ? will search and item by its name
+    filterItemByName: (state) => (filter) => {
+      if (!filter) return state.destination; // Return all if no filter
+      return state.destination.filter((item) =>
+        item.destination.toLowerCase().includes(filter.toLowerCase())
+      );
+    },
     // here to capture all the stats from the findings above we can take the above cities to update as selected
   },
 
-  // ? will search and item by its name
-  filterItemByName: (state) => (filter) => {
-    if (!filter) return state.destination; // Return all if no filter
-    return state.destination.filter((item) =>
-      item.destination.toLowerCase().includes(filter.toLowerCase())
-    );
-  },
 
-  // numOfExpensesByCities: (state) => {
-  //   const filteredCities = this.filtering;
-  //   const expenseCount = {};
-
-  //   filteredCities.forEach((city) => {
-  //     expenseCount[city.cityID] = city.expenses ? city.expenses.length : 0;
-  //   });
-
-  //   return expenseCount;
-  // },
-  coding: (state) => {
-    return "coding";
-  },
+ 
 });
