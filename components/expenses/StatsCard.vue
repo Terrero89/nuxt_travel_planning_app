@@ -63,6 +63,7 @@ const props = defineProps({
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
+  
 }
 
 .card-item {

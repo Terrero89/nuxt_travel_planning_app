@@ -10,10 +10,7 @@ const cityId = route.params.cityID;
 
 <template>
   <div>
-    <!-- destinationID: {{ destId }}
-    cityID: {{ cityId }} -->
-    <!-- <UButton :to="`/destinations/${destId}/cities-${cityId}/createExpense`">Create New Expense</UButton> -->
-
+ 
      <ExpensesList/>
    
   </div>

@@ -8,6 +8,7 @@
 .main-container {
   max-width: 60rem;
   margin: 0 auto;
+  
 }
 .wrapper {
   /* border: solid red 1px; */

@@ -99,6 +99,10 @@ const addExpenseLink = computed(
       :priority="expense.priority"
       :expectedExpenseDate="expense.expectedExpenseDate"
     />
+    <UICard class="my-5"></UICard>
+    <UICard class="mt-5"></UICard>
+    <UICard class="mt-5"></UICard>
+    <UICard class="mt-5"></UICard>
   </div>
 </template>
 

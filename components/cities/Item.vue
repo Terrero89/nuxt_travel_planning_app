@@ -136,7 +136,7 @@ onMounted(() => {
             <div class="col section">
               <span class="title-section pb-2"> Total Cost</span>
               <h2>
-                $ <span class="highlight">{{ props.totalCost }} </span>
+                $ <span class="highlight">{{ props.totalCost  }} </span>
               </h2>
               <span class="pb-2 title-section">Duration </span>
               <h2>
@@ -246,6 +246,7 @@ onMounted(() => {
   padding: 1rem;
   margin: 0.5rem 0rem;
   display: flex;
+  
 }
 
 .destination-item h1 {

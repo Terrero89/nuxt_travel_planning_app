@@ -36,22 +36,20 @@ const props = defineProps({
         <span>{{ numOfExpenses }}</span>
       </div>
       <div class="card-item">
-        <label>Total Duration:</label>
+        <label>No. of Cities:</label>
+        <span>{{ bookedItems }}</span>
+      </div>
+      <div class="card-item">
+        <label>Accomomodation totals:</label>
         <span>$ {{ accommodationCost }} </span>
       </div>
       <div class="card-item">
-        <label>Total Cost:</label>
+        <label>Overall Cost:</label>
         <span>$ {{ totalCost }} </span>
       </div>
-
-      <div class="card-item">
-        <label>Booked Items:</label>
-        <span>{{ bookedItems }}</span>
-      </div>
-
       <div class="card-item">
         <label>Average Rating:</label>
-        <span>{{ averageRating }} / 5</span>
+        <span>{{ averageRating.toFixed(2) }} / 5</span>
       </div>
 
    
@@ -66,6 +64,8 @@ const props = defineProps({
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
+  background:  rgb(248, 248, 248);
+
 }
 
 .card-item {

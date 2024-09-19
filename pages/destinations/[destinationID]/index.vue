@@ -10,7 +10,6 @@ const destId = route.params.destinationID;
 
 <template>
   <div>
-    
     <CitiesList />
   </div>
 </template>

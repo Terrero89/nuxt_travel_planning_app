@@ -67,8 +67,6 @@ onMounted(() => {
   <div class="destination-item">
     <div class="item">
       <div class="destination">
-        <!-- {{ props.expenseID }} -->
-
         <div class="d-flex align-items-center">
           <h1 class="title">{{ props.expense }}</h1>
           <div class="status">
@@ -106,24 +104,6 @@ onMounted(() => {
               <h2>
                 <span class="highlight">{{ props.duration }} </span>
               </h2>
-              <!-- <div>
-                <span class="">
-                  <UBadge
-                    v-if="!props.isCompleted"
-                    variant="soft"
-                    size="md"
-                    color="red"
-                    >In progress</UBadge
-                  >
-                  <UBadge
-                    v-if="props.isCompleted"
-                    variant="soft"
-                    size="md"
-                    color="primary"
-                    >Complete</UBadge
-                  >
-                </span>
-              </div> -->
             </div>
             <div class="col section">
               <span class="title-section pb-2"> Price </span>

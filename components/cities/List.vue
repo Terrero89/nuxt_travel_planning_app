@@ -77,7 +77,7 @@ const filtered = computed(() => {
 
     <CitiesStatsCard
       :numOfExpenses="9"
-      :totalCost="filtered.totalAccommodationCost + filtered.totalCost"
+      :totalCost="filtered.totalAccommodationCost"
       :bookedItems="filtered.numberOfItems"
       :averageRating="filtered.avgRating"
       :totalDuration="48"
@@ -113,7 +113,12 @@ const filtered = computed(() => {
       :cityRating="city.cityRating"
       :cityComments="city.cityComments"
     />
+    <UICard class="my-5"></UICard>
+    <UICard class="mt-5"></UICard>
+    <UICard class="mt-5"></UICard>
+    <UICard class="mt-5"></UICard>
   </div>
+
 </template>
 
 <style scoped></style>
