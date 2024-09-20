@@ -94,7 +94,13 @@ export const useExpenseStore = defineStore({
       return (id) => prj.filter((p) => p.parentCityID === id);
     },
 
-    // ! Adding the filtering functionality here....
+    getAmountOfExpenses(state) {
+      const expenses = state.expenses.filter((p) => p.parentCityID);
+      return (id) => expenses.filter((item) => item.parentCityID === id).length;
+
+    },
+
+
    
     getDataFilter: (state) => (id, byPriority, byCategory, byMisc, byStatus) => {
       // Step 1: Filter by destination ID (parentDestinationID)
