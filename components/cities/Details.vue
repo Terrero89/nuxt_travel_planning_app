@@ -172,20 +172,18 @@ onMounted(() => {
 
       <div>
         <span class="detail-label">See Cities to visit </span>
-        <NuxtLink class="space dr-button" :to="citiesLink">
-          <button>See Expenses</button>
+        <NuxtLink class="space " :to="citiesLink">
+          <button class="details-button">See Expenses</button>
         </NuxtLink>
       </div>
+   
       <div class="details-row d-block">
         <span class="detail-label">Added on : </span>
-        <p class="d-block">
-          {{ formatDate(props.date) }}
-        </p>
+        <span class="detail-value space">{{ formatDate(props.date) }}</span>
       </div>
-
       <div class="details-row d-block">
-        <span class="detail-label">Trip Comments: </span>
-        <p class="d-block">
+        <span class="detail-label ">Trip Comments: </span>
+        <p class="d-block comment">
           {{ props.comments }}
         </p>
       </div>
@@ -201,6 +199,27 @@ onMounted(() => {
 
 
 <style scoped>
+
+.details-button{
+  color: black;
+  border: #b0b0b0 solid 1px;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.details-button:hover{
+  background-color: #dadada;
+  transition: 0.3s ease-in-out;
+
+
+}
+.comment {
+  border: solid rgb(180, 180, 180) 1px;
+  min-height: 5rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
 .highlight {
   font-weight: 800;
 

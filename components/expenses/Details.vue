@@ -283,8 +283,9 @@ onMounted(async () => {
 
     <div class="details-row d-block">
       <span class="detail-label">Comments: </span>
-      <span class="">
-        {{ props.comments }}
+      <span class=" d-block comment">
+      
+      
       </span>
     </div>
 
@@ -297,6 +298,12 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.comment {
+  border: solid rgb(180, 180, 180) 1px;
+  min-height: 5rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
 .marked-link {
   text-decoration: none;
   color: gray;
