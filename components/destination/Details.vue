@@ -2,7 +2,7 @@
 import { useDestinationStore } from "@/store/destination";
 const store = useDestinationStore();
 import { storeToRefs } from "pinia";
-import { formatDate, formatNumber } from '../../utils/date-conversion';
+import { formatDate, formatNumber } from "../../utils/date-conversion";
 import {
   calculateDaysRangeDuration,
   calculateTotalDuration,
@@ -32,7 +32,6 @@ const updateLink = computed(
   () => `/destinations/${props.destinationID}/update`
 );
 
-
 const tripStatus = computed(() => {
   if (props.isTripCompleted === "Completed") {
     return "Completed";
@@ -41,7 +40,7 @@ const tripStatus = computed(() => {
   } else if (props.isTripCompleted === "In progress") {
     return "In progress";
   }
-})
+});
 
 const ratingStatus = computed(() => {
   if (props.tripRating >= 4.5) {
@@ -51,8 +50,7 @@ const ratingStatus = computed(() => {
   } else if (props.tripRating < 4) {
     return { rating: props.tripRating, color: "red" };
   }
-
-})
+});
 const removeItem = async (id) => {
   console.log(id);
 
@@ -80,24 +78,27 @@ const removeItem = async (id) => {
     <div class="details-row">
       <span class="detail-label">Dates: </span>
       <span class="detail-value space">
-        {{ formatDate(props.from) }} - {{ formatDate(props.to) }}</span>
+        {{ formatDate(props.from) }} - {{ formatDate(props.to) }}</span
+      >
     </div>
 
     <div class="details-row">
       <span class="detail-label">Budget:</span>
-      <span class="detail-value space">${{ formatNumber(props.destinationBudget) }}</span>
+      <span class="detail-value space"
+        >${{ formatNumber(props.destinationBudget) }}</span
+      >
     </div>
 
     <div class="details-row">
       <span class="detail-label">Trip Duration:</span>
 
-      <span class="detail-value space">{{ calculateDaysRangeDuration(props.from, props.to) }}
+      <span class="detail-value space"
+        >{{ calculateDaysRangeDuration(props.from, props.to) }}
         {{
           calculateTotalDuration(props.from, props.to) > 1 ? "day" : "days"
-        }}</span>
+        }}</span
+      >
     </div>
-
-
 
     <div>
       <div class="details-row">
@@ -110,74 +111,116 @@ const removeItem = async (id) => {
 
     <div class="details-row">
       <span class="detail-label">Cities Included: </span>
-      <span class="detail-value space">{{ props.citiesIncludedOnTrip }} cities</span>
+      <span class="detail-value space"
+        >{{ props.citiesIncludedOnTrip }} cities</span
+      >
     </div>
 
-<div>
-  <div>
-   
-      <span class="detail-label">Status: </span>
-              <span class="mr-auto">
-                <UBadge
-                  v-if="tripStatus === 'Completed'"
-                  variant="outline"
-                  size="md"
-                  color="green"
-                  >Completed</UBadge
-                >
-                <UBadge
-                v-if="tripStatus === 'Pending'"
-                  variant="outline"
-                  size="md"
-                  color="red"
-                  >Pending</UBadge
-                >
-                <UBadge
-                v-if="tripStatus === 'In progress'"
-                  variant="outline"
-                  size="md"
-                  color="yellow"
-                  >In progress</UBadge
-                >
-              </span>
-            </div>
-</div>
-
+    <div>
+      <div>
+        <span class="detail-label">Status: </span>
+        <span class="mr-auto">
+          <UBadge
+            v-if="tripStatus === 'Completed'"
+            variant="outline"
+            size="md"
+            color="green"
+            >Completed</UBadge
+          >
+          <UBadge
+            v-if="tripStatus === 'Pending'"
+            variant="outline"
+            size="md"
+            color="red"
+            >Pending</UBadge
+          >
+          <UBadge
+            v-if="tripStatus === 'In progress'"
+            variant="outline"
+            size="md"
+            color="yellow"
+            >In progress</UBadge
+          >
+        </span>
+      </div>
+    </div>
 
     <div>
       <span>
         <span class="detail-label">Rating: </span>
-        <UBadge v-if="ratingStatus.rating < 4" variant="solid" size="md" color="red">{{ props.tripRating.toFixed(1) }}
+        <UBadge
+          v-if="ratingStatus.rating < 4"
+          variant="solid"
+          size="md"
+          color="red"
+          >{{ props.tripRating.toFixed(1) }}
         </UBadge>
-        <UBadge v-if="ratingStatus.rating >= 4 && ratingStatus.rating <= 4.5" variant="solid" size="md" color="yellow">
-          {{ props.tripRating.toFixed(1) }}</UBadge>
-        <UBadge v-if="ratingStatus.rating >= 4.5" variant="solid" size="md" color="green">{{ props.tripRating.toFixed(1)
-          }}</UBadge>
+        <UBadge
+          v-if="ratingStatus.rating >= 4 && ratingStatus.rating <= 4.5"
+          variant="solid"
+          size="md"
+          color="yellow"
+        >
+          {{ props.tripRating.toFixed(1) }}</UBadge
+        >
+        <UBadge
+          v-if="ratingStatus.rating >= 4.5"
+          variant="solid"
+          size="md"
+          color="green"
+          >{{ props.tripRating.toFixed(1) }}</UBadge
+        >
       </span>
     </div>
 
     <div>
       <span class="detail-label">See Cities to visit </span>
-      <NuxtLink class="space dr-button" :to="citiesLink">
-        <button>Cities</button>
+      <NuxtLink class="space" :to="citiesLink">
+        <button class="details-button">Cities</button>
       </NuxtLink>
     </div>
-
+    
+    <div class="details-row d-block">
+        <span class="detail-label">Added on : </span>
+        <span class="detail-value space">{{ formatDate(props.date) }}</span>
+      </div>
     <div class="details-row d-block">
       <span class="detail-label">Trip Comments: </span>
-      <p class="d-block">
+      <p class="d-block comment">
         {{ props.tripComments }}
       </p>
     </div>
-    <span class="detail-value space"> {{ formatDate(props.date) }}</span>
+
     <div class="modal-actions">
-      <UButton color="red" @click="removeItem(props.destinationID)">Delete</UButton>
+      <UButton color="red" @click="removeItem(props.destinationID)"
+        >Delete</UButton
+      >
       <UButton :to="updateLink">Update</UButton>
     </div>
   </div>
 </template>
 
 <style scoped>
+
+.details-button{
+  color: black;
+  border: #b0b0b0 solid 1px;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.details-button:hover{
+  background-color: #dadada;
+  transition: 0.3s ease-in-out;
+
+
+}
+.comment {
+  border: solid rgb(180, 180, 180) 1px;
+  min-height: 5rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
 /* for highlighting titles : color: gray; */
 /* for highlighting values :  color: rgb(43, 41, 41);
   font-weight: 500;*/

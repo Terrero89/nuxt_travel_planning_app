@@ -60,9 +60,7 @@ onMounted(async () => {
     :bookedItems="2"
     :averageRating="4.5"
     :totalDuration="48"/>
-    <!-- will be about no. people | no. cities| no. of days, no. of expenses, total cost of trip average | rating  -->
-    <!-- {{ filterByStatusPending }}
-    {{ filterByStatusComplete }} -->
+
     <UIContainer>
       <!-- Display loading message or spinner while data is being fetched -->
       <div v-if="isLoading" class="flex items-center space-x-4 mx-auto">

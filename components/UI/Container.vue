@@ -8,15 +8,17 @@
 .main-container {
   max-width: 60rem;
   margin: 0 auto;
+
   
 }
 .wrapper {
   /* border: solid red 1px; */
-  max-width: 60rem;
+  max-width: 50rem;
+  border-radius: 15px;
   /* min-height:43rem; */
 
   /* margin: 1rem auto 3rem auto; */
-  border-radius: 5px;
+
 }
 </style>
 v

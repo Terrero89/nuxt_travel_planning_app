@@ -119,8 +119,8 @@ onMounted(() => {
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
-              <span class="pb-2 title-section">Accommodation </span>
-              <h2>{{ props.accommodation }}</h2>
+              <!-- <span class="pb-2 title-section">Accommodation </span>
+              <h2>{{ props.accommodation }}</h2> -->
               <span class="pb-2 title-section">Accommodation Cost </span>
               <h2>
                 $ <span class="highlight">{{ props.accommodationCost }} </span>
@@ -134,10 +134,10 @@ onMounted(() => {
               </h2>
             </div>
             <div class="col section">
-              <span class="title-section pb-2"> Total Cost</span>
+              <!-- <span class="title-section pb-2"> Total Cost</span>
               <h2>
                 $ <span class="highlight">{{ props.totalCost  }} </span>
-              </h2>
+              </h2> -->
               <span class="pb-2 title-section">Duration </span>
               <h2>
                 <span class="highlight"
@@ -156,37 +156,41 @@ onMounted(() => {
               </h2>
             </div>
             <div class="col section">
-              <span class="pb-2 title-section">Date Planned</span>
-              <h2>{{ formatDate(props.date) }}</h2>
+              <!-- <span class="pb-2 title-section">Date Planned</span>
+              <h2>{{ formatDate(props.date) }}</h2> -->
               <span class="pb-2 title-section">Rating</span>
               <h2 >
                 <span class="highlight">
                   <UBadge
                     v-if="ratingStatus.rating < 4"
-                    variant="solid"
+                    variant="soft"
                     size="md"
                     color="red"
                     >{{ props.cityRating }}</UBadge
                   >
                   <UBadge
                     v-if="ratingStatus.rating >= 4 && ratingStatus.rating <= 4.4"
-                    variant="solid"
+                    variant="soft"
                     size="md"
                     color="yellow"
                     >{{ props.cityRating }}</UBadge
                   >
                   <UBadge
                     v-if="ratingStatus.rating >= 4.5"
-                    variant="solid"
+                    variant="soft"
                     size="md"
                     color="green"
                     >{{ props.cityRating }}</UBadge
                   >
+
                 </span>
+
               </h2>
-              <UButton class="my-2" color="blue" variant="outline" label="Details" @click="isOpen = true" />
+<!--              <UButton class="my-2" color="blue" variant="solid" label="Details" @click="isOpen = true" />-->
             </div>
-    
+            <div class="col ">
+              <button class="my-2 details-button"   @click="isOpen = true" >Details</button>
+            </div>
 
           </div>
           <div>
@@ -219,6 +223,20 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
+.details-button{
+  color: black;
+  border: #b0b0b0 solid 1px;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.details-button:hover{
+  background-color: #dadada;
+  transition: 0.3s ease-in-out;
+
+
+}
 .highlight {
   font-weight: 800;
 

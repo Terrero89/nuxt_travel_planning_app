@@ -4,7 +4,6 @@ import { useDestinationStore } from "@/store/destination";
 import { storeToRefs } from "pinia";
 import { formatDate } from "../../utils/date-conversion";
 
-
 const store = useDestinationStore();
 const { destination, fetchDestinations } = storeToRefs(store);
 
@@ -42,8 +41,6 @@ const calculateDaysRemaining = () => {
   }
 };
 
-
-
 const tripStatus = computed(() => {
   if (props.isTripCompleted === "Completed") {
     return "Completed";
@@ -52,18 +49,17 @@ const tripStatus = computed(() => {
   } else if (props.isTripCompleted === "In progress") {
     return "In progress";
   }
-})
+});
 
 const ratingStatus = computed(() => {
   if (props.tripRating >= 4.5) {
-    return {rating: props.tripRating, color: "green"};
+    return { rating: props.tripRating, color: "green" };
   } else if (props.tripRating >= 4 && props.tripRating < 4.5) {
-    return {rating: props.tripRating, color: "yellow"};
+    return { rating: props.tripRating, color: "yellow" };
   } else if (props.tripRating < 4) {
-    return {rating: props.tripRating, color: "red"};
+    return { rating: props.tripRating, color: "red" };
   }
-  
-})
+});
 // Automatically calculate daysRemainingForTrip on mount and update it daily
 onMounted(() => {
   calculateDaysRemaining();
@@ -85,39 +81,36 @@ onMounted(() => {
         <!-- {{ props.destinationID }} -->
         <div class="d-flex align-items-center">
           <h1 class="title">{{ props.destination }}</h1>
-        <div class="status">
-              <span class="mr-0">
-                <UBadge
-                  v-if="tripStatus === 'Completed'"
-                  variant="outline"
-                  size="md"
-                  color="green"
-                  >Completed</UBadge
-                >
-                <UBadge
+          <div class="status">
+            <span class="mr-0">
+              <UBadge
+                v-if="tripStatus === 'Completed'"
+                variant="outline"
+                size="md"
+                color="green"
+                >Completed</UBadge
+              >
+              <UBadge
                 v-if="tripStatus === 'Pending'"
-                  variant="outline"
-                  size="md"
-                  color="red"
-                  >Pending</UBadge
-                >
-                <UBadge
+                variant="outline"
+                size="md"
+                color="red"
+                >Pending</UBadge
+              >
+              <UBadge
                 v-if="tripStatus === 'In progress'"
-                  variant="outline"
-                  size="md"
-                  color="yellow"
-                  >In progress</UBadge
-                >
-              </span>
-            </div>
+                variant="outline"
+                size="md"
+                color="yellow"
+                >In progress</UBadge
+              >
+            </span>
+          </div>
         </div>
-   
-        
+
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
-              <span class="pb-2 title-section">Transportation </span>
-              <h2>{{ props.transportType }}</h2>
               <span class="pb-2 title-section">Duration </span>
               <h2>
                 <span class="highlight">{{ props.tripDuration }}</span>
@@ -125,13 +118,13 @@ onMounted(() => {
               </h2>
             </div>
             <div class="col section">
-              <span class="title-section pb-2"> Budget </span>
-              <h2>
+              <!-- <span class="title-section pb-2"> Budget </span> -->
+              <!-- <h2>
                 $
                 <span class="highlight"
                   >{{ formatNumber(props.destinationBudget) }}
                 </span>
-              </h2>
+              </h2> -->
 
               <span class="pb-2 title-section"> Days until trip </span>
               <h2>
@@ -141,39 +134,40 @@ onMounted(() => {
               <!-- if dates is equal to 0  or is passed then we are going torender the date "ago" instead -->
             </div>
             <div class="col section">
-              <span class="pb-2 title-section">Date Planned</span>
-              <h2>{{ formatDate(props.date) }}</h2>
               <span class="pb-2 title-section">Rating</span>
               <h2>
                 <span class="highlight">
                   <UBadge
                     v-if="ratingStatus.rating < 4"
-                    variant="solid"
+                    variant="soft"
                     size="md"
                     color="red"
-                    >{{ props.tripRating.toFixed(1)}}</UBadge
+                    >{{ props.tripRating.toFixed(1) }}</UBadge
                   >
                   <UBadge
-                    v-if="ratingStatus.rating >= 4 && ratingStatus.rating  <= 4.5"
-                    variant="solid"
+                    v-if="
+                      ratingStatus.rating >= 4 && ratingStatus.rating <= 4.5
+                    "
+                    variant="soft"
                     size="md"
                     color="yellow"
-                    >{{ props.tripRating.toFixed(1)}}</UBadge
+                    >{{ props.tripRating.toFixed(1) }}</UBadge
                   >
                   <UBadge
                     v-if="ratingStatus.rating >= 4.5"
-                    variant="solid"
+                    variant="soft"
                     size="md"
                     color="green"
-                    >{{ props.tripRating.toFixed(1) }}</UBadge>
+                    >{{ props.tripRating.toFixed(1) }}</UBadge
+                  >
                 </span>
               </h2>
-
-          
-
-              <UButton class="my-2" color="blue" label="Details" @click="isOpen = true" />
             </div>
-         
+
+
+            <div class="col ">
+              <button class="my-2 details-button"   @click="isOpen = true" >Details</button>
+            </div>
           </div>
           <div>
             <div>
@@ -206,6 +200,20 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
+.details-button{
+  color: black;
+  border: #b0b0b0 solid 1px;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.details-button:hover{
+  background-color: #dadada;
+  transition: 0.3s ease-in-out;
+
+
+}
 .highlight {
   font-weight: 800;
 
@@ -219,6 +227,7 @@ onMounted(() => {
   font-weight: bold;
   color: rgb(78, 77, 77);
   margin-right: auto;
+
 }
 .section span {
   font-weight: bold;

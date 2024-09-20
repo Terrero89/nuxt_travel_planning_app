@@ -56,6 +56,9 @@ onMounted(() => {
   // Update daysRemainingForExpense every day at midnight
   const interval = setInterval(calculateDaysRemaining, 86400000); // 86400000ms = 24 hours
 
+  // Computed property to check if category is "Attractions"
+  const isAttractionCategory = computed(() => props.category === "Attractions");
+
   // Cleanup interval on unmount
   onUnmounted(() => {
     clearInterval(interval);
@@ -86,7 +89,7 @@ onMounted(() => {
                 >Pending</UBadge
               >
               <UBadge
-                v-if=" expenseStatus === 'In Progress'"
+                v-if="expenseStatus === 'In Progress'"
                 variant="outline"
                 size="md"
                 color="yellow"
@@ -100,16 +103,23 @@ onMounted(() => {
             <div class="col section">
               <span class="pb-2 title-section">Category </span>
               <h2>{{ props.category }}</h2>
-              <span class="pb-2 title-section">Duration </span>
-              <h2>
-                <span class="highlight">{{ props.duration }} </span>
-              </h2>
-            </div>
-            <div class="col section">
-              <span class="title-section pb-2"> Price </span>
-              <h2>
+
+              <span v-if="props.category === 'Attractions'"> Price </span>
+              <h2 v-if="props.category === 'Attractions'">
                 $ <span class="highlight">{{ props.cost }} </span>
               </h2>
+<!--              <div>-->
+<!--                <span class="pb-2 title-section">Duration </span>-->
+<!--                <h2>-->
+<!--                  <span class="highlight">{{ props.duration }} </span>-->
+<!--                </h2>-->
+<!--              </div>-->
+            </div>
+            <div class="col section">
+<!--              <span class="title-section pb-2"> Price </span>-->
+<!--              <h2>-->
+<!--                $ <span class="highlight">{{ props.cost }} </span>-->
+<!--              </h2>-->
               <span class="pb-2 title-section"> Reservation Date</span>
               <h2>
                 <span class="highlight"
@@ -118,10 +128,14 @@ onMounted(() => {
               </h2>
             </div>
             <div class="col section">
-              <span class="pb-2 title-section">Date Planned</span>
-              <h2>{{ formatDate(props.date) }}</h2>
+              <!-- <span class="pb-2 title-section">Date Planned</span>
+              <h2>{{ formatDate(props.date) }}</h2> -->
+          
+              <!-- <span class="pb-2 title-section">Date Planned</span>
+              <h2>{{ formatDate(props.date) }}</h2> -->
+
               <span class="pb-2 title-section">Rating</span>
-              <h2 v-if="props.placeRating < 4">
+              <h2>
                 <span class="highlight">
                   <UBadge
                     v-if="props.placeRating < 4"
@@ -130,13 +144,6 @@ onMounted(() => {
                     color="red"
                     >{{ props.placeRating }}</UBadge
                   >
-                </span>
-              </h2>
-
-              <h2
-                v-else-if="props.placeRating >= 4 && props.placeRating <= 4.5"
-              >
-                <span class="highlight">
                   <UBadge
                     v-if="props.placeRating >= 4 && props.placeRating <= 4.5"
                     variant="solid"
@@ -144,10 +151,6 @@ onMounted(() => {
                     color="yellow"
                     >{{ props.placeRating }}</UBadge
                   >
-                </span>
-              </h2>
-              <h2 v-else-if="props.placeRating > 4.5">
-                <span class="highlight">
                   <UBadge
                     v-if="props.placeRating > 4.5"
                     variant="solid"
@@ -155,17 +158,19 @@ onMounted(() => {
                     color="green"
                     >{{ props.placeRating }}</UBadge
                   >
+
                 </span>
+
               </h2>
 
-              <UButton
-              class="my-2"
-                color="blue"
-                variant="outline"
-                label="Details"
-                @click="isOpen = true"
-              />
+           
             </div>
+            <div class="col mx-auto">
+              <button
+                  class="my-2 details-button"
+                  @click="isOpen = true"
+              >Details</button> </div>
+            
           </div>
           <div>
             <div>
@@ -204,6 +209,20 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
+.details-button{
+  color: black;
+  border: #b0b0b0 solid 1px;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.details-button:hover{
+  background-color: #dadada;
+  transition: 0.3s ease-in-out;
+
+
+}
 .highlight {
   font-weight: 800;
 
