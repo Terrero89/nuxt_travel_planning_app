@@ -2,6 +2,10 @@
 import { ref, onMounted, computed, watch } from "vue";
 import { useCityStore } from "@/store/cities";
 import { storeToRefs } from "pinia";
+import { useExpenseStore } from "@/store/expenses";
+const expenseStore = useExpenseStore();
+const { fetchExpenses, getAvgRatingForCity } = expenseStore;
+const { expenses } = storeToRefs(expenseStore);
 const cityStore = useCityStore();
 const { cities } = storeToRefs(cityStore);
 const { fetchCities, updateCity } = cityStore;
@@ -58,8 +62,11 @@ const updateCityHandler = async () => {
 };
 
 onMounted(async () => {
+  await fetchExpenses()
   await fetchCities();
 });
+
+let updatedRating = computed(()=> cityItem.value = getAvgRatingForCity(cityParamID))
 </script>
 
 <template>
@@ -69,7 +76,7 @@ onMounted(async () => {
       <h3 class="mb-4">Update City</h3>
 
       <!-- {{ cityItem }} -->
-
+{{updatedRating}}
       <div>
         <label for="inputPassword4" class="form-label">City</label>
         <input type="input" v-model.trim="cityItem.city" class="form-control" id="name-input" />
@@ -143,8 +150,9 @@ onMounted(async () => {
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Rating</label>
 
-        <input type="number" v-model.trim="cityItem.cityRating" class="form-control" id="name-input" min="0" max="5"
-          step="0.1" />
+        <input type="number" v-model.trim="updatedRating" class="form-control" id="name-input" min="0" max="5"
+          step="0.1"  readonly/>
+   
       </div>
       <div class="">
           <label for="transportType" class="form-label">Visit status</label>

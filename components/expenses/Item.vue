@@ -56,8 +56,6 @@ onMounted(() => {
   // Update daysRemainingForExpense every day at midnight
   const interval = setInterval(calculateDaysRemaining, 86400000); // 86400000ms = 24 hours
 
-  // Computed property to check if category is "Attractions"
-  const isAttractionCategory = computed(() => props.category === "Attractions");
 
   // Cleanup interval on unmount
   onUnmounted(() => {

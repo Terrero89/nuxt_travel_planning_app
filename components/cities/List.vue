@@ -3,9 +3,11 @@ import { onMounted } from "vue";
 import { useDestinationStore } from "@/store/destination";
 import { useCityStore } from "@/store/cities";
 import { useExpenseStore } from "@/store/expenses";
-const cityStore = useCityStore();
-const destStore = useDestinationStore();
 
+const cityStore = useCityStore();
+const expenseStore = useExpenseStore();
+const destStore = useDestinationStore();
+const {getAvgRatingForCity,fetchExpenses } = expenseStore;
 import { storeToRefs } from "pinia";
 
 const {
@@ -44,6 +46,7 @@ const props = defineProps([
 ]);
 
 onMounted(async () => {
+  await fetchExpenses();
   await fetchCities();
   await fetchDestinations();
 });
@@ -110,7 +113,7 @@ const filtered = computed(() => {
       :isThisCityVisited="city.isThisCityVisited"
       :daysRemainingForCity="city.daysRemainingForCity"
       :expenseIncludedOnCity="city.expenseIncludedOnCity"
-      :cityRating="city.cityRating"
+      :cityRating="getAvgRatingForCity(city.cityID)"
       :cityComments="city.cityComments"
     />
     <UICard class="my-5"></UICard>

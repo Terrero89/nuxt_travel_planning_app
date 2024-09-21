@@ -1,7 +1,11 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
+import { useExpenseStore } from "@/store/expenses"
 
 
+const expenseStore = useExpenseStore();
+const {expenses,expensesAmount } = storeToRefs(expenseStore);
+const {fetchExpenses, getAvgRatingForCity } = expenseStore;
 const props = defineProps([
   "cityID",
   "parentDestinationID",
@@ -67,7 +71,9 @@ const ratingStatus = computed(() => {
   
 })
 // Automatically calculate daysRemainingForCity on mount and update it daily
-onMounted(() => {
+onMounted(async() => {
+  await fetchExpenses()
+  // await getAmount(props.cityID)
   calculateDaysRemainingForCity();
 
   // Update daysRemainingForCity every day at midnight
@@ -85,9 +91,8 @@ onMounted(() => {
     <div class="item">
       <!-- <div class="status" :class="currStatus"></div> -->
       <div class="destination">
-        <!-- {{ props.parentDestinationID  }} -->
+        {{getAvgRatingForCity(props.cityID) === 0 ? 0 : getAvgRatingForCity(props.cityID)}}
 
-       
         <div class="d-flex align-items-center">
           <h1 class="title">{{ props.city }}</h1>
         <div class="status">
@@ -166,7 +171,7 @@ onMounted(() => {
                     variant="soft"
                     size="md"
                     color="red"
-                    >{{ props.cityRating }}</UBadge
+                    >{{ ratingStatus.rating }}</UBadge
                   >
                   <UBadge
                     v-if="ratingStatus.rating >= 4 && ratingStatus.rating <= 4.4"

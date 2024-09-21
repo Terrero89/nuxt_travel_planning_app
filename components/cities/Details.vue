@@ -9,7 +9,7 @@ const cityStore = useCityStore();
 import { storeToRefs } from "pinia";
 const { cities } = storeToRefs(cityStore);
 const {expenses } = storeToRefs(expenseStore);
-const { getAmountOfExpenses } = expenseStore;
+const { getAmountOfExpenses, fetchExpenses } = expenseStore;
 const { fetchCities, updateCity, citiesAsArray, deleteCity,} = cityStore;
 const route = useRoute(); //route object
 const destinationParamID = route.params.destinationID;
@@ -78,10 +78,19 @@ const ratingStatus = computed(() => {
   }
   
 })
-onMounted(() => {
-  fetchCities()
+
+const evalLenghtOfExpenses = computed(() => {
+  if(getAmountOfExpenses(props.cityID) > 0) {
+    return getAmountOfExpenses(props.cityID)
+  }else{
+    return 'No expenses added yet'
+  }
+})
+onMounted(async() => {
+  await fetchExpenses()
+  await fetchCities()
   cityStore.citiesAsArray.value
-  expenseStore.getAmountOfExpenses(props.cityID)
+
 });
 </script>
 
@@ -89,7 +98,7 @@ onMounted(() => {
   <div>
     <div class="modal-details">
       <h3>City Details</h3>
-      {{ props.cityID }}- {{getAmountOfExpenses(props.cityID)}}
+      {{ props.cityID }}-
       <hr />
       <h2>{{ props.city }}</h2>
       <div class="details-row">
@@ -156,7 +165,8 @@ onMounted(() => {
 
       <div class="details-row">
         <span class="detail-label">No. of Expenses </span>
-        <span class="detail-value space">{{getAmountOfExpenses(props.cityID)}}</span>
+<!--        <span class="detail-value space">{{expenseStore.getAmountOfExpenses(props.cityID)}}</span>-->
+        <span class="detail-value space">{{evalLenghtOfExpenses}}</span>
       </div>
 
       <div v-if="props.cityRating">
