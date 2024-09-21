@@ -83,7 +83,7 @@ const evalLenghtOfExpenses = computed(() => {
   if(getAmountOfExpenses(props.cityID) > 0) {
     return getAmountOfExpenses(props.cityID)
   }else{
-    return 'No expenses added yet'
+    return 'No expenses added'
   }
 })
 onMounted(async() => {
@@ -165,7 +165,6 @@ onMounted(async() => {
 
       <div class="details-row">
         <span class="detail-label">No. of Expenses </span>
-<!--        <span class="detail-value space">{{expenseStore.getAmountOfExpenses(props.cityID)}}</span>-->
         <span class="detail-value space">{{evalLenghtOfExpenses}}</span>
       </div>
 

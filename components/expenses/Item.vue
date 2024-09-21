@@ -102,8 +102,8 @@ onMounted(() => {
               <span class="pb-2 title-section">Category </span>
               <h2>{{ props.category }}</h2>
 
-              <span v-if="props.category === 'Attractions'"> Price </span>
-              <h2 v-if="props.category === 'Attractions'">
+              <span > Price </span>
+              <h2>
                 $ <span class="highlight">{{ props.cost }} </span>
               </h2>
 <!--              <div>-->

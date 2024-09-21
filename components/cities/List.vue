@@ -7,7 +7,7 @@ import { useExpenseStore } from "@/store/expenses";
 const cityStore = useCityStore();
 const expenseStore = useExpenseStore();
 const destStore = useDestinationStore();
-const {getAvgRatingForCity,fetchExpenses } = expenseStore;
+const {getAvgRatingForCity,fetchExpenses,  getTotalAccommodationsNumbers, getAmountOfExpenses} = expenseStore;
 import { storeToRefs } from "pinia";
 
 const {
@@ -65,6 +65,13 @@ const filtered = computed(() => {
   );
 });
 
+
+
+onMounted(async() => {
+  await fetchExpenses()
+
+
+});
 </script>
 
 <template>
@@ -107,7 +114,7 @@ const filtered = computed(() => {
       :accommodationAddress="city.accommodationAddress"
       :from="city.from"
       :to="city.to"
-      :totalCost="city.totalCost"
+      :totalCost="getTotalAccommodationsNumbers(city.cityID) + city.accommodationCost"
       :cityDuration="city.cityDuration"
       :date="city.date"
       :isThisCityVisited="city.isThisCityVisited"

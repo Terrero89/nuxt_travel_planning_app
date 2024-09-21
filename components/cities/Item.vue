@@ -5,7 +5,7 @@ import { useExpenseStore } from "@/store/expenses"
 
 const expenseStore = useExpenseStore();
 const {expenses,expensesAmount } = storeToRefs(expenseStore);
-const {fetchExpenses, getAvgRatingForCity } = expenseStore;
+const {fetchExpenses, getAvgRatingForCity,    getTotalAccommodationsNumbers } = expenseStore;
 const props = defineProps([
   "cityID",
   "parentDestinationID",
@@ -39,7 +39,7 @@ const calculateDaysRemainingForCity = () => {
   } else {
     daysRemainingForCity.value = 0;
   }
-};
+};143
 
 const accommodationStatus = computed(() => {
   if (props.isAccommodationPaid === "Reserved") {
@@ -92,7 +92,9 @@ onMounted(async() => {
       <!-- <div class="status" :class="currStatus"></div> -->
       <div class="destination">
         {{getAvgRatingForCity(props.cityID) === 0 ? 0 : getAvgRatingForCity(props.cityID)}}
-
+{{   getTotalAccommodationsNumbers(props.cityID)  }}
+{{formatNumber(getTotalAccommodationsNumbers(props.cityID) )}}
+{{ props.totalCost }}
         <div class="d-flex align-items-center">
           <h1 class="title">{{ props.city }}</h1>
         <div class="status">
@@ -126,7 +128,7 @@ onMounted(async() => {
             <div class="col section">
               <!-- <span class="pb-2 title-section">Accommodation </span>
               <h2>{{ props.accommodation }}</h2> -->
-              <span class="pb-2 title-section">Accommodation Cost </span>
+              <span class="pb-2 title-section">Stay Cost </span>
               <h2>
                 $ <span class="highlight">{{ props.accommodationCost }} </span>
               </h2>
@@ -139,10 +141,10 @@ onMounted(async() => {
               </h2>
             </div>
             <div class="col section">
-              <!-- <span class="title-section pb-2"> Total Cost</span>
+              <span class="title-section pb-2"> Total Cost</span>
               <h2>
                 $ <span class="highlight">{{ props.totalCost  }} </span>
-              </h2> -->
+              </h2>
               <span class="pb-2 title-section">Duration </span>
               <h2>
                 <span class="highlight"
@@ -154,15 +156,16 @@ onMounted(async() => {
                   }}</span
                 >
               </h2>
+            
+            </div>
+            <div class="col section">
+              <!-- <span class="pb-2 title-section">Date Planned</span>
+              <h2>{{ formatDate(props.date) }}</h2> -->
               <span class="pb-2 title-section"> Days until visit </span>
               <h2>
                 <span class="highlight">{{ daysRemainingForCity }} </span>
                 days
               </h2>
-            </div>
-            <div class="col section">
-              <!-- <span class="pb-2 title-section">Date Planned</span>
-              <h2>{{ formatDate(props.date) }}</h2> -->
               <span class="pb-2 title-section">Rating</span>
               <h2 >
                 <span class="highlight">
