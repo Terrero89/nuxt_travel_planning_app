@@ -56,11 +56,13 @@ export const useCityStore = defineStore({
       const cityList = [];
 
       for (const key in this.cities) {
-        const newCity = {
-          cityID: key,
-          ...this.cities[key],
-        };
-        cityList.push(newCity);
+        if (this.cities[key]) { // Check if city data exists
+          const newCity = {
+            cityID: key,
+            ...this.cities[key],
+          };
+          cityList.push(newCity);
+        }
       }
       this.cities = cityList;
     },
@@ -84,7 +86,7 @@ export const useCityStore = defineStore({
 
         // Update the local state after a successful update
         const index = this.cities.findIndex((city) => city.cityID === cityID);
-        if (index !== -1) {
+        if (index !== -1) {penses
           // Use the returned data from Firebase to ensure consistency
           this.cities[index] = { cityID, ...updatedCity };
         }
@@ -214,6 +216,10 @@ export const useCityStore = defineStore({
       return state.destination.filter((item) =>
         item.destination.toLowerCase().includes(filter.toLowerCase())
       );
+    },
+    getAmountOfCities(state) {
+      const city = state.cities.filter((p) => p.parentDestinationID);
+      return (id) => city.filter((item) => item.parentDestinationID === id).length;
     },
     // here to capture all the stats from the findings above we can take the above cities to update as selected
   },

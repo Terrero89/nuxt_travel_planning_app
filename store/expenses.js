@@ -142,23 +142,18 @@ export const useExpenseStore = defineStore({
 
     getTotalAccommodationsNumbers: (state) => (id) => {
       // Filter expenses by parentCityID (similar to filteredExpenses in getAvgRatingForCity)
-      const filteredExpenses = state.expenses.filter((p) => p.parentCityID === id);
+      const filteredExpenses = state.expenses.filter(
+        (p) => p.parentCityID === id
+      );
       const lengthData = filteredExpenses.length;
-    
+
       if (lengthData === 0) return 0; // Avoid division by 0
-    
-      // Calculate the total cost
-      // const totalCost = filteredExpenses.reduce(
-      //   (sum, city) => sum + (city.cost || 0),
-      //   0
-      // );
 
       const totalCost = filteredExpenses.reduce(
         (sum, city) => sum + (city.cost || 0),
         0
       );
-      console.log(totalCost)
-    
+
       // Return the total cost
       return totalCost; // Optional: format it to 2 decimal places like the average rating
     },

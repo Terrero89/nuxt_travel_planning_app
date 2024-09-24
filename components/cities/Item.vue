@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
-import { useExpenseStore } from "@/store/expenses"
-
+import { useExpenseStore } from "@/store/expenses";
 
 const expenseStore = useExpenseStore();
-const {expenses,expensesAmount } = storeToRefs(expenseStore);
-const {fetchExpenses, getAvgRatingForCity,    getTotalAccommodationsNumbers } = expenseStore;
+const { expenses, expensesAmount } = storeToRefs(expenseStore);
+const { fetchExpenses, getAvgRatingForCity, getTotalAccommodationsNumbers } =
+  expenseStore;
 const props = defineProps([
   "cityID",
   "parentDestinationID",
@@ -39,7 +39,8 @@ const calculateDaysRemainingForCity = () => {
   } else {
     daysRemainingForCity.value = 0;
   }
-};143
+};
+143;
 
 const accommodationStatus = computed(() => {
   if (props.isAccommodationPaid === "Reserved") {
@@ -49,7 +50,7 @@ const accommodationStatus = computed(() => {
   } else if (props.isAccommodationPaid === "Pending" || false) {
     return "Pending";
   }
-})
+});
 const visitStatus = computed(() => {
   if (props.isThisCityVisited === "Visited") {
     return "Visited";
@@ -58,21 +59,20 @@ const visitStatus = computed(() => {
   } else if (props.isThisCityVisited === "In progress") {
     return "In progress";
   }
-})
+});
 
 const ratingStatus = computed(() => {
-  if (props.cityRating >4.5) {
-    return {rating: props.cityRating, color: "green"};
+  if (props.cityRating > 4.5) {
+    return { rating: props.cityRating, color: "green" };
   } else if (props.cityRating >= 4 && props.cityRating <= 4.5) {
-    return {rating: props.cityRating, color: "yellow"};
+    return { rating: props.cityRating, color: "yellow" };
   } else if (props.cityRating < 4) {
-    return {rating: props.cityRating, color: "red"};
+    return { rating: props.cityRating, color: "red" };
   }
-  
-})
+});
 // Automatically calculate daysRemainingForCity on mount and update it daily
-onMounted(async() => {
-  await fetchExpenses()
+onMounted(async () => {
+  await fetchExpenses();
   // await getAmount(props.cityID)
   calculateDaysRemainingForCity();
 
@@ -87,41 +87,45 @@ onMounted(async() => {
 </script>
 
 <template>
-  <div class="destination-item"  >
+  <div class="destination-item">
     <div class="item">
       <!-- <div class="status" :class="currStatus"></div> -->
       <div class="destination">
-        {{getAvgRatingForCity(props.cityID) === 0 ? 0 : getAvgRatingForCity(props.cityID)}}
-{{   getTotalAccommodationsNumbers(props.cityID)  }}
-{{formatNumber(getTotalAccommodationsNumbers(props.cityID) )}}
-{{ props.totalCost }}
+        {{
+          getAvgRatingForCity(props.cityID) === 0
+            ? 0
+            : getAvgRatingForCity(props.cityID)
+        }}
+        {{ getTotalAccommodationsNumbers(props.cityID) }}
+        {{ formatNumber(getTotalAccommodationsNumbers(props.cityID)) }}
+        {{ props.totalCost }}
         <div class="d-flex align-items-center">
           <h1 class="title">{{ props.city }}</h1>
-        <div class="status">
-              <span class="mr-0">
-                <UBadge
-                  v-if="visitStatus === 'Visited'"
-                  variant="outline"
-                  size="md"
-                  color="green"
-                  >Completed</UBadge
-                >
-                <UBadge
+          <div class="status">
+            <span class="mr-0">
+              <UBadge
+                v-if="visitStatus === 'Visited'"
+                variant="outline"
+                size="md"
+                color="green"
+                >Completed</UBadge
+              >
+              <UBadge
                 v-if="visitStatus === 'Not visited'"
-                  variant="outline"
-                  size="md"
-                  color="red"
-                  >Pending</UBadge
-                >
-                <UBadge
+                variant="outline"
+                size="md"
+                color="red"
+                >Pending</UBadge
+              >
+              <UBadge
                 v-if="visitStatus === 'In progress'"
-                  variant="outline"
-                  size="md"
-                  color="yellow"
-                  >In progress</UBadge
-                >
-              </span>
-            </div>
+                variant="outline"
+                size="md"
+                color="yellow"
+                >In progress</UBadge
+              >
+            </span>
+          </div>
         </div>
         <div class="destination-wrapper">
           <div class="section-one row">
@@ -135,28 +139,25 @@ onMounted(async() => {
 
               <span class="pb-2 title-section">Booking Status </span>
               <h2>
-                <span class="highlight"
-                  >{{ accommodationStatus}}
-                </span>
+                <span class="highlight">{{ accommodationStatus }} </span>
               </h2>
             </div>
             <div class="col section">
               <span class="title-section pb-2"> Total Cost</span>
               <h2>
-                $ <span class="highlight">{{ props.totalCost  }} </span>
+                $ <span class="highlight">{{ props.totalCost }} </span>
               </h2>
               <span class="pb-2 title-section">Duration </span>
               <h2>
                 <span class="highlight"
                   >{{ calculateDaysRangeDuration(props.from, props.to) }}
                   {{
-                    calculateTotalDuration(props.from, props.to)>= 1 
+                    calculateTotalDuration(props.from, props.to) >= 1
                       ? "day"
                       : "days"
                   }}</span
                 >
               </h2>
-            
             </div>
             <div class="col section">
               <!-- <span class="pb-2 title-section">Date Planned</span>
@@ -167,7 +168,7 @@ onMounted(async() => {
                 days
               </h2>
               <span class="pb-2 title-section">Rating</span>
-              <h2 >
+              <h2>
                 <span class="highlight">
                   <UBadge
                     v-if="ratingStatus.rating < 4"
@@ -177,7 +178,9 @@ onMounted(async() => {
                     >{{ ratingStatus.rating }}</UBadge
                   >
                   <UBadge
-                    v-if="ratingStatus.rating >= 4 && ratingStatus.rating <= 4.4"
+                    v-if="
+                      ratingStatus.rating >= 4 && ratingStatus.rating <= 4.4
+                    "
                     variant="soft"
                     size="md"
                     color="yellow"
@@ -190,16 +193,15 @@ onMounted(async() => {
                     color="green"
                     >{{ props.cityRating }}</UBadge
                   >
-
                 </span>
-
               </h2>
-<!--              <UButton class="my-2" color="blue" variant="solid" label="Details" @click="isOpen = true" />-->
+              <!--              <UButton class="my-2" color="blue" variant="solid" label="Details" @click="isOpen = true" />-->
             </div>
-            <div class="col ">
-              <button class="my-2 details-button"   @click="isOpen = true" >Details</button>
+            <div class="col">
+              <button class="my-2 details-button" @click="isOpen = true">
+                Details
+              </button>
             </div>
-
           </div>
           <div>
             <UModal v-model="isOpen">
@@ -231,19 +233,16 @@ onMounted(async() => {
 </template>
 
 <style scoped>
-
-.details-button{
+.details-button {
   color: black;
-  border: #b0b0b0 solid 1px;
+  border: #e1e1e1 solid 1px;
   padding: 5px 10px;
   border-radius: 8px;
 }
 
-.details-button:hover{
+.details-button:hover {
   background-color: #dadada;
   transition: 0.3s ease-in-out;
-
-
 }
 .highlight {
   font-weight: 800;
@@ -272,7 +271,6 @@ onMounted(async() => {
   padding: 1rem;
   margin: 0.5rem 0rem;
   display: flex;
-  
 }
 
 .destination-item h1 {

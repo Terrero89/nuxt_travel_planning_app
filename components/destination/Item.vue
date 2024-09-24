@@ -3,7 +3,9 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useDestinationStore } from "@/store/destination";
 import { storeToRefs } from "pinia";
 import { formatDate } from "../../utils/date-conversion";
-
+import { useCityStore } from "@/store/cities";
+const cityStore = useCityStore();
+const { fetchCities, getAmountOfCities } = cityStore;
 const store = useDestinationStore();
 const { destination, fetchDestinations } = storeToRefs(store);
 
@@ -22,6 +24,7 @@ const props = defineProps([
   "tripRating",
   "tripComments",
   "numOfPeople",
+  "planeTickets"
 ]);
 
 const destinationParam = ref(props.destinationID);
@@ -68,8 +71,9 @@ onMounted(() => {
   const interval = setInterval(calculateDaysRemaining, 86400000); // 86400000ms = 24 hours
 
   // Cleanup interval on unmount
-  onUnmounted(() => {
-    clearInterval(interval);
+  onUnmounted (async() => {
+    await fetchCities()
+    // clearInterval(interval);
   });
 });
 </script>
@@ -188,6 +192,7 @@ onMounted(() => {
                     :tripRating="props.tripRating"
                     :tripComments="props.tripComments"
                     :numOfPeople="props.numOfPeople"
+                    :planeTickets="props.planeTickets"
                   />
                 </div>
               </UModal>

@@ -4,7 +4,7 @@ import { useCityStore } from "@/store/cities";
 import { storeToRefs } from "pinia";
 import { useExpenseStore } from "@/store/expenses";
 const expenseStore = useExpenseStore();
-const { fetchExpenses, getAvgRatingForCity } = expenseStore;
+const { fetchExpenses, getAvgRatingForCity, getTotalAccommodationsNumbers } = expenseStore;
 const { expenses } = storeToRefs(expenseStore);
 const cityStore = useCityStore();
 const { cities } = storeToRefs(cityStore);
@@ -67,6 +67,8 @@ onMounted(async () => {
 });
 
 let updatedRating = computed(()=> cityItem.value = getAvgRatingForCity(cityParamID))
+
+let updatedTotalCost = computed( ()=> cityItem.value = getTotalAccommodationsNumbers(cityParamID) + cityItem.value.accommodationCost)
 </script>
 
 <template>
@@ -76,7 +78,7 @@ let updatedRating = computed(()=> cityItem.value = getAvgRatingForCity(cityParam
       <h3 class="mb-4">Update City</h3>
 
       <!-- {{ cityItem }} -->
-{{updatedRating}}
+{{updatedRating}}---{{updatedTotalCost}}
       <div>
         <label for="inputPassword4" class="form-label">City</label>
         <input type="input" v-model.trim="cityItem.city" class="form-control" id="name-input" />
@@ -127,11 +129,11 @@ let updatedRating = computed(()=> cityItem.value = getAvgRatingForCity(cityParam
         </select>
       </div>
 
-      <div>
-        <label for="inputPassword4" class="form-label">Budget</label>
-        <input type="number" v-model.trim="cityItem.destinationBudget" class="form-control" id="name-input" />
+      <div class="">
+        <label for="inputPassword4" class="form-label">Total Costs</label>
+        <input type="number" v-model.trim="updatedTotalCost" class="form-control" id="name-input" />
       </div>
-
+    
       <div class="col-6">
         <label for="inputPassword4" class="form-label">From: </label>
         <input type="date" v-model.trim="cityItem.from" class="form-control" id="name-input" />

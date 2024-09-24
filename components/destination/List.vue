@@ -1,9 +1,11 @@
 <script setup>
 import { onMounted } from "vue";
 import { useDestinationStore } from "@/store/destination";
+import { useCityStore } from "@/store/cities";
 import { storeToRefs } from "pinia";
 
-// Access the store
+const cityStore = useCityStore();
+const { fetchCities, getAmountOfCities } = cityStore;
 const store = useDestinationStore();
 const { destination, isLoading } = storeToRefs(store); // Include isLoading state
 
@@ -14,10 +16,6 @@ const {
   // filterByStatusPending,
   // filterByStatusComplete,
 } = store;
-
-onMounted(async () => {
-  await fetchDestinations();
-});
 
 const filter = ref("");
 
@@ -37,16 +35,16 @@ const props = defineProps([
   "tripRating",
   "tripComments",
   "numOfPeople",
+  "planeTickets"
 ]);
 // const filteredData = () =>{
 
 const createCityLink = computed(() => `/destinations/create`);
 
 onMounted(async () => {
-  filterItemByName.value;
-  // filterByStatusPending.value;
-  // filterByStatusComplete.value;
-  // await filteredData(destination)
+  await fetchDestinations();
+  await fetchCities(); // Ensure cities are fetched before using them
+ 
 });
 </script>
 <template>
@@ -54,13 +52,15 @@ onMounted(async () => {
     <UICard class="mt-5 py-2">
       <UISearchFilter v-model="filter" />
     </UICard>
-    <UIDisplayCard   :highestCategory="'Food/Drinks'"
-    :priorityCount="4"
-    :totalCost="1500"
-    :bookedItems="2"
-    :averageRating="4.5"
-    :totalDuration="48"/>
-
+    <UIDisplayCard
+      :highestCategory="'Food/Drinks'"
+      :priorityCount="4"
+      :totalCost="1500"
+      :bookedItems="2"
+      :averageRating="4.5"
+      :totalDuration="48"
+    />
+    {{ getAmountOfCities("-O5PPTfcVs2rR02VPLi6") }}
     <UIContainer>
       <!-- Display loading message or spinner while data is being fetched -->
       <div v-if="isLoading" class="flex items-center space-x-4 mx-auto">
@@ -86,14 +86,14 @@ onMounted(async () => {
           :date="trip.date"
           :isTripCompleted="trip.isTripCompleted"
           :daysRemainingForTrip="trip.daysRemainingForTrip"
-          :citiesIncludedOnTrip="trip.citiesIncludedOnTrip"
+          :citiesIncludedOnTrip="getAmountOfCities(trip.destinationID)"
           :tripRating="trip.tripRating"
           :tripComments="trip.tripComments"
           :numOfPeople="trip.numOfPeople"
+          :planeTickets="trip.planeTickets"
         />
       </div>
     </UIContainer>
-    
   </div>
 </template>
 

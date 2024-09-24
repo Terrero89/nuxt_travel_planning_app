@@ -210,7 +210,7 @@ onMounted(() => {
 
 .details-button{
   color: black;
-  border: #b0b0b0 solid 1px;
+  border: #e1e1e1 solid 1px;
   padding: 5px 10px;
   border-radius: 8px;
 }

@@ -65,6 +65,10 @@ const filtered = computed(() => {
   );
 });
 
+// const newCalculatedTotal = computed(()=> {
+//   const totalCost = filteredCities.reduce((sum, city) => sum + city.totalCost, 0);
+// })
+
 
 
 onMounted(async() => {
@@ -86,9 +90,8 @@ onMounted(async() => {
     </UICard>
 
     <CitiesStatsCard
-      :numOfExpenses="9"
+      :numOfItems="filtered.numberOfItems"
       :totalCost="filtered.totalAccommodationCost"
-      :bookedItems="filtered.numberOfItems"
       :averageRating="filtered.avgRating"
       :totalDuration="48"
       :accommodationCost="filtered.totalAccommodationCost"
@@ -96,7 +99,6 @@ onMounted(async() => {
   
    DATA {{filtered}}
 
-<!-- {{ filtering(destId, filterByStatus, filterByCategory, filterByBookingStatus) }} -->
     <CitiesItem
       v-for="city in filtering(
         destId,

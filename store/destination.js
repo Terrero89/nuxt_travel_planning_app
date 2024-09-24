@@ -28,6 +28,7 @@ export const useDestinationStore = defineStore({
             destinationID: key,
             destination: responseData[key].destination,
             transportType: responseData[key].transportType,
+            planeTickets: responseData[key].planeTickets,
             from: responseData[key].from,
             to: responseData[key].to,
             destinationBudget: responseData[key].destinationBudget,

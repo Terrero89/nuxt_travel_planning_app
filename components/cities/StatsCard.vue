@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({
-  numOfExpenses: {
+  numOfItems: {
     type: Number,
     required: true,
   },
@@ -8,15 +8,11 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-
   totalCost: {
     type: Number,
     required: true,
   },
-  bookedItems: {
-    type: Number,
-    required: true,
-  },
+
   averageRating: {
     type: Number,
     required: true,
@@ -32,20 +28,17 @@ const props = defineProps({
   <UICard>
     <div class="card-body">
       <div class="card-item">
-        <label>No. of expenses:</label>
-        <span>{{ numOfExpenses }}</span>
+        <label>No. of cities:</label>
+        <span>{{ numOfItems }}</span>
       </div>
-      <div class="card-item">
-        <label>No. of Cities:</label>
-        <span>{{ bookedItems }}</span>
-      </div>
+
       <div class="card-item">
         <label>Stay totals:</label>
         <span>$ {{ accommodationCost }} </span>
       </div>
       <div class="card-item">
         <label>Overall Cost:</label>
-        <span>$ {{ totalCost }} </span>
+        <span>$ {{ totalCost + accommodationCost }} </span>
       </div>
       <div class="card-item">
         <label>Average Rating:</label>

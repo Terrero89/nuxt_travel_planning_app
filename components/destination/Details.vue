@@ -1,12 +1,16 @@
 <script setup>
 import { useDestinationStore } from "@/store/destination";
+import { useCityStore } from "@/store/cities";
 const store = useDestinationStore();
+const cityStore = useCityStore();
+const  { fetchCities,getAmountOfCities} =  cityStore;
 import { storeToRefs } from "pinia";
 import { formatDate, formatNumber } from "../../utils/date-conversion";
 import {
   calculateDaysRangeDuration,
   calculateTotalDuration,
 } from "../../utils/date-conversion";
+
 const { deleteDestination, fetchDestinations } = store;
 const { destination } = storeToRefs(store);
 const props = defineProps([
@@ -24,6 +28,7 @@ const props = defineProps([
   "tripRating",
   "tripComments",
   "numOfPeople",
+  "planeTickets"
 ]);
 
 //? links
@@ -58,6 +63,13 @@ const removeItem = async (id) => {
 
   navigateTo(`/destinations`);
 };
+
+onMounted(async () => {
+  await fetchCities();
+// filterItemByName.value;
+
+});
+
 </script>
 
 <template>
@@ -68,7 +80,11 @@ const removeItem = async (id) => {
     <h2>{{ props.destination }}</h2>
     <div class="details-row">
       <span class="detail-label">Number of travelers:</span>
-      <span class="detail-value space"> {{ props.numOfPeople }}</span>
+      <span class="detail-value space"> {{ formatNumber(props.numOfPeople) }}</span>
+    </div>
+    <div class="details-row">
+      <span class="detail-label">Plane tickets:</span>
+      <span class="detail-value space"> $ {{ props.planeTickets}}</span>
     </div>
     <div class="details-row">
       <span class="detail-label">Transport Type:</span>
