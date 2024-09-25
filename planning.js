@@ -10,6 +10,9 @@
 6.fix the statsCards for each part.
 7. Automate the daysRemaining for city/dest/expense to update overnight
 8. adding variable in store to keep it persist. ex: totalRating, totalCost, totalAccommodationCost for all STORES 
+9. fix day/days based on amount of days left
+10.make sure that when dates are equal to 0 to display (1 day ago) etc..
+11.
 */
 
 /*
