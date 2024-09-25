@@ -1,0 +1,24 @@
+
+// 09/24/2024
+//**planning for next steps */
+/*
+1. fix the totalCost for city/expenses and destinations
+2. maybe create a getter in pinia to calculate the total of totalCost & totalAccommodationCost
+3. Find a way to automate the update of the days remaining in firebase overnight for city/expenses/destinations
+4. Find a way to automate the calculation of the total of the amount totalCost
+5. //! fix why there are errors when updating the city/dest/expenses
+6.fix the statsCards for each part.
+7. Automate the daysRemaining for city/dest/expense to update overnight
+*/
+
+
+//**planning for error handling and feedback*/
+/*
+
+*/
+
+/*BUGS: */
+/*
+- 
+
+*/

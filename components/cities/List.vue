@@ -123,12 +123,9 @@ onMounted(async() => {
       :daysRemainingForCity="city.daysRemainingForCity"
       :expenseIncludedOnCity="city.expenseIncludedOnCity"
       :cityRating="getAvgRatingForCity(city.cityID)"
-      :cityComments="city.cityComments"
+      :cityComments="city.tripComments"
     />
-    <UICard class="my-5"></UICard>
-    <UICard class="mt-5"></UICard>
-    <UICard class="mt-5"></UICard>
-    <UICard class="mt-5"></UICard>
+
   </div>
 
 </template>

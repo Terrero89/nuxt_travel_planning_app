@@ -136,7 +136,7 @@ onMounted(async () => {
               <h2>
                 $ <span class="highlight">{{ props.accommodationCost }} </span>
               </h2>
-
+              Comments
               <span class="pb-2 title-section">Booking Status </span>
               <h2>
                 <span class="highlight">{{ accommodationStatus }} </span>
@@ -220,7 +220,7 @@ onMounted(async () => {
                   :date="props.date"
                   :daysRemainingForCity="daysRemainingForCity"
                   :expenseIncludedOnCity="props.expenseIncludedOnCity"
-                  :cityRating="props.cityRating"
+                  :cityRating="props.cityRaCommentsting"
                   :cityComments="props.cityComments"
                 />
               </div>

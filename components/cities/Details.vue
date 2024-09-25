@@ -198,7 +198,7 @@ onMounted(async() => {
       <div class="details-row d-block">
         <span class="detail-label ">Trip Comments: </span>
         <p class="d-block comment">
-          {{ props.comments }}
+          {{ props.cityComments }}
         </p>
       </div>
 
