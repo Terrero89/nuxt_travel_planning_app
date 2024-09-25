@@ -9,15 +9,25 @@
 5. //! fix why there are errors when updating the city/dest/expenses
 6.fix the statsCards for each part.
 7. Automate the daysRemaining for city/dest/expense to update overnight
+8. adding variable in store to keep it persist. ex: totalRating, totalCost, totalAccommodationCost for all STORES 
 */
 
+/*
+GOALS:
+to get all the totals of money, time, and resources
+to be able to navigate easily
+to be able to see data for those things.
+log all the related changes to code.
 
-//**planning for error handling and feedback*/
+
+*/
+
+// **planning for error handling and feedback*/
 /*
 
 */
 
-/*BUGS: */
+/!BUGS: /
 /*
 - 
 

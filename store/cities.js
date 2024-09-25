@@ -42,8 +42,9 @@ export const useCityStore = defineStore({
 
       // console.log(response)
     },
-
-    async fetchCities() {
+    Rating
+    4.63
+    ￼Details    async fetchCities() {
       const response = await fetch(this.URL);
       const responseData = await response.json();
       this.cities = responseData;
@@ -70,8 +71,9 @@ export const useCityStore = defineStore({
     async updateCity(cityID, payload) {
       const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;
       const options = {
-        method: "PUT",
-        headers: { "Content-type": "application/json" },
+        Rating
+        4.63
+        ￼Details        headers: { "Content-type": "application/json" },
         body: JSON.stringify(payload),
       };
 
@@ -89,8 +91,9 @@ export const useCityStore = defineStore({
         if (index !== -1) {penses
           // Use the returned data from Firebase to ensure consistency
           this.cities[index] = { cityID, ...updatedCity };
-        }
-      } catch (error) {
+          Rating
+          4.63
+          ￼Details      } catch (error) {
         console.error("Error updating city:", error);
       }
     },
