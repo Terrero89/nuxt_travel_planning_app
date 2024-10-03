@@ -73,8 +73,6 @@ onMounted(async () => {
 
 <template>
   <div class="projects">
-Stay totals:
-$ 262.77
     <UICard class="mt-5">
       <UICityFilter
         v-model="filter"
