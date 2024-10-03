@@ -42,9 +42,7 @@ export const useCityStore = defineStore({
 
       // console.log(response)
     },
-    Rating
-    4.63
-    ￼Details    async fetchCities() {
+    async fetchCities() {
       const response = await fetch(this.URL);
       const responseData = await response.json();
       this.cities = responseData;
@@ -57,7 +55,8 @@ export const useCityStore = defineStore({
       const cityList = [];
 
       for (const key in this.cities) {
-        if (this.cities[key]) { // Check if city data exists
+        if (this.cities[key]) {
+          // Check if city data exists
           const newCity = {
             cityID: key,
             ...this.cities[key],
@@ -71,9 +70,8 @@ export const useCityStore = defineStore({
     async updateCity(cityID, payload) {
       const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;
       const options = {
-        Rating
-        4.63
-        ￼Details        headers: { "Content-type": "application/json" },
+        method: "PUT",
+        headers: { "Content-type": "application/json" },
         body: JSON.stringify(payload),
       };
 
@@ -88,19 +86,17 @@ export const useCityStore = defineStore({
 
         // Update the local state after a successful update
         const index = this.cities.findIndex((city) => city.cityID === cityID);
-        if (index !== -1) {penses
+        if (index !== -1) {
+          penses;
           // Use the returned data from Firebase to ensure consistency
           this.cities[index] = { cityID, ...updatedCity };
-          Rating
-          4.63
-          ￼Details      } catch (error) {
+        }
+      } catch (error) {
         console.error("Error updating city:", error);
       }
     },
   },
   getters: {
-
-
     citiesAsArray: (state) => {
       return state.cities;
     },
@@ -110,7 +106,6 @@ export const useCityStore = defineStore({
       const prj = this.citiesAsArray.filter((item) => item.parentDestinationID);
       return (id) => prj.filter((data) => data.parentDestinationID === id);
     },
-
     filtering: (state) => (id, byStatus, byCategory, byBooking) => {
       // Step 1: Filter by destination ID (parentDestinationID)
       let cities = state.cities;
@@ -185,26 +180,40 @@ export const useCityStore = defineStore({
       return citiesBooked;
     },
 
-    coding:() => (id, byStatus, byCategory, byBooking) => { 
+    coding: () => (id, byStatus, byCategory, byBooking) => {
       return this.filtering(id, byStatus, byCategory, byBooking);
     },
     filteredCitiesStats: (state) => (id, byStatus, byCategory, byBooking) => {
       // Filter cities based on the provided filters
-      const filteredCities = state.filtering(id, byStatus, byCategory, byBooking);
-    
+      const filteredCities = state.filtering(
+        id,
+        byStatus,
+        byCategory,
+        byBooking
+      );
+
       // Calculate total cost, total duration, and total ratings
-      const totalCost = filteredCities.reduce((sum, city) => sum + city.totalCost, 0);
-      const totalDuration = filteredCities.reduce((sum, city) => sum + city.totalDuration, 0);
-      const totalRatings = filteredCities.reduce((sum, city) => sum + (city.cityRating || 0), 0);
+      const totalCost = filteredCities.reduce(
+        (sum, city) => sum + city.totalCost,
+        0
+      );
+      const totalDuration = filteredCities.reduce(
+        (sum, city) => sum + city.totalDuration,
+        0
+      );
+      const totalRatings = filteredCities.reduce(
+        (sum, city) => sum + (city.cityRating || 0),
+        0
+      );
       const avgRating =
         filteredCities.length > 0 ? totalRatings / filteredCities.length : 0;
-    
+
       // Calculate total accommodation cost
       const totalAccommodationCost = filteredCities.reduce(
         (sum, city) => sum + (city.accommodationCost || 0),
         0
       );
-    
+
       return {
         totalCost,
         totalDuration,
@@ -212,6 +221,17 @@ export const useCityStore = defineStore({
         numberOfItems: filteredCities.length,
         avgRating,
       };
+    },
+
+    getTotalAccommodationCosts: (state) => {
+      const filteredAccommodations = state.expenses.filter(
+        (p) => p.cityID
+      );
+      const totalAccommodationCost = filteredCities.reduce(
+        (sum, city) => sum + (city.accommodationCost || 0),
+        0
+      );
+      return totalAccommodationCost
     },
     // ? will search and item by its name
     filterItemByName: (state) => (filter) => {
@@ -222,11 +242,9 @@ export const useCityStore = defineStore({
     },
     getAmountOfCities(state) {
       const city = state.cities.filter((p) => p.parentDestinationID);
-      return (id) => city.filter((item) => item.parentDestinationID === id).length;
+      return (id) =>
+        city.filter((item) => item.parentDestinationID === id).length;
     },
     // here to capture all the stats from the findings above we can take the above cities to update as selected
   },
-
-
- 
 });

@@ -53,6 +53,7 @@ const updateCityHandler = async () => {
       ...cityItem.value,
       duration: tripDuration.value,
       daysRemainingForCity: daysRemainingForTrip.value,
+      totalCost: cityStore.citiesTotalCost
     });
     navigateTo("/destinations");
   } catch (error) {
@@ -64,11 +65,15 @@ const updateCityHandler = async () => {
 onMounted(async () => {
   await fetchExpenses()
   await fetchCities();
+  cityStore.citiesTotalCost =  getTotalAccommodationsNumbers(cityParamID) + cityItem.value.accommodationCost
 });
 
 let updatedRating = computed(()=> cityItem.value = getAvgRatingForCity(cityParamID))
 
 let updatedTotalCost = computed( ()=> cityItem.value = getTotalAccommodationsNumbers(cityParamID) + cityItem.value.accommodationCost)
+
+
+
 </script>
 
 <template>
@@ -78,7 +83,7 @@ let updatedTotalCost = computed( ()=> cityItem.value = getTotalAccommodationsNum
       <h3 class="mb-4">Update City</h3>
 
       <!-- {{ cityItem }} -->
-{{updatedRating}}---{{updatedTotalCost}}
+{{updatedRating}}---{{updatedTotalCost}}-- {{cityStore.citiesTotalCost}}
       <div>
         <label for="inputPassword4" class="form-label">City</label>
         <input type="input" v-model.trim="cityItem.city" class="form-control" id="name-input" />

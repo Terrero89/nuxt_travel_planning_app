@@ -7,7 +7,7 @@ import { useExpenseStore } from "@/store/expenses";
 const cityStore = useCityStore();
 const expenseStore = useExpenseStore();
 const destStore = useDestinationStore();
-const {getAvgRatingForCity,fetchExpenses,  getTotalAccommodationsNumbers, getAmountOfExpenses} = expenseStore;
+const {getAvgRatingForCity,fetchExpenses,  getTotalAccommodationsNumbers} = expenseStore;
 import { storeToRefs } from "pinia";
 
 const {
@@ -65,9 +65,6 @@ const filtered = computed(() => {
   );
 });
 
-// const newCalculatedTotal = computed(()=> {
-//   const totalCost = filteredCities.reduce((sum, city) => sum + city.totalCost, 0);
-// })
 
 
 
@@ -98,6 +95,7 @@ onMounted(async() => {
     />
   
    DATA {{filtered}}
+
 
     <CitiesItem
       v-for="city in filtering(

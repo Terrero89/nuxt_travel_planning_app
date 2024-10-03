@@ -15,6 +15,25 @@
 11.
 */
 
+
+/*
+**Planning for destinations:
+1. fix the totalCost for city/expenses and destinations
+*/
+
+/*
+** //? Planning for cities:
+- how to accurately have the most updated total cost of each city based on cityID from expenses 
+- //! Find a way to automate the update of the days remaining in firebase overnight for cities |from:| property
+- //! refresH button  in citiesItem that updates the days remaining/ TotalCost/rating from current calculations in component, and updatte that information based overnight.
+
+
+*/
+/*
+** Planning for expenses:
+*/
+
+
 /*
 GOALS:
 to get all the totals of money, time, and resources

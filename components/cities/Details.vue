@@ -36,10 +36,10 @@ const props = defineProps([
 ]);
 // have to find a way to grab all the required fields now that i have both ids
 const removeItem = async (id) => {
-  console.log(id);
+
 
   deleteCity(id);
-  navigateTo(`/destinations/${destId}`);
+  // navigateTo(`/destinations/${destId}`);
 };
 const citiesLink = computed(
   () => `/destinations/${destId}/cities-${props.cityID}`
@@ -185,7 +185,7 @@ onMounted(async() => {
       </div>
 
       <div>
-        <span class="detail-label">See Cities to visit </span>
+        <span class="detail-label">See Cities to visit </span>del
         <NuxtLink class="space " :to="citiesLink">
           <button class="details-button">See Expenses</button>
         </NuxtLink>
