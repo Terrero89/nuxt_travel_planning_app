@@ -17,10 +17,7 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  totalDuration: {
-    type: Number,
-    required: true,
-  },
+
 });
 </script>
 
@@ -31,14 +28,15 @@ const props = defineProps({
         <label>No. of cities:</label>
         <span>{{ numOfItems }}</span>
       </div>
-
+<!-- good -->
       <div class="card-item">
         <label>Stay totals:</label>
         <span>$ {{ accommodationCost }} </span>
       </div>
+      <!-- bad -->
       <div class="card-item">
         <label>Overall Cost:</label>
-        <span>$ {{ totalCost + accommodationCost }} </span>
+        <span>$ {{ totalCost  }} </span>
       </div>
       <div class="card-item">
         <label>Average Rating:</label>

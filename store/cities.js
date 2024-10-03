@@ -197,10 +197,7 @@ export const useCityStore = defineStore({
         (sum, city) => sum + city.totalCost,
         0
       );
-      const totalDuration = filteredCities.reduce(
-        (sum, city) => sum + city.totalDuration,
-        0
-      );
+    
       const totalRatings = filteredCities.reduce(
         (sum, city) => sum + (city.cityRating || 0),
         0
@@ -213,13 +210,14 @@ export const useCityStore = defineStore({
         (sum, city) => sum + (city.accommodationCost || 0),
         0
       );
+   
 
       return {
         totalCost,
-        totalDuration,
         totalAccommodationCost, // Add this to the returned object
         numberOfItems: filteredCities.length,
         avgRating,
+     
       };
     },
 

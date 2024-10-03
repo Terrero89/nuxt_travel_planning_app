@@ -23,9 +23,10 @@
 
 /*
 ** //? Planning for cities:
-- how to accurately have the most updated total cost of each city based on cityID from expenses 
+- how to accurately have the most updated total cost of each city based on cityID from expenses  ---> in cities item add the timer to update everynight
+- add the current ratings for cities to be added to the DB when updating a rating in cities
 - //! Find a way to automate the update of the days remaining in firebase overnight for cities |from:| property
-- //! refresH button  in citiesItem that updates the days remaining/ TotalCost/rating from current calculations in component, and updatte that information based overnight.
+- //! refresH button in citiesItem that updates the days remaining/ TotalCost/rating from current calculations in component, and updatte that information based overnight.
 
 
 */

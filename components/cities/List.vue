@@ -7,7 +7,8 @@ import { useExpenseStore } from "@/store/expenses";
 const cityStore = useCityStore();
 const expenseStore = useExpenseStore();
 const destStore = useDestinationStore();
-const {getAvgRatingForCity,fetchExpenses,  getTotalAccommodationsNumbers} = expenseStore;
+const { getAvgRatingForCity, fetchExpenses, getTotalAccommodationsNumbers } =
+  expenseStore;
 import { storeToRefs } from "pinia";
 
 const {
@@ -65,18 +66,15 @@ const filtered = computed(() => {
   );
 });
 
-
-
-
-onMounted(async() => {
-  await fetchExpenses()
-
-
+onMounted(async () => {
+  await fetchExpenses();
 });
 </script>
 
 <template>
   <div class="projects">
+Stay totals:
+$ 262.77
     <UICard class="mt-5">
       <UICityFilter
         v-model="filter"
@@ -88,14 +86,13 @@ onMounted(async() => {
 
     <CitiesStatsCard
       :numOfItems="filtered.numberOfItems"
-      :totalCost="filtered.totalAccommodationCost"
+      :totalCost="filtered.totalCost"
       :averageRating="filtered.avgRating"
       :totalDuration="48"
       :accommodationCost="filtered.totalAccommodationCost"
     />
-  
-   DATA {{filtered}}
 
+    <!-- DATA {{ filtered }} --: {{ filtered.totalCost }}xx -->
 
     <CitiesItem
       v-for="city in filtering(
@@ -114,7 +111,9 @@ onMounted(async() => {
       :accommodationAddress="city.accommodationAddress"
       :from="city.from"
       :to="city.to"
-      :totalCost="getTotalAccommodationsNumbers(city.cityID) + city.accommodationCost"
+      :totalCost="
+        getTotalAccommodationsNumbers(city.cityID) + city.accommodationCost
+      "
       :cityDuration="city.cityDuration"
       :date="city.date"
       :isThisCityVisited="city.isThisCityVisited"
@@ -123,9 +122,7 @@ onMounted(async() => {
       :cityRating="getAvgRatingForCity(city.cityID)"
       :cityComments="city.tripComments"
     />
-
   </div>
-
 </template>
 
 <style scoped></style>

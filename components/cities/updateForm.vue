@@ -4,7 +4,8 @@ import { useCityStore } from "@/store/cities";
 import { storeToRefs } from "pinia";
 import { useExpenseStore } from "@/store/expenses";
 const expenseStore = useExpenseStore();
-const { fetchExpenses, getAvgRatingForCity, getTotalAccommodationsNumbers } = expenseStore;
+const { fetchExpenses, getAvgRatingForCity, getTotalAccommodationsNumbers } =
+  expenseStore;
 const { expenses } = storeToRefs(expenseStore);
 const cityStore = useCityStore();
 const { cities } = storeToRefs(cityStore);
@@ -53,7 +54,8 @@ const updateCityHandler = async () => {
       ...cityItem.value,
       duration: tripDuration.value,
       daysRemainingForCity: daysRemainingForTrip.value,
-      totalCost: cityStore.citiesTotalCost
+      totalCost: cityStore.citiesTotalCost,
+      cityRating: parseFloat(updatedRating.value),
     });
     navigateTo("/destinations");
   } catch (error) {
@@ -63,17 +65,23 @@ const updateCityHandler = async () => {
 };
 
 onMounted(async () => {
-  await fetchExpenses()
+  await fetchExpenses();
   await fetchCities();
-  cityStore.citiesTotalCost =  getTotalAccommodationsNumbers(cityParamID) + cityItem.value.accommodationCost
+  cityStore.citiesTotalCost =
+    getTotalAccommodationsNumbers(cityParamID) +
+    cityItem.value.accommodationCost;
 });
 
-let updatedRating = computed(()=> cityItem.value = getAvgRatingForCity(cityParamID))
+let updatedRating = computed(
+  () => (cityItem.value = getAvgRatingForCity(cityParamID))
+);
 
-let updatedTotalCost = computed( ()=> cityItem.value = getTotalAccommodationsNumbers(cityParamID) + cityItem.value.accommodationCost)
-
-
-
+let updatedTotalCost = computed(
+  () =>
+    (cityItem.value =
+      getTotalAccommodationsNumbers(cityParamID) +
+      cityItem.value.accommodationCost)
+);
 </script>
 
 <template>
@@ -81,18 +89,30 @@ let updatedTotalCost = computed( ()=> cityItem.value = getTotalAccommodationsNum
     <!-- {{ cityItem.city }} -->
     <form class="row g-3" @submit.prevent="updateCityHandler">
       <h3 class="mb-4">Update City</h3>
-
+      ::{{ typeof updatedRating }}:: {{ typeof parseInt(updatedRating) }}xx
       <!-- {{ cityItem }} -->
-{{updatedRating}}---{{updatedTotalCost}}-- {{cityStore.citiesTotalCost}}
+      {{ updatedRating }}---{{ updatedTotalCost }}--
+      {{ cityStore.citiesTotalCost }}
       <div>
         <label for="inputPassword4" class="form-label">City</label>
-        <input type="input" v-model.trim="cityItem.city" class="form-control" id="name-input" />
+        <input
+          type="input"
+          v-model.trim="cityItem.city"
+          class="form-control"
+          id="name-input"
+        />
       </div>
       <div>
         <div class="">
-          <label for="transportType" class="form-label">Accommodation Type</label>
+          <label for="transportType" class="form-label"
+            >Accommodation Type</label
+          >
 
-          <select class="form-select" v-model="cityItem.accommodation" aria-label="Default select example">
+          <select
+            class="form-select"
+            v-model="cityItem.accommodation"
+            aria-label="Default select example"
+          >
             <option>Airbnb</option>
             <option>Hotel</option>
             <option>Hostel</option>
@@ -102,30 +122,52 @@ let updatedTotalCost = computed( ()=> cityItem.value = getTotalAccommodationsNum
           </select>
         </div>
         <div class="">
-          <label for="inputPassword4" class="form-label">Accommodation Price</label>
-          <input type="number" v-model.trim="cityItem.accommodationCost" class="form-control" id="name-input" />
+          <label for="inputPassword4" class="form-label"
+            >Accommodation Price</label
+          >
+          <input
+            type="number"
+            v-model.trim="cityItem.accommodationCost"
+            class="form-control"
+            id="name-input"
+          />
           <!-- {{ cityItem.accommodationAddress }} -->
-
         </div>
         <div class="">
-          <label for="transportType" class="form-label">Reservation status</label>
+          <label for="transportType" class="form-label"
+            >Reservation status</label
+          >
 
-          <select class="form-select" v-model="cityItem.isAccommodationPaid" aria-label="Default select example">
+          <select
+            class="form-select"
+            v-model="cityItem.isAccommodationPaid"
+            aria-label="Default select example"
+          >
             <option></option>
             <option>Reserved</option>
             <option>Half Reserved</option>
             <option>Pending</option>
-
           </select>
         </div>
 
         <div>
           <label for="inputPassword4" class="form-label">Address</label>
-          <input type="input" v-model.trim="cityItem.accommodationAddress" class="form-control" id="name-input" />
+          <input
+            type="input"
+            v-model.trim="cityItem.accommodationAddress"
+            class="form-control"
+            id="name-input"
+          />
         </div>
-        <label for="transportType" class="form-label">Transportation Type</label>
+        <label for="transportType" class="form-label"
+          >Transportation Type</label
+        >
 
-        <select class="form-select" v-model="cityItem.transportType" aria-label="Default select example">
+        <select
+          class="form-select"
+          v-model="cityItem.transportType"
+          aria-label="Default select example"
+        >
           <option>Plane</option>
           <option>Train</option>
           <option>Car</option>
@@ -136,49 +178,88 @@ let updatedTotalCost = computed( ()=> cityItem.value = getTotalAccommodationsNum
 
       <div class="">
         <label for="inputPassword4" class="form-label">Total Costs</label>
-        <input type="number" v-model.trim="updatedTotalCost" class="form-control" id="name-input" />
+        <input
+          type="number"
+          v-model.trim="updatedTotalCost"
+          class="form-control"
+          id="name-input"
+        />
       </div>
-    
+
       <div class="col-6">
         <label for="inputPassword4" class="form-label">From: </label>
-        <input type="date" v-model.trim="cityItem.from" class="form-control" id="name-input" />
+        <input
+          type="date"
+          v-model.trim="cityItem.from"
+          class="form-control"
+          id="name-input"
+        />
       </div>
       <!-- {{formatDate(from)}} -->
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">To: </label>
-        <input type="date" v-model.trim="cityItem.to" class="form-control" id="name-input" />
+        <input
+          type="date"
+          v-model.trim="cityItem.to"
+          class="form-control"
+          id="name-input"
+        />
       </div>
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Duration</label>
-        <input type="number" v-model.trim="cityItem.duration" class="form-control" id="name-input" />
+        <input
+          type="number"
+          v-model.trim="cityItem.duration"
+          class="form-control"
+          id="name-input"
+        />
       </div>
 
       <div class="col-6">
         <label for="inputPassword4" class="form-label">Rating</label>
 
-        <input type="number" v-model.trim="updatedRating" class="form-control" id="name-input" min="0" max="5"
-          step="0.1"  readonly/>
-   
+        <input
+          type="number"
+          v-model.trim="updatedRating"
+          class="form-control"
+          id="name-input"
+          min="0"
+          max="5"
+          step="0.1"
+          readonly
+        />
+        ::{{ typeof parseInt(updatedRating) }} ::{{ parseFloat(updatedRating) }}
       </div>
       <div class="">
-          <label for="transportType" class="form-label">Visit status</label>
+        <label for="transportType" class="form-label">Visit status</label>
 
-          <select class="form-select" v-model="cityItem.isThisCityVisited" aria-label="Default select example">
-            <option></option>
-            <option>Visited</option>
-            <option>In progress</option>
-            <option>Not visited</option>
-
-          </select>
-        </div>
+        <select
+          class="form-select"
+          v-model="cityItem.isThisCityVisited"
+          aria-label="Default select example"
+        >
+          <option></option>
+          <option>Visited</option>
+          <option>In progress</option>
+          <option>Not visited</option>
+        </select>
+      </div>
       <div>
-        <textarea class="form-control" v-model="cityItem.tripComments" aria-label="With textarea"
-          placeholder="Comments" />
+        <textarea
+          class="form-control"
+          v-model="cityItem.tripComments"
+          aria-label="With textarea"
+          placeholder="Comments"
+        />
       </div>
 
       <div>
-        <button type="submit" class="btn btn-primary py-2 px-4" @click="updateCityHandler">
+        <button
+          type="submit"
+          class="btn btn-primary py-2 px-4"
+          @click="updateCityHandler"
+        >
           Submit
         </button>
       </div>
