@@ -70,7 +70,7 @@ export const useCityStore = defineStore({
     async updateCity(cityID, payload) {
       const url = `https://travel-planning-app-44a08-default-rtdb.firebaseio.com/cities/${cityID}.json`;
       const options = {
-        method: "PUT",
+        method: "PATCH",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(payload),
       };
@@ -87,7 +87,7 @@ export const useCityStore = defineStore({
         // Update the local state after a successful update
         const index = this.cities.findIndex((city) => city.cityID === cityID);
         if (index !== -1) {
-          penses;
+        
           // Use the returned data from Firebase to ensure consistency
           this.cities[index] = { cityID, ...updatedCity };
         }

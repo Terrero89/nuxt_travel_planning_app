@@ -54,7 +54,7 @@ const updateCityHandler = async () => {
       ...cityItem.value,
       duration: tripDuration.value,
       daysRemainingForCity: daysRemainingForTrip.value,
-      totalCost: cityStore.citiesTotalCost,
+      totalCost: updatedTotalCost.value,
       cityRating: parseFloat(updatedRating.value),
     });
     navigateTo("/destinations");
