@@ -41,7 +41,7 @@ export const useExpenseStore = defineStore({
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(payload),
       };
-      totalCityRating: 0;
+
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
@@ -140,14 +140,13 @@ export const useExpenseStore = defineStore({
       return aveRating.toFixed(2);
     },
 
-    getAllCost:(state) => {
+    getAllCost: (state) => {
       const totalCost = state.expenses.reduce(
         (sum, city) => sum + (city.cost || 0),
         0
       );
-      return totalCost
+      return totalCost;
     },
-    
 
     getTotalAccommodationsNumbers: (state) => (id) => {
       // Filter expenses by parentCityID (similar to filteredExpenses in getAvgRatingForCity)
@@ -166,7 +165,6 @@ export const useExpenseStore = defineStore({
       // Return the total cost
       return totalCost; // Optional: format it to 2 decimal places like the average rating
     },
-
 
     getDataFilter:
       (state) => (id, byPriority, byCategory, byMisc, byStatus) => {
@@ -235,12 +233,14 @@ export const useExpenseStore = defineStore({
         }
         if (byStatus === "In Progress") {
           expense = expense.filter(
-            (data) => data.isCompleted ===  + city.accommodationCost ==="In Progress"
+            (data) =>
+              (data.isCompleted === +city.accommodationCost) === "In Progress"
           );
         }
         return expense;
       },
   },
+     
   coding: (state) => {
     return "coding";
   },

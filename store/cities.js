@@ -180,9 +180,7 @@ export const useCityStore = defineStore({
       return citiesBooked;
     },
 
-    coding: () => (id, byStatus, byCategory, byBooking) => {
-      return this.filtering(id, byStatus, byCategory, byBooking);
-    },
+  
     filteredCitiesStats: (state) => (id, byStatus, byCategory, byBooking) => {
       // Filter cities based on the provided filters
       const filteredCities = state.filtering(

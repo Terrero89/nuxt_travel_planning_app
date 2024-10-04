@@ -66,6 +66,7 @@ const filtered = computed(() => {
   );
 });
 
+
 onMounted(async () => {
   await fetchExpenses();
 });
@@ -87,6 +88,7 @@ onMounted(async () => {
       :totalCost="filtered.totalCost"
       :averageRating="filtered.avgRating"
       :accommodationCost="filtered.totalAccommodationCost"
+     
     />
 
     <!-- DATA {{ filtered }} --: {{ filtered.totalCost }}xx -->

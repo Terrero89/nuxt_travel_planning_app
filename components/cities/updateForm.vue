@@ -48,6 +48,43 @@ watch([() => cityItem.value.from, () => cityItem.value.to], () => {
   cityItem.value.daysRemainingForTrip = daysRemainingForTrip.value;
 });
 
+let updatedTotalCost = ref(0);
+
+
+let updatedRating = computed(
+  () => (cityItem.value = getAvgRatingForCity(cityParamID))
+);
+
+  watch(updatedTotalCost, async (newVal, oldVal) => {
+  if (updatedTotalCost !== 0 && newVal !== 0&& newVal !== oldVal) {
+    cityStore.citiesTotalCost = newVal;
+    // console.log("Total cost changed:", newVal);
+    // console.log("Total cost changed:", oldVal);
+    try {
+    await updateCity(cityParamID, {
+      ...cityItem.value,
+      totalCost: newVal,
+      duration: tripDuration.value,
+      cityRating: parseFloat(updatedRating.value),
+    });
+  } catch (error) {
+    console.error("Error updating city cost:", error);
+  }
+
+  }
+}, { immediate: true });
+
+
+// Initialize `updatedTotalCost` with current accommodation cost + any other relevant costs
+onMounted(async () => {
+  await fetchExpenses();
+  await fetchCities();
+  updatedTotalCost.value =
+    getTotalAccommodationsNumbers(cityParamID) + (cityItem.value.accommodationCost );
+});
+
+
+
 const updateCityHandler = async () => {
   try {
     await updateCity(cityParamID, {
@@ -64,6 +101,8 @@ const updateCityHandler = async () => {
   }
 };
 
+
+
 onMounted(async () => {
   await fetchExpenses();
   await fetchCities();
@@ -71,17 +110,6 @@ onMounted(async () => {
     getTotalAccommodationsNumbers(cityParamID) +
     cityItem.value.accommodationCost;
 });
-
-let updatedRating = computed(
-  () => (cityItem.value = getAvgRatingForCity(cityParamID))
-);
-
-let updatedTotalCost = computed(
-  () =>
-    (cityItem.value =
-      getTotalAccommodationsNumbers(cityParamID) +
-      cityItem.value.accommodationCost)
-);
 </script>
 
 <template>
@@ -89,10 +117,7 @@ let updatedTotalCost = computed(
     <!-- {{ cityItem.city }} -->
     <form class="row g-3" @submit.prevent="updateCityHandler">
       <h3 class="mb-4">Update City</h3>
-      ::{{ typeof updatedRating }}:: {{ typeof parseInt(updatedRating) }}xx
-      <!-- {{ cityItem }} -->
-      {{ updatedRating }}---{{ updatedTotalCost }}--
-      {{ cityStore.citiesTotalCost }}
+    
       <div>
         <label for="inputPassword4" class="form-label">City</label>
         <input
@@ -180,9 +205,10 @@ let updatedTotalCost = computed(
         <label for="inputPassword4" class="form-label">Total Costs</label>
         <input
           type="number"
-          v-model.trim="updatedTotalCost"
+          v-model="updatedTotalCost"
           class="form-control"
           id="name-input"
+          readonly
         />
       </div>
 
@@ -229,7 +255,6 @@ let updatedTotalCost = computed(
           step="0.1"
           readonly
         />
-        ::{{ typeof parseInt(updatedRating) }} ::{{ parseFloat(updatedRating) }}
       </div>
       <div class="">
         <label for="transportType" class="form-label">Visit status</label>

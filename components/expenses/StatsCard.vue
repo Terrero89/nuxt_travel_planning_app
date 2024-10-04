@@ -9,10 +9,7 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  bookedItems: {
-    type: Number,
-    required: true,
-  },
+
   averageRating: {
     type: Number,
     required: true,
@@ -38,20 +35,13 @@ const props = defineProps({
       </div>
 
       <div class="card-item">
-        <label>Booked Items:</label>
-        <span>{{ bookedItems }}</span>
-      </div>
-
-      <div class="card-item">
-        <label>Average Rating:</label>
-        <span>{{ averageRating }} / 5</span>
-      </div>
-
-      <div class="card-item">
         <label>Total Duration:</label>
         <span>{{ totalDuration }} hours</span>
       </div>
- 
+      <div class="card-item">
+        <label>Avg Rating:</label>
+        <span>{{ averageRating }} / 5</span>
+      </div>
     </div>
   </UICard>
 </template>
@@ -63,7 +53,6 @@ const props = defineProps({
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
-  
 }
 
 .card-item {

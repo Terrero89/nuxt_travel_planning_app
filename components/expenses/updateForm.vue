@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted, computed, watch } from "vue";
 import { storeToRefs } from "pinia";
-
+import {useExpenseStore} from "@/store/expenses"
+import {useCityStore} from "@/store/cities"
 const expenseStore = useExpenseStore();
 const cityStore = useCityStore();
 const { fetchExpenses, updateExpense } = expenseStore;
@@ -24,6 +25,7 @@ const expenseItem = computed(() => {
 const updateExpenseHandler = async () => {
   try {
     await updateExpense(expenseID, expenseItem.value);
+  
 
     navigateTo(`/destinations/${destId}/cities-${cityId}`);
   } catch (error) {
