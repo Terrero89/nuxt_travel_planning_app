@@ -41,7 +41,7 @@ export const useExpenseStore = defineStore({
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(payload),
       };
-      totalCityRating: 0;
+
       try {
         const response = await fetch(url, options);
         if (!response.ok) {

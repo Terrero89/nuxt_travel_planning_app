@@ -60,7 +60,7 @@ let updatedRating = computed(
 
 
   watch(updatedTotalCost, async (newVal, oldVal) => {
-  if (updatedTotalCost !== 0 && newVal !== oldVal) {
+  if (updatedTotalCost !== 0 && newVal !== 0&& newVal !== oldVal) {
     cityStore.citiesTotalCost = newVal;
     console.log("Total cost changed:", newVal);
     console.log("Total cost changed:", oldVal);
