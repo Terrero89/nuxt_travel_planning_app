@@ -10,48 +10,48 @@
 6.fix the statsCards for each part. DONE
 7. Automate the daysRemaining for city/dest/expense to update overnight DONE
 8. adding variable in store to keep it persist. ex: totalRating, totalCost, totalAccommodationCost for all STORES - DONE
-9. fix day/days based on amount of days left
-10.make sure that when dates are equal to 0 to display (1 day ago) etc..
+9. fix day/days based on amount of days left --> DONE
+10.make sure that when dates are equal to 0 to display (1 day ago) etc..---> DONE
 11.
 */
 
 
 /*
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 **Planning for destinations:
 1. fix the totalCost for city/expenses and destinations
 */
 
 /*
 ** //? Planning for cities:
-- how to accurately have the most updated total cost of each city based on cityID from expenses  ---> in cities item add the timer to update everynight
-- add the current ratings for cities to be added to the DB when updating a rating in cities
-- //! Find a way to automate the update of the days remaining in firebase overnight for cities |from:| property
-- //! refresH button in citiesItem that updates the days remaining/ TotalCost/rating from current calculations in component, and updatte that information based overnight.
+- how to accurately have the most updated total cost of each city based on cityID from expenses  ---> DONE no need for overnight
+- add the current ratings for cities to be added to the DB when updating a rating in cities -- PROGRES
+- //! Find a way to automate the update of the days remaining in firebase overnight for cities |from:| property - DONE
+- //! refresH button in citiesItem that updates the days remaining/ TotalCost/rating from current calculations in component, and updatte that information based overnight.--- DONE
 
 
 */
-/*
-** Planning for expenses:
-*/
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//? PENDING TASKS:
 
 /*
-GOALS:
-to get all the totals of money, time, and resources
-to be able to navigate easily
-to be able to see data for those things.
-log all the related changes to code.
+- //! NEXT: filter component stats total.
+- Add the data that was removed from expensess
+- Cleanup expenses from DB that are not in used 
+- Add a pagination
+- destination/cities/expenses/dashboard PAGES to add content{
+    - what city is next, and previous
+    - what is the highest cost city
+    - attractions, food, specifically calculated at the end 
+    - highest rated
+    - next 
 
 
-*/
 
-// **planning for error handling and feedback*/
-/*
+}
 
-*/
 
-/!BUGS TO WORK ON   : /
-/*
-- if I update an expense cost, then i will manually have to update the city to reflect the toal cost correctly. DONE --> it updates on entering to the page
+
+
 
 */

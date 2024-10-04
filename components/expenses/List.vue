@@ -94,9 +94,9 @@ const addExpenseLink = computed(
     <ExpensesStatsCard
       :numOfExpenses="stats.numberOfItems"
       :totalCost="stats.totalCost"
-      :bookedItems="stats.numberOfItems"
+     
       :averageRating="stats.avgRating.toFixed(2)"
-      :totalDuration="48"
+      :totalDuration="stats. totalDurationAttractions"
     />
     <ExpensesItem
       v-for="expense in getDataFilter(

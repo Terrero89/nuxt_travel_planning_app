@@ -60,7 +60,7 @@ onMounted(async () => {
       :averageRating="4.5"
       :totalDuration="48"
     />
-    {{ getAmountOfCities("-O5PPTfcVs2rR02VPLi6") }}
+  
     <UIContainer>
       <!-- Display loading message or spinner while data is being fetched -->
       <div v-if="isLoading" class="flex items-center space-x-4 mx-auto">
