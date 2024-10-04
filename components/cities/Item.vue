@@ -4,8 +4,12 @@ import { useExpenseStore } from "@/store/expenses";
 
 const expenseStore = useExpenseStore();
 const { expenses, expensesAmount } = storeToRefs(expenseStore);
-const { fetchExpenses, getAvgRatingForCity, getTotalAccommodationsNumbers } =
-  expenseStore;
+const {
+  fetchExpenses,
+  getAvgRatingForCity,
+  getTotalAccommodationsNumbers,
+  getTotalOverallCost,
+} = expenseStore;
 const props = defineProps([
   "cityID",
   "parentDestinationID",
@@ -90,15 +94,15 @@ onMounted(async () => {
   <div class="destination-item">
     <div class="item">
       <!-- <div class="status" :class="currStatus"></div> -->
+
       <div class="destination">
-        {{
-          getAvgRatingForCity(props.cityID) === 0
-            ? 0
-            : getAvgRatingForCity(props.cityID)
-        }}
-        {{ getTotalAccommodationsNumbers(props.cityID) }}
-        {{ formatNumber(getTotalAccommodationsNumbers(props.cityID)) }}
-        {{ props.totalCost }}
+        <!-- <div>RATING TOTAL: {{ getAvgRatingForCity(props.cityID) }}</div>
+        <div>
+          TOTAL CITIES EXP: {{ getTotalAccommodationsNumbers(props.cityID) }}
+        </div>
+        <div>COST TOTAL ACC: {{ props.accommodationCost }}</div>
+        <div>OVERALL TOTAL: {{ props.totalCost }}</div> -->
+
         <div class="d-flex align-items-center">
           <h1 class="title">{{ props.city }}</h1>
           <div class="status">
@@ -130,8 +134,6 @@ onMounted(async () => {
         <div class="destination-wrapper">
           <div class="section-one row">
             <div class="col section">
-              <!-- <span class="pb-2 title-section">Accommodation </span>
-              <h2>{{ props.accommodation }}</h2> -->
               <span class="pb-2 title-section">Stay Cost </span>
               <h2>
                 $ <span class="highlight">{{ props.accommodationCost }} </span>
@@ -160,8 +162,6 @@ onMounted(async () => {
               </h2>
             </div>
             <div class="col section">
-              <!-- <span class="pb-2 title-section">Date Planned</span>
-              <h2>{{ formatDate(props.date) }}</h2> -->
               <span class="pb-2 title-section"> Days until visit </span>
               <h2>
                 <span class="highlight">{{ daysRemainingForCity }} </span>

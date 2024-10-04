@@ -140,6 +140,15 @@ export const useExpenseStore = defineStore({
       return aveRating.toFixed(2);
     },
 
+    getAllCost:(state) => {
+      const totalCost = state.expenses.reduce(
+        (sum, city) => sum + (city.cost || 0),
+        0
+      );
+      return totalCost
+    },
+    
+
     getTotalAccommodationsNumbers: (state) => (id) => {
       // Filter expenses by parentCityID (similar to filteredExpenses in getAvgRatingForCity)
       const filteredExpenses = state.expenses.filter(
@@ -157,6 +166,8 @@ export const useExpenseStore = defineStore({
       // Return the total cost
       return totalCost; // Optional: format it to 2 decimal places like the average rating
     },
+
+
     getDataFilter:
       (state) => (id, byPriority, byCategory, byMisc, byStatus) => {
         // Step 1: Filter by destination ID (parentDestinationID)
@@ -224,7 +235,7 @@ export const useExpenseStore = defineStore({
         }
         if (byStatus === "In Progress") {
           expense = expense.filter(
-            (data) => data.isCompleted === "In Progress"
+            (data) => data.isCompleted ===  + city.accommodationCost ==="In Progress"
           );
         }
         return expense;
