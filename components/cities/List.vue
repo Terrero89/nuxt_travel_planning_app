@@ -86,7 +86,6 @@ onMounted(async () => {
       :numOfItems="filtered.numberOfItems"
       :totalCost="filtered.totalCost"
       :averageRating="filtered.avgRating"
-      :totalDuration="48"
       :accommodationCost="filtered.totalAccommodationCost"
     />
 
