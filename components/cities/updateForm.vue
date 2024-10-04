@@ -75,13 +75,6 @@ let updatedRating = computed(
 
   }
 }, { immediate: true });
-// let updatedTotalCost = computed(
-//   () =>
-//     (cityItem.value =
-//       getTotalAccommodationsNumbers(cityParamID) +
-//       cityItem.value.accommodationCost)
-// );
-// Make `updatedTotalCost` reactive and initialize it
 
 
 // Initialize `updatedTotalCost` with current accommodation cost + any other relevant costs
@@ -126,10 +119,7 @@ onMounted(async () => {
     <!-- {{ cityItem.city }} -->
     <form class="row g-3" @submit.prevent="updateCityHandler">
       <h3 class="mb-4">Update City</h3>
-      ::{{ typeof updatedRating }}:: {{ typeof parseInt(updatedRating) }}xx
-      <!-- {{ cityItem }} -->
-      {{ updatedTotalCost }}--
-      {{ cityStore.citiesTotalCost }}
+    
       <div>
         <label for="inputPassword4" class="form-label">City</label>
         <input
@@ -267,7 +257,6 @@ onMounted(async () => {
           step="0.1"
           readonly
         />
-        ::{{ typeof parseInt(updatedRating) }} ::{{ parseFloat(updatedRating) }}
       </div>
       <div class="">
         <label for="transportType" class="form-label">Visit status</label>
