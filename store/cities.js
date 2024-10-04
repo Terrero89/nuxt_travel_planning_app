@@ -146,13 +146,13 @@ export const useCityStore = defineStore({
       }
       if (byCategory === "Closest Date") {
         let city = cities.sort(
-          (a, b) => b.daysRemainingForCity - b.daysRemainingForCity
+          (a, b) => new Date(a.from) - new Date(b.from)
         );
         filteredCities = city;
       }
       if (byCategory === "Further Date") {
         let city = cities.sort(
-          (a, b) => b.daysRemainingForCity - a.daysRemainingForCity
+          (a, b) => new Date(b.from) - new Date(a.from)
         );
         filteredCities = city;
       }

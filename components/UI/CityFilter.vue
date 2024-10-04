@@ -49,10 +49,6 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
 
         <div class="col-lg-2 col-md-2 col-sm-2 col-6 my-auto item">
           <div>
-            <!-- <label for="transportType" class="form-label "
-              > By Type </label
-            >
-         -->
             <select
               class="form-select"
               id="category-selection"
@@ -72,13 +68,6 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
 
         <div class="col-lg-2 col-md-2 col-sm-2 col-4 my-auto item">
           <div>
-            <!-- <label for="transportType" class="form-label"
-              > By Booking status</label
-            > -->
-            <!-- <label for="transportType" class="form-label"
-              > By Booking </label
-            > -->
-
             <select
               class="form-select"
               id="booking-selection"
