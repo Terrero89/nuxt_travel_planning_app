@@ -50,8 +50,8 @@ log all the related changes to code.
 
 */
 
-/!BUGS: /
+/!BUGS TO WORK ON   : /
 /*
-- 
+- if I update an expense cost, then i will manually have to update the city to reflect the toal cost correctly.
 
 */

@@ -1,12 +1,13 @@
 <script setup>
 import { ref, onMounted, computed, watch } from "vue";
-import { useExpenseStore } from "@/store/expenses";
 import { storeToRefs } from "pinia";
 
 const expenseStore = useExpenseStore();
+const cityStore = useCityStore()
 const { fetchExpenses, updateExpense } = expenseStore;
 
-const { expenses } = storeToRefs(expenseStore);
+
+const {} = storeToRefs(expenseStore);
 
 const route = useRoute(); // route object
 
@@ -75,6 +76,8 @@ const expenseItem = computed(() => {
 const updateExpenseHandler = async () => {
   try {
     await updateExpense(expenseID, expenseItem.value);
+   
+
     navigateTo(
       `/destinations/${destId}/cities-${cityId}`
     );
