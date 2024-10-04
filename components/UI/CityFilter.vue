@@ -88,7 +88,7 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
         <div class="col-lg-2 col-md-2 col-sm-2 col-8 ml-auto item">
           <nuxt-link type="button" class="d-flex justify-content-end">
             <div class="my-auto mr-5">
-              <UButton label="Refresh" variant="none" />
+              <UButton label="Refresh"  />
             </div>
 
             <UButton

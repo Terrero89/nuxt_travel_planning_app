@@ -48,6 +48,52 @@ watch([() => cityItem.value.from, () => cityItem.value.to], () => {
   cityItem.value.daysRemainingForTrip = daysRemainingForTrip.value;
 });
 
+let updatedTotalCost = ref(0);
+
+
+let updatedRating = computed(
+  () => (cityItem.value = getAvgRatingForCity(cityParamID))
+);
+// let updatedTotalCost = ref(
+//   getTotalAccommodationsNumbers(cityParamID) + cityItem.value.accommodationCost
+// );
+
+
+  watch(updatedTotalCost, async (newVal, oldVal) => {
+  if (updatedTotalCost !== 0 && newVal !== oldVal) {
+    cityStore.citiesTotalCost = newVal;
+    console.log("Total cost changed:", newVal);
+    console.log("Total cost changed:", oldVal);
+    try {
+    await updateCity(cityParamID, {
+      ...cityItem.value,
+      totalCost: newVal,
+    });
+  } catch (error) {
+    console.error("Error updating city cost:", error);
+  }
+
+  }
+}, { immediate: true });
+// let updatedTotalCost = computed(
+//   () =>
+//     (cityItem.value =
+//       getTotalAccommodationsNumbers(cityParamID) +
+//       cityItem.value.accommodationCost)
+// );
+// Make `updatedTotalCost` reactive and initialize it
+
+
+// Initialize `updatedTotalCost` with current accommodation cost + any other relevant costs
+onMounted(async () => {
+  await fetchExpenses();
+  await fetchCities();
+  updatedTotalCost.value =
+    getTotalAccommodationsNumbers(cityParamID) + (cityItem.value.accommodationCost );
+});
+
+
+
 const updateCityHandler = async () => {
   try {
     await updateCity(cityParamID, {
@@ -64,6 +110,8 @@ const updateCityHandler = async () => {
   }
 };
 
+
+
 onMounted(async () => {
   await fetchExpenses();
   await fetchCities();
@@ -71,17 +119,6 @@ onMounted(async () => {
     getTotalAccommodationsNumbers(cityParamID) +
     cityItem.value.accommodationCost;
 });
-
-let updatedRating = computed(
-  () => (cityItem.value = getAvgRatingForCity(cityParamID))
-);
-
-let updatedTotalCost = computed(
-  () =>
-    (cityItem.value =
-      getTotalAccommodationsNumbers(cityParamID) +
-      cityItem.value.accommodationCost)
-);
 </script>
 
 <template>
@@ -91,7 +128,7 @@ let updatedTotalCost = computed(
       <h3 class="mb-4">Update City</h3>
       ::{{ typeof updatedRating }}:: {{ typeof parseInt(updatedRating) }}xx
       <!-- {{ cityItem }} -->
-      {{ updatedRating }}---{{ updatedTotalCost }}--
+      {{ updatedTotalCost }}--
       {{ cityStore.citiesTotalCost }}
       <div>
         <label for="inputPassword4" class="form-label">City</label>
@@ -180,9 +217,10 @@ let updatedTotalCost = computed(
         <label for="inputPassword4" class="form-label">Total Costs</label>
         <input
           type="number"
-          v-model.trim="updatedTotalCost"
+          v-model="updatedTotalCost"
           class="form-control"
           id="name-input"
+          readonly
         />
       </div>
 
