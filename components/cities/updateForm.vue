@@ -54,20 +54,18 @@ let updatedTotalCost = ref(0);
 let updatedRating = computed(
   () => (cityItem.value = getAvgRatingForCity(cityParamID))
 );
-// let updatedTotalCost = ref(
-//   getTotalAccommodationsNumbers(cityParamID) + cityItem.value.accommodationCost
-// );
-
 
   watch(updatedTotalCost, async (newVal, oldVal) => {
   if (updatedTotalCost !== 0 && newVal !== 0&& newVal !== oldVal) {
     cityStore.citiesTotalCost = newVal;
-    console.log("Total cost changed:", newVal);
-    console.log("Total cost changed:", oldVal);
+    // console.log("Total cost changed:", newVal);
+    // console.log("Total cost changed:", oldVal);
     try {
     await updateCity(cityParamID, {
       ...cityItem.value,
       totalCost: newVal,
+      duration: tripDuration.value,
+      cityRating: parseFloat(updatedRating.value),
     });
   } catch (error) {
     console.error("Error updating city cost:", error);

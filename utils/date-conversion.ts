@@ -110,6 +110,42 @@ export function timeSince(date: Date): string {
     return years === 1 ? `${years} year ago` : `${years} years ago`;
   }
 }
+///
+export function timeSinceDate(dateString: string): string {
+  // Convert the string parameter into a Date object
+  const date = new Date(dateString);
+  
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    return "Invalid date";
+  }
+
+  const now = new Date();
+  const differenceInMillis = now.getTime() - date.getTime();
+
+  const msPerMinute = 60 * 1000;
+  const msPerHour = msPerMinute * 60;
+  const msPerDay = msPerHour * 24;
+  const msPerWeek = msPerDay * 7;
+  const msPerMonth = msPerDay * 30; // Approximation
+  const msPerYear = msPerDay * 365; // Approximation
+
+  if (differenceInMillis < msPerDay) {
+    return "less than a day ago";
+  } else if (differenceInMillis < msPerWeek) {
+    const days = Math.floor(differenceInMillis / msPerDay);
+    return days === 1 ? `${days} day ago` : `${days} days ago`;
+  } else if (differenceInMillis < msPerMonth) {
+    const weeks = Math.floor(differenceInMillis / msPerWeek);
+    return weeks === 1 ? `${weeks} week ago` : `${weeks} weeks ago`;
+  } else if (differenceInMillis < msPerYear) {
+    const months = Math.floor(differenceInMillis / msPerMonth);
+    return months === 1 ? `${months} month ago` : `${months} months ago`;
+  } else {
+    const years = Math.floor(differenceInMillis / msPerYear);
+    return years === 1 ? `${years} year ago` : `${years} years ago`;
+  }
+}
 
 /*
 function that checks if a date is greater than another. 

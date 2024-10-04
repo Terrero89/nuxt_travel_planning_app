@@ -83,6 +83,14 @@ onMounted(async () => {
   // Update daysRemainingForCity every day at midnight
   const interval = setInterval(calculateDaysRemainingForCity, 86400000); // 86400000ms = 24 hours
 
+
+
+  //! VCOMPUTED PROPERTY THAT EVALUATES 
+  const isPastOrPresent = computed(()=> {
+    if(daysRemainingForCity > 1){
+      return daysRemainingForCity
+    }
+  })
   // Cleanup interval on unmount
   onUnmounted(() => {
     clearInterval(interval);
@@ -153,19 +161,17 @@ onMounted(async () => {
               <h2>
                 <span class="highlight"
                   >{{ calculateDaysRangeDuration(props.from, props.to) }}
-                  {{
-                    calculateTotalDuration(props.from, props.to) >= 1
-                      ? "day"
-                      : "days"
-                  }}</span
+                  {{calculateDaysRangeDuration(props.from, props.to)  > 1 ? "Days" : "Day" }}
+                 </span
                 >
+               
               </h2>
             </div>
             <div class="col section">
               <span class="pb-2 title-section"> Days until visit </span>
               <h2>
-                <span class="highlight">{{ daysRemainingForCity }} </span>
-                days
+                <span class="highlight">{{ daysRemainingForCity > 1 ? `${daysRemainingForCity} Days`:  timeSinceDate(props.from)}} </span>
+            
               </h2>
               <span class="pb-2 title-section">Rating</span>
               <h2>

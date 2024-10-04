@@ -2,7 +2,7 @@
 const route = useRoute(); //route object
 const destId = route.params.destinationID;
 
-const props = defineProps(["modelValue"]);
+const props = defineProps(["modelValue", "refresh"]);
 const emit = defineEmits([
   "update:modelValue",
   "update:filter2",
@@ -16,6 +16,8 @@ const filterByCategory = ref("");
 const filterByBookingStatus = ref("");
 
 const createCityLink = computed(() => `/destinations/${destId}/createCity`);
+
+
 </script>
 
 <template>
@@ -87,8 +89,8 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
 
         <div class="col-lg-2 col-md-2 col-sm-2 col-8 ml-auto item">
           <nuxt-link type="button" class="d-flex justify-content-end">
-            <div class="my-auto mr-5">
-              <UButton label="Refresh"  />
+            <div class="my-auto mr-5 ">
+              <UButton label="Back" />
             </div>
 
             <UButton

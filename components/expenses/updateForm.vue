@@ -25,7 +25,7 @@ const expenseItem = computed(() => {
 const updateExpenseHandler = async () => {
   try {
     await updateExpense(expenseID, expenseItem.value);
-    await fetchCities()
+  
 
     navigateTo(`/destinations/${destId}/cities-${cityId}`);
   } catch (error) {
