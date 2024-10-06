@@ -45,6 +45,8 @@
     - attractions, food, specifically calculated at the end 
     - highest rated
     - next 
+    - Fix priority/status when adding expenses`
+    - Fix adding address to cities and showing them in details
 
 
 
