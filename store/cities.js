@@ -185,7 +185,7 @@ export const useCityStore = defineStore({
       );
 
       // Calculate total cost, total duration, and total ratings
-      const totalCost = filteredstateCities.reduce(
+      const totalCost = filteredCities.reduce(
         (sum, city) => sum + city.totalCost,
         0
       );

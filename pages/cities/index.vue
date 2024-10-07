@@ -46,6 +46,7 @@ const props = defineProps([
   "cityComments",
 ]);
 const searched = computed(() => {
+  if (!cityStore.cities) return cityStore.cities
   return cityStore.cities.filter((p) => {
     return (
       p.city.toLowerCase().indexOf(filterByName.value.toLowerCase()) != -1
@@ -74,7 +75,6 @@ onMounted(async () => {
 <div>
 
 <!-- {{ filterItemByCity(filterByName).slice(0,3) }} -->
-
 
 
 

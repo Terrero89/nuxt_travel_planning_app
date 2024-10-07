@@ -85,12 +85,7 @@ onMounted(async () => {
 
 
 
-  //! VCOMPUTED PROPERTY THAT EVALUATES 
-  const isPastOrPresent = computed(()=> {
-    if(daysRemainingForCity > 1){
-      return daysRemainingForCity
-    }
-  })
+
   // Cleanup interval on unmount
   onUnmounted(() => {
     clearInterval(interval);
