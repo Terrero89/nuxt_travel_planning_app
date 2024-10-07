@@ -36,8 +36,8 @@
 
 /*
 - //! NEXT: filter component stats total.
-- Add the data that was removed from expensess
-- Cleanup expenses from DB that are not in used 
+- Add the data that was removed from expenses - DONE 
+- Cleanup expenses from DB that are not in used - DONE 
 - Add a pagination
 - destination/cities/expenses/dashboard PAGES to add content{
     - what city is next, and previous
@@ -47,7 +47,8 @@
     - next 
     - Fix priority/status when adding expenses`
     - Fix adding address to cities and showing them in details
-
+    - FIX expnses expectxDdate to e mre accurate an reflleectd baasse n at
+    - Fix expenses expectedDate to be more and reflect it based on that 
 
 
 }
