@@ -20,7 +20,7 @@ const {
   coding,
 } = cityStore;
 const { fetchDestinations } = destStore;
-const { cities, filteredCitiesStats } = storeToRefs(cityStore);
+const { cities, } = storeToRefs(cityStore);
 const { destination } = storeToRefs(destStore);
 const { expenses } = useExpenseStore();
 

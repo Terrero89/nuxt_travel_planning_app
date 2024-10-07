@@ -124,5 +124,6 @@ export const useDestinationStore = defineStore({
       item.destination.toLowerCase().includes(filter.toLowerCase())
       );
     },
+    
   },
 });

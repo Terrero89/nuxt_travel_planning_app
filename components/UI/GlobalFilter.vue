@@ -2,17 +2,14 @@
 const route = useRoute(); //route object
 const destId = route.params.destinationID;
 
-const props = defineProps(["modelValue", "modelValue2"]);
+const props = defineProps(["modelValue"]);
 const emit = defineEmits([
   "update:modelValue",
-  "update:filter2",
-  "update:filter3",
-  "update:filter4",
-  "update:modelValue2"
+
  ,
 ]);
-
 const filterByName = ref("");
+
 const filterByStatus = ref("");
 const filterByCategory = ref("");
 const filterByBookingStatus = ref("");
@@ -47,9 +44,10 @@ const createCityLink = computed(() => `/destinations/${destId}/createCity`);
               type="text"
               class="form-control"
               placeholder="Search by.."
-              :value="modelValue2"
-              @input="$emit('update:modelValue2', $event.target.value)"
+              :value="modelValue"
+             @input="$emit('update:modelValue', $event.target.value)"
             />
+        
           </div>
         </div>
         <!--  -->

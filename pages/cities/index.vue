@@ -14,7 +14,7 @@ import { storeToRefs } from "pinia";
 const {
   fetchCities,
   filterItemById,
-  filterItemByName,
+  filterItemByCity,
   filtering,
   numOfExpensesByCities,
   coding,
@@ -26,7 +26,7 @@ const { expenses } = useExpenseStore();
 
 const route = useRoute(); //route object
 const destId = route.params.destinationID;
-
+const filterByName = ref("");
 const props = defineProps([
   "cityID",
   "parentDestinationID",
@@ -45,12 +45,22 @@ const props = defineProps([
   "date",
   "cityComments",
 ]);
+const searched = computed(() => {
+  return cityStore.cities.filter((p) => {
+    return (
+      p.city.toLowerCase().indexOf(filterByName.value.toLowerCase()) != -1
+    );
+  });
+});
+
 
 onMounted(async () => {
   await fetchExpenses();
   await fetchCities();
   await fetchDestinations();
 });
+
+
 
 onMounted(async () => {
   await fetchExpenses();
@@ -59,13 +69,18 @@ onMounted(async () => {
 <template>
   <div>
     <UICard>
-  
- <UIGlobalFilter/>
-
+      <UIGlobalFilter  v-model="filterByName"/>
     </UICard>
+<div>
 
+<!-- {{ filterItemByCity(filterByName).slice(0,3) }} -->
+
+
+
+
+</div>
     <CitiesItem
-      v-for="city in cities"
+      v-for="city in searched"
       :key="city.cityID"
       :cityID="city.cityID"
       :parentDestinationID="destId"
