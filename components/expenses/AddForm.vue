@@ -133,7 +133,7 @@ const showPrice = computed(() => {
       </div>
       <div class="col-6">
         <label for="priority" class="form-label">Status</label>
-        <select v-model="priority" class="form-select" id="priority">
+        <select v-model="isCompleted" class="form-select" id="priority">
           <option value="" disabled selected hidden>Status</option>
           <option>Complete</option>
           <option>In progress</option>

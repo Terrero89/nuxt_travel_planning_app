@@ -240,7 +240,7 @@ export const useExpenseStore = defineStore({
         return expense;
       },
   },
-     
+
   coding: (state) => {
     return "coding";
   },

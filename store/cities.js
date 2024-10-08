@@ -87,7 +87,6 @@ export const useCityStore = defineStore({
         // Update the local state after a successful update
         const index = this.cities.findIndex((city) => city.cityID === cityID);
         if (index !== -1) {
-        
           // Use the returned data from Firebase to ensure consistency
           this.cities[index] = { cityID, ...updatedCity };
         }
@@ -145,15 +144,11 @@ export const useCityStore = defineStore({
         filteredCities = city;
       }
       if (byCategory === "Closest Date") {
-        let city = cities.sort(
-          (a, b) => new Date(a.from) - new Date(b.from)
-        );
+        let city = cities.sort((a, b) => new Date(a.from) - new Date(b.from));
         filteredCities = city;
       }
       if (byCategory === "Further Date") {
-        let city = cities.sort(
-          (a, b) => new Date(b.from) - new Date(a.from)
-        );
+        let city = cities.sort((a, b) => new Date(b.from) - new Date(a.from));
         filteredCities = city;
       }
 
@@ -180,7 +175,6 @@ export const useCityStore = defineStore({
       return citiesBooked;
     },
 
-  
     filteredCitiesStats: (state) => (id, byStatus, byCategory, byBooking) => {
       // Filter cities based on the provided filters
       const filteredCities = state.filtering(
@@ -195,7 +189,7 @@ export const useCityStore = defineStore({
         (sum, city) => sum + city.totalCost,
         0
       );
-    
+
       const totalRatings = filteredCities.reduce(
         (sum, city) => sum + (city.cityRating || 0),
         0
@@ -208,34 +202,31 @@ export const useCityStore = defineStore({
         (sum, city) => sum + (city.accommodationCost || 0),
         0
       );
-   
 
       return {
         totalCost,
         totalAccommodationCost, // Add this to the returned object
         numberOfItems: filteredCities.length,
         avgRating,
-     
       };
     },
 
     getTotalAccommodationCosts: (state) => {
-      const filteredAccommodations = state.expenses.filter(
-        (p) => p.cityID
-      );
+      const filteredAccommodations = state.expenses.filter((p) => p.cityID);
       const totalAccommodationCost = filteredCities.reduce(
         (sum, city) => sum + (city.accommodationCost || 0),
         0
       );
-      return totalAccommodationCost
+      return totalAccommodationCost;
     },
     // ? will search and item by its name
-    filterItemByName: (state) => (filter) => {
-      if (!filter) return state.destination; // Return all if no filter
-      return state.destination.filter((item) =>
-        item.destination.toLowerCase().includes(filter.toLowerCase())
+    filterItemByCity: (state) => (filter) => {
+      if (!filter) return state.cities; // Return all if no filter
+      return this.citiesAsArray.filter((item) =>
+        item.city.toLowerCase().includes(filter.toLowerCase()) // Adjust 'name' to the correct property
       );
     },
+
     getAmountOfCities(state) {
       const city = state.cities.filter((p) => p.parentDestinationID);
       return (id) =>

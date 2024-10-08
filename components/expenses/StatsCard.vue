@@ -36,7 +36,7 @@ const props = defineProps({
 
       <div class="card-item">
         <label>Total Duration:</label>
-        <span>{{ totalDuration }} hours</span>
+        <span>{{ totalDuration }} </span>
       </div>
       <div class="card-item">
         <label>Avg Rating:</label>
