@@ -30,6 +30,16 @@ onMounted(async () => {
   await fetchCities();
 });
 
+const comp = computed(()=>{
+  return expenseStore.filteredExpensesStats(
+    cityId,
+    filterByPriority.value,
+    filterByCategory.value,
+    filterByMisc.value,
+    filterByStatus.value
+  ).filter((item)=> item.cost)
+})
+
 // Create a computed property to filter expenses based on the filters and cityID
 const filtered = computed(() => {
   return expenseStore.filteredExpensesStats(
@@ -51,8 +61,11 @@ const stats = computed(() => {
     filterByStatus.value
   );
 
+  console.log(filteredExpenses)
+  
+
   const totalCost = filteredExpenses.reduce(
-    (sum, expense) => sum + expense.cost,
+    (sum, expense) => sum + Number(expense.cost),
     0
   );
   const totalRatings = filteredExpenses.reduce(
@@ -60,7 +73,7 @@ const stats = computed(() => {
     0
   );
   const totalDurationAttractions= filteredExpenses.reduce(
-    (sum, expense) => sum + (expense.duration || 0),
+    (sum, expense) => sum + Number(expense.duration ),
     0
   );
   const avgRating =
@@ -88,13 +101,13 @@ const addExpenseLink = computed(
       v-model:filter4="filterByStatus"
     />
  <!-- Display Stats -->
- {{stats}}
+ <!-- {{stats}} -->
+
 
     <!-- highest type of category | how many in priority | total cost | no. of booked items| rating average from all of ratings | total duration |  -->
     <ExpensesStatsCard
       :numOfExpenses="stats.numberOfItems"
       :totalCost="stats.totalCost"
-     
       :averageRating="stats.avgRating.toFixed(2)"
       :totalDuration="stats. totalDurationAttractions"
     />
