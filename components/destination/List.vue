@@ -7,7 +7,7 @@ import { storeToRefs } from "pinia";
 const cityStore = useCityStore();
 const { fetchCities, getAmountOfCities } = cityStore;
 const store = useDestinationStore();
-const { destination, isLoading } = storeToRefs(store); // Include isLoading state
+const { destination, isLoading,  } = storeToRefs(store); // Include isLoading state
 
 // Fetch destinations when the component is mounted
 const {
@@ -15,6 +15,7 @@ const {
   filterItemByName,
   // filterByStatusPending,
   // filterByStatusComplete,
+ 
 } = store;
 
 const filter = ref("");
@@ -35,9 +36,9 @@ const props = defineProps([
   "tripRating",
   "tripComments",
   "numOfPeople",
-  "planeTickets"
+  "planeTickets",
+  "totalCost"
 ]);
-// const filteredData = () =>{
 
 const createCityLink = computed(() => `/destinations/create`);
 
@@ -51,16 +52,8 @@ onMounted(async () => {
   <div class="projects">
     <UICard class="mt-5 py-2">
       <UISearchFilter v-model="filter" />
-    </UICard>
-    <UIDisplayCard
-      :highestCategory="'Food/Drinks'"
-      :priorityCount="4"
-      :totalCost="1500"
-      :bookedItems="2"
-      :averageRating="4.5"
-      :totalDuration="48"
-    />
-  
+    </UICard>  
+ 
     <UIContainer>
       <!-- Display loading message or spinner while data is being fetched -->
       <div v-if="isLoading" class="flex items-center space-x-4 mx-auto">
@@ -71,6 +64,7 @@ onMounted(async () => {
           <USkeleton class="h-10 w-[600px]" />
         </div>
       </div>
+    
 
       <div v-else>
         <DestinationItem
@@ -91,6 +85,7 @@ onMounted(async () => {
           :tripComments="trip.tripComments"
           :numOfPeople="trip.numOfPeople"
           :planeTickets="trip.planeTickets"
+          :totalCost="500 + trip.planeTickets"
         />
       </div>
     </UIContainer>

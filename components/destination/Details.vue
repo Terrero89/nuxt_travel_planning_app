@@ -3,8 +3,9 @@ import { useDestinationStore } from "@/store/destination";
 import { useCityStore } from "@/store/cities";
 const store = useDestinationStore();
 const cityStore = useCityStore();
-const  { fetchCities,getAmountOfCities} =  cityStore;
+const { fetchCities, getAmountOfCities } = cityStore;
 import { storeToRefs } from "pinia";
+const { citiesAsArray } = storeToRefs(cityStore);
 import { formatDate, formatNumber } from "../../utils/date-conversion";
 import {
   calculateDaysRangeDuration,
@@ -12,7 +13,7 @@ import {
 } from "../../utils/date-conversion";
 
 const { deleteDestination, fetchDestinations } = store;
-const { destination } = storeToRefs(store);
+const { destination, getTotalCosts } = storeToRefs(store);
 const props = defineProps([
   "destinationID",
   "destination",
@@ -28,7 +29,8 @@ const props = defineProps([
   "tripRating",
   "tripComments",
   "numOfPeople",
-  "planeTickets"
+  "planeTickets",
+  "totalCost",
 ]);
 
 //? links
@@ -36,6 +38,7 @@ const citiesLink = computed(() => `/destinations/${props.destinationID}`);
 const updateLink = computed(
   () => `/destinations/${props.destinationID}/update`
 );
+
 
 const tripStatus = computed(() => {
   if (props.isTripCompleted === "Completed") {
@@ -66,16 +69,23 @@ const removeItem = async (id) => {
 
 onMounted(async () => {
   await fetchCities();
-// filterItemByName.value;
+  // filterItemByName.value;
 
 });
+
+
 
 </script>
 
 <template>
   <div class="modal-details">
     <h3>Destination Details</h3>
-    <!-- {{ props.destinationID }} -->
+    <!-- {{ props.destinationID }}-- -->
+    {{ (getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget *
+      100 }}
+
+    <!-- {{ citiesAsArray }} -->
+
     <hr />
     <h2>{{ props.destination }}</h2>
     <div class="details-row">
@@ -84,7 +94,32 @@ onMounted(async () => {
     </div>
     <div class="details-row">
       <span class="detail-label">Plane tickets:</span>
-      <span class="detail-value space"> $ {{ props.planeTickets}}</span>
+      <span class="detail-value space"> $ {{ props.planeTickets }}</span>
+    </div>
+    <div class="details-row">
+      <span class="detail-label">Total trip cost:</span>
+      <!-- <span class="detail-value space"> $ {{getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets}}</span> -->
+      <span class=" mx-5">
+        <UBadge
+       
+          v-if="(getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget * 100 < 70 "
+          variant="solid" size="md" color="green">{{ getTotalCosts(props.destinationID, citiesAsArray).totalCost +
+            props.planeTickets }}</UBadge>
+        <UBadge
+        class="text-dark"
+          v-if="(getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget * 100 >= 75 && (getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget * 100 <= 89"
+          variant="outline" size="md" color="yellow">{{ getTotalCosts(props.destinationID, citiesAsArray).totalCost +
+            props.planeTickets }}</UBadge>
+        <UBadge
+       class="text-dark"
+          v-if="(getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget * 100 >= 90"
+          variant="outline" size="md" color="red">{{ getTotalCosts(props.destinationID, citiesAsArray).totalCost +
+            props.planeTickets }}</UBadge>
+      </span>
+    </div>
+    <div class="details-row">
+      <span class="detail-label">Budget:</span>
+      <span class="detail-value space">${{ formatNumber(props.destinationBudget) }}</span>
     </div>
     <div class="details-row">
       <span class="detail-label">Transport Type:</span>
@@ -94,26 +129,17 @@ onMounted(async () => {
     <div class="details-row">
       <span class="detail-label">Dates: </span>
       <span class="detail-value space">
-        {{ formatDate(props.from) }} - {{ formatDate(props.to) }}</span
-      >
+        {{ formatDate(props.from) }} - {{ formatDate(props.to) }}</span>
     </div>
-
-    <div class="details-row">
-      <span class="detail-label">Budget:</span>
-      <span class="detail-value space"
-        >${{ formatNumber(props.destinationBudget) }}</span
-      >
-    </div>
-
+    {{ status }}
+    <!-- (getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget * 100 < 70)  -->
     <div class="details-row">
       <span class="detail-label">Trip Duration:</span>
 
-      <span class="detail-value space"
-        >{{ calculateDaysRangeDuration(props.from, props.to) }}
+      <span class="detail-value space">{{ calculateDaysRangeDuration(props.from, props.to) }}
         {{
           calculateTotalDuration(props.from, props.to) > 1 ? "day" : "days"
-        }}</span
-      >
+        }}</span>
     </div>
 
     <div>
@@ -127,36 +153,18 @@ onMounted(async () => {
 
     <div class="details-row">
       <span class="detail-label">Cities Included: </span>
-      <span class="detail-value space"
-        >{{ props.citiesIncludedOnTrip }} cities</span
-      >
+      <span class="detail-value space">{{ getTotalCosts(props.destinationID, citiesAsArray).numOfCities }} cities</span>
+
+
     </div>
 
     <div>
       <div>
         <span class="detail-label">Status: </span>
         <span class="mr-auto">
-          <UBadge
-            v-if="tripStatus === 'Completed'"
-            variant="outline"
-            size="md"
-            color="green"
-            >Completed</UBadge
-          >
-          <UBadge
-            v-if="tripStatus === 'Pending'"
-            variant="outline"
-            size="md"
-            color="red"
-            >Pending</UBadge
-          >
-          <UBadge
-            v-if="tripStatus === 'In progress'"
-            variant="outline"
-            size="md"
-            color="yellow"
-            >In progress</UBadge
-          >
+          <UBadge v-if="tripStatus === 'Completed'" variant="outline" size="md" color="green">Completed</UBadge>
+          <UBadge v-if="tripStatus === 'Pending'" variant="outline" size="md" color="red">Pending</UBadge>
+          <UBadge v-if="tripStatus === 'In progress'" variant="outline" size="md" color="yellow">In progress</UBadge>
         </span>
       </div>
     </div>
@@ -164,28 +172,12 @@ onMounted(async () => {
     <div>
       <span>
         <span class="detail-label">Rating: </span>
-        <UBadge
-          v-if="ratingStatus.rating < 4"
-          variant="solid"
-          size="md"
-          color="red"
-          >{{ props.tripRating.toFixed(1) }}
+        <UBadge v-if="ratingStatus.rating < 4" variant="solid" size="md" color="red">{{ props.tripRating.toFixed(1) }}
         </UBadge>
-        <UBadge
-          v-if="ratingStatus.rating >= 4 && ratingStatus.rating <= 4.5"
-          variant="solid"
-          size="md"
-          color="yellow"
-        >
-          {{ props.tripRating.toFixed(1) }}</UBadge
-        >
-        <UBadge
-          v-if="ratingStatus.rating >= 4.5"
-          variant="solid"
-          size="md"
-          color="green"
-          >{{ props.tripRating.toFixed(1) }}</UBadge
-        >
+        <UBadge v-if="ratingStatus.rating >= 4 && ratingStatus.rating <= 4.5" variant="solid" size="md" color="yellow">
+          {{ props.tripRating.toFixed(1) }}</UBadge>
+        <UBadge v-if="ratingStatus.rating >= 4.5" variant="solid" size="md" color="green">{{ props.tripRating.toFixed(1)
+          }}</UBadge>
       </span>
     </div>
 
@@ -195,11 +187,11 @@ onMounted(async () => {
         <button class="details-button">Cities</button>
       </NuxtLink>
     </div>
-    
+
     <div class="details-row d-block">
-        <span class="detail-label">Added on : </span>
-        <span class="detail-value space">{{ formatDate(props.date) }}</span>
-      </div>
+      <span class="detail-label">Added on : </span>
+      <span class="detail-value space">{{ formatDate(props.date) }}</span>
+    </div>
     <div class="details-row d-block">
       <span class="detail-label">Trip Comments: </span>
       <p class="d-block comment">
@@ -208,9 +200,7 @@ onMounted(async () => {
     </div>
 
     <div class="modal-actions">
-      <UButton color="red" @click="removeItem(props.destinationID)"
-        >Delete</UButton
-      >
+      <UButton color="red" @click="removeItem(props.destinationID)">Delete</UButton>
       <UButton :to="updateLink">Update</UButton>
     </div>
   </div>
@@ -218,25 +208,32 @@ onMounted(async () => {
 
 <style scoped>
 
-.details-button{
+.text-dark{
+  color: rgb(0, 128, 64);
+  margin-right: 1rem;
+  
+}
+.details-button {
   color: black;
   border: #b0b0b0 solid 1px;
   padding: 5px 10px;
   border-radius: 8px;
 }
 
-.details-button:hover{
+.details-button:hover {
   background-color: #dadada;
   transition: 0.3s ease-in-out;
 
 
 }
+
 .comment {
   border: solid rgb(180, 180, 180) 1px;
   min-height: 5rem;
   border-radius: 5px;
   margin-top: 1rem;
 }
+
 /* for highlighting titles : color: gray; */
 /* for highlighting values :  color: rgb(43, 41, 41);
   font-weight: 500;*/

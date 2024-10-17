@@ -115,6 +115,15 @@ export const useDestinationStore = defineStore({
     filterByStatusComplete: (state) => state.destination.filter((data)=> data.isTripCompleted === "Completed" ),
     filterByStatusPending: (state) => state.destination.filter((data)=> data.isTripCompleted === "Pending" ),
     filterByStatusInProgress: (state) => state.destination.filter((data)=> data.isTripCompleted === "In Progress" ),
+    getTotalCosts: (state) => (destID, citiesArray) => {
+      const filteredDestinations = state.destination.filter((p) => p.destinationID);
+      const filteredCities = citiesArray.filter((p) => p.parentDestinationID);
+      const filterAll = filteredCities.filter((p) => p.parentDestinationID === destID);
+      const totalCost= filterAll.reduce((sum, city) => sum + city.totalCost, 0)
+      // return totalAccommodationCost;
+      return {totalCost: totalCost, numOfCities: filterAll.length || 0}
+      
+    },
 
 
     // ? will search and item by its name

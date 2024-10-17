@@ -24,7 +24,8 @@ const props = defineProps([
   "tripRating",
   "tripComments",
   "numOfPeople",
-  "planeTickets"
+  "planeTickets",
+"totalCost"
 ]);
 
 const destinationParam = ref(props.destinationID);
@@ -122,14 +123,6 @@ onMounted(() => {
               </h2>
             </div>
             <div class="col section">
-              <!-- <span class="title-section pb-2"> Budget </span> -->
-              <!-- <h2>
-                $
-                <span class="highlight"
-                  >{{ formatNumber(props.destinationBudget) }}
-                </span>
-              </h2> -->
-
               <span class="pb-2 title-section"> Days until trip </span>
               <h2>
                 <span class="highlight">{{ daysRemainingForTrip }} </span>
@@ -193,6 +186,7 @@ onMounted(() => {
                     :tripComments="props.tripComments"
                     :numOfPeople="props.numOfPeople"
                     :planeTickets="props.planeTickets"
+                    :totalCost="props.totalCost"
                   />
                 </div>
               </UModal>

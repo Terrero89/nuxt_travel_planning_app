@@ -9,6 +9,7 @@ const expenseStore = useExpenseStore();
 const destStore = useDestinationStore();
 const { getAvgRatingForCity, fetchExpenses, getTotalAccommodationsNumbers } =
   expenseStore;
+
 import { storeToRefs } from "pinia";
 
 const {
@@ -21,11 +22,12 @@ const {
 } = cityStore;
 const { fetchDestinations } = destStore;
 const { cities, } = storeToRefs(cityStore);
-const { destination } = storeToRefs(destStore);
+const { destination,destinationsTotalCost } = storeToRefs(destStore);
 const { expenses } = useExpenseStore();
 
 const route = useRoute(); //route object
 const destId = route.params.destinationID;
+
 
 const props = defineProps([
   "cityID",
@@ -45,6 +47,7 @@ const props = defineProps([
   "date",
   "cityComments",
 ]);
+
 
 onMounted(async () => {
   await fetchExpenses();
@@ -123,5 +126,5 @@ onMounted(async () => {
     />
   </div>
 </template>
-
+  
 <style scoped></style>
