@@ -106,6 +106,8 @@ export const useDestinationStore = defineStore({
         console.error("Error updating Destination:", error);
       }
     },
+
+  
   },
   getters: {
     destinationsAsArray: (state) => {
@@ -116,12 +118,24 @@ export const useDestinationStore = defineStore({
     filterByStatusPending: (state) => state.destination.filter((data)=> data.isTripCompleted === "Pending" ),
     filterByStatusInProgress: (state) => state.destination.filter((data)=> data.isTripCompleted === "In Progress" ),
     getTotalCosts: (state) => (destID, citiesArray) => {
-      const filteredDestinations = state.destination.filter((p) => p.destinationID);
+      // const filteredDestinations = state.destination.filter((p) => p.destinationID);
       const filteredCities = citiesArray.filter((p) => p.parentDestinationID);
       const filterAll = filteredCities.filter((p) => p.parentDestinationID === destID);
       const totalCost= filterAll.reduce((sum, city) => sum + city.totalCost, 0)
+      // Calculate the sum of ratings
+      const totalRating = filterAll.reduce(
+        (sum, city) => sum + (city.cityRating || 0),
+        0
+      );
+
+      
+
+      const lengthData = filterAll.length;
+      // Calculate the average rating
+      const aveRating = totalRating / lengthData;
+   
       // return totalAccommodationCost;
-      return {totalCost: totalCost, numOfCities: filterAll.length || 0}
+      return {totalCost: totalCost, numOfCities: filterAll.length, aveRating: aveRating  }
       
     },
 

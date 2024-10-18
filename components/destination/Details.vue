@@ -6,14 +6,10 @@ const cityStore = useCityStore();
 const { fetchCities, getAmountOfCities } = cityStore;
 import { storeToRefs } from "pinia";
 const { citiesAsArray } = storeToRefs(cityStore);
-import { formatDate, formatNumber } from "../../utils/date-conversion";
-import {
-  calculateDaysRangeDuration,
-  calculateTotalDuration,
-} from "../../utils/date-conversion";
 
-const { deleteDestination, fetchDestinations } = store;
-const { destination, getTotalCosts } = storeToRefs(store);
+
+const { deleteDestination } = store;
+const { getTotalCosts, destinationsTotalRating } = storeToRefs(store);
 const props = defineProps([
   "destinationID",
   "destination",
@@ -67,11 +63,12 @@ const removeItem = async (id) => {
   navigateTo(`/destinations`);
 };
 
+
 onMounted(async () => {
   await fetchCities();
-  // filterItemByName.value;
 
 });
+
 
 
 
@@ -83,8 +80,8 @@ onMounted(async () => {
     <!-- {{ props.destinationID }}-- -->
     {{ (getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget *
       100 }}
+      {{typeof getTotalCosts(props.destinationID, citiesAsArray).aveRating}}
 
-    <!-- {{ citiesAsArray }} -->
 
     <hr />
     <h2>{{ props.destination }}</h2>
@@ -98,23 +95,21 @@ onMounted(async () => {
     </div>
     <div class="details-row">
       <span class="detail-label">Total trip cost:</span>
-      <!-- <span class="detail-value space"> $ {{getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets}}</span> -->
-      <span class=" mx-5">
+      <span class="details-row">
         <UBadge
        
           v-if="(getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget * 100 < 70 "
-          variant="solid" size="md" color="green">{{ getTotalCosts(props.destinationID, citiesAsArray).totalCost +
-            props.planeTickets }}</UBadge>
+          variant="solid" size="md" color="green">$ {{ formatNumber((getTotalCosts(props.destinationID, citiesAsArray).totalCost +
+            props.planeTickets).toFixed(2))}}</UBadge>
         <UBadge
-        class="text-dark"
+        
           v-if="(getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget * 100 >= 75 && (getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget * 100 <= 89"
-          variant="outline" size="md" color="yellow">{{ getTotalCosts(props.destinationID, citiesAsArray).totalCost +
-            props.planeTickets }}</UBadge>
+          variant="solid" size="md" color="yellow">$ {{formatNumber((getTotalCosts(props.destinationID, citiesAsArray).totalCost +
+            props.planeTickets).toFixed(2))}}</UBadge>
         <UBadge
-       class="text-dark"
           v-if="(getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget * 100 >= 90"
-          variant="outline" size="md" color="red">{{ getTotalCosts(props.destinationID, citiesAsArray).totalCost +
-            props.planeTickets }}</UBadge>
+          variant="solid" size="md" color="red">$ {{ formatNumber((getTotalCosts(props.destinationID, citiesAsArray).totalCost +
+            props.planeTickets).toFixed(2)) }}</UBadge>
       </span>
     </div>
     <div class="details-row">
@@ -131,7 +126,7 @@ onMounted(async () => {
       <span class="detail-value space">
         {{ formatDate(props.from) }} - {{ formatDate(props.to) }}</span>
     </div>
-    {{ status }}
+    
     <!-- (getTotalCosts(props.destinationID, citiesAsArray).totalCost + props.planeTickets) / props.destinationBudget * 100 < 70)  -->
     <div class="details-row">
       <span class="detail-label">Trip Duration:</span>
@@ -208,11 +203,6 @@ onMounted(async () => {
 
 <style scoped>
 
-.text-dark{
-  color: rgb(0, 128, 64);
-  margin-right: 1rem;
-  
-}
 .details-button {
   color: black;
   border: #b0b0b0 solid 1px;
