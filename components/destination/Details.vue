@@ -55,12 +55,14 @@ const ratingStatus = computed(() => {
     return { rating: props.tripRating, color: "red" };
   }
 });
+
+
 const removeItem = async (id) => {
-  console.log(id);
-
-  deleteDestination(id);
-
-  navigateTo(`/destinations`);
+  if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
+    await deleteDestination(id);; // Proceed with the deletion if confirmed
+    // Optionally navigate or refresh the page after deletion
+    navigateTo(`/destinations`);
+  }
 };
 
 

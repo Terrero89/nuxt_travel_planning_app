@@ -30,12 +30,17 @@ const props = defineProps([
   "comments",
   "expectedExpenseDate"
 ]);
-const removeItem = async (id) => {
-  console.log(id);
 
-  deleteExpense(id);
-  navigateTo( `/destinations/${props.destinationID}`);
+
+const removeItem = async (id) => {
+  if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
+    deleteExpense(id);
+    navigateTo( `/destinations/${props.destinationID}`);// Proceed with the deletion if confirmed
+    // Optionally navigate or refresh the page after deletion
+    
+  }
 };
+
 const updateExpensesLink = computed(
   () =>
     `/destinations/${destinationParamID}/cities-${cityParamID}/expense-${props.expenseID}/updateExpense`

@@ -35,11 +35,13 @@ const props = defineProps([
   "date"
 ]);
 // have to find a way to grab all the required fields now that i have both ids
+// Function to remove a city with confirmation
 const removeItem = async (id) => {
-
-
-  deleteCity(id);
-  // navigateTo(`/destinations/${destId}`);
+  if (confirm("Are you sure you want to delete this city? This action cannot be undone.")) {
+    await deleteCity(id); // Proceed with the deletion if confirmed
+    // Optionally navigate or refresh the page after deletion
+    navigateTo(`/destinations/${destId}`);
+  }
 };
 const citiesLink = computed(
   () => `/destinations/${destId}/cities-${props.cityID}`
