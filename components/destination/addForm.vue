@@ -82,13 +82,6 @@ const submitForm = () => {
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Create Destination</h3>
 
-      <!-- Validation Errors -->
-      <!-- <div v-if="validationErrors.length" class="alert alert-danger">
-        <ul>
-          <li v-for="(error, index) in validationErrors" :key="index">{{ error }}</li>
-        </ul>
-      </div> -->
-
       <div :class="{'is-invalid': validationErrors.includes('Destination name is required.')}">
         <label for="destinationName" class="form-label">Destination</label>
         <input
@@ -97,6 +90,9 @@ const submitForm = () => {
           class="form-control"
           id="destinationName"
         />
+        <div v-if="validationErrors.includes('Destination name is required.')" class="invalid-feedback">
+          Destination name is required.
+        </div>
       </div>
 
       <div :class="{'is-invalid': validationErrors.includes('Number of people must be greater than 0.')}">
@@ -107,6 +103,9 @@ const submitForm = () => {
           class="form-control"
           id="numOfPeople"
         />
+        <div v-if="validationErrors.includes('Number of people must be greater than 0.')" class="invalid-feedback">
+          Number of people must be greater than 0.
+        </div>
       </div>
 
       <div :class="{'is-invalid': validationErrors.includes('Transportation type is required.')}">
@@ -122,6 +121,9 @@ const submitForm = () => {
           <option>Car</option>
           <option>Cruise</option>
         </select>
+        <div v-if="validationErrors.includes('Transportation type is required.')" class="invalid-feedback">
+          Transportation type is required.
+        </div>
       </div>
 
       <div :class="{'is-invalid': validationErrors.includes('Budget must be a positive number.')}">
@@ -132,6 +134,9 @@ const submitForm = () => {
           class="form-control"
           id="destinationBudget"
         />
+        <div v-if="validationErrors.includes('Budget must be a positive number.')" class="invalid-feedback">
+          Budget must be a positive number.
+        </div>
       </div>
 
       <div class="col-6" :class="{'is-invalid': validationErrors.includes('From date is required.')}">
@@ -142,6 +147,9 @@ const submitForm = () => {
           class="form-control"
           id="fromDate"
         />
+        <div v-if="validationErrors.includes('From date is required.')" class="invalid-feedback">
+          From date is required.
+        </div>
       </div>
 
       <div class="col-6" :class="{'is-invalid': validationErrors.includes('To date is required.')}">
@@ -152,6 +160,9 @@ const submitForm = () => {
           class="form-control"
           id="toDate"
         />
+        <div v-if="validationErrors.includes('To date is required.')" class="invalid-feedback">
+          To date is required.
+        </div>
       </div>
 
       <div class="col-6">
@@ -222,9 +233,9 @@ label {
   margin: 0.5rem 0;
 }
 
-.alert {
+.invalid-feedback {
   color: red;
-  margin-bottom: 1rem;
+  font-size: 0.875rem; /* Smaller font for error messages */
 }
 
 .is-invalid input,

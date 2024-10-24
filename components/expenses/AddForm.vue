@@ -121,7 +121,7 @@ const showPrice = computed(() => {
           id="expense"
         />
       
-        <span v-if="validationErrors.expense" class="error-message">{{ validationErrors.expense }}</span>
+        <small v-if="validationErrors.expense" class="error-message">{{ validationErrors.expense }}</small>
       </div>
 
       <div class="col-6">
@@ -144,7 +144,7 @@ const showPrice = computed(() => {
           <option>N/A</option>
         </select>
      
-        <span v-if="validationErrors.category" class="error-message">{{ validationErrors.category }}</span>
+        <small v-if="validationErrors.category" class="error-message">{{ validationErrors.category }}</small>
       </div>
 
       <div class="col-6" v-if="showPrice">
@@ -157,7 +157,7 @@ const showPrice = computed(() => {
           id="cost"
         />
        
-        <span v-if="validationErrors.cost" class="error-message">{{ validationErrors.cost }}</span>
+        <small v-if="validationErrors.cost" class="error-message">{{ validationErrors.cost }}</small>
       </div>
 
       <div class="col-6">
@@ -172,7 +172,7 @@ const showPrice = computed(() => {
           step="0.1"
         />
        
-        <span v-if="validationErrors.placeRating" class="error-message">{{ validationErrors.placeRating }}</span>
+        <small v-if="validationErrors.placeRating" class="error-message">{{ validationErrors.placeRating }}</small>
       </div>
 
       <div class="col-6">
@@ -190,7 +190,7 @@ const showPrice = computed(() => {
           <option>Optional</option>
         </select>
         
-        <span v-if="validationErrors.priority" class="error-message">{{ validationErrors.priority }}</span>
+        <small v-if="validationErrors.priority" class="error-message">{{ validationErrors.priority }}</small>
       </div>
 
       <div class="col-6">
@@ -218,7 +218,7 @@ const showPrice = computed(() => {
           id="date-input"
         />
        
-        <span v-if="validationErrors.expectedExpenseDate" class="error-message">{{ validationErrors.expectedExpenseDate }}</span>
+        <small v-if="validationErrors.expectedExpenseDate" class="error-message">{{ validationErrors.expectedExpenseDate }}</small>
       </div>
 
       <div>
@@ -229,7 +229,7 @@ const showPrice = computed(() => {
           :class="{ 'invalid': validationErrors.location }"
         />
         
-        <span v-if="validationErrors.location" class="error-message">{{ validationErrors.location }}</span>
+        <small v-if="validationErrors.location" class="error-message">{{ validationErrors.location }}</small>
       </div>
 
       <div>
@@ -278,11 +278,12 @@ label {
 .form-control {
   width: 100%;
   padding: 0.5rem;
-  margin-bottom: 1rem;
+ 
 }
 
 .error-message {
   color: red;
-  font-size: 0.875rem;
+ 
+
 }
 </style>
