@@ -13,10 +13,10 @@ const transportType = ref("");
 const destinationBudget = ref();
 const from = ref("");
 const to = ref("");
-const tripRating = ref(10);
+const tripRating = ref(0);
 const tripComments = ref("");
 const numOfPeople = ref(0);
-
+const validationErrors = ref([]);
 
 // Computed property for trip duration
 const tripDuration = computed(() => {
@@ -38,7 +38,26 @@ const daysRemainingForTrip = computed(() => {
   return Math.ceil(daysRemaining); // Round up to the nearest whole number
 });
 
+// Function to validate form inputs
+const validateForm = () => {
+  validationErrors.value = [];
+  
+  if (!destinationName.value) validationErrors.value.push("Destination name is required.");
+  if (!transportType.value) validationErrors.value.push("Transportation type is required.");
+  if (!destinationBudget.value || destinationBudget.value <= 0) validationErrors.value.push("Budget must be a positive number.");
+  if (!from.value) validationErrors.value.push("From date is required.");
+  if (!to.value) validationErrors.value.push("To date is required.");
+  if (tripDuration.value === 0) validationErrors.value.push("Trip duration must be greater than 0.");
+  if (numOfPeople.value <= 0) validationErrors.value.push("Number of people must be greater than 0.");
+
+  return validationErrors.value.length === 0; // Return true if no errors
+};
+
 const submitForm = () => {
+  if (!validateForm()) {
+    return; // Stop if validation fails
+  }
+
   const tripData = {
     destination: destinationName.value,
     transportType: transportType.value,
@@ -51,20 +70,26 @@ const submitForm = () => {
     tripRating: tripRating.value,
     tripComments: tripComments.value,
     date: new Date(),
-    numOfPeople: numOfPeople.value  ,
+    numOfPeople: numOfPeople.value,
   };
 
   addDestination(tripData);
   navigateTo("/destinations");
 };
 </script>
-
 <template>
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
       <h3 class="mb-4">Create Destination</h3>
 
-      <div>
+      <!-- Validation Errors -->
+      <!-- <div v-if="validationErrors.length" class="alert alert-danger">
+        <ul>
+          <li v-for="(error, index) in validationErrors" :key="index">{{ error }}</li>
+        </ul>
+      </div> -->
+
+      <div :class="{'is-invalid': validationErrors.includes('Destination name is required.')}">
         <label for="destinationName" class="form-label">Destination</label>
         <input
           type="text"
@@ -74,22 +99,24 @@ const submitForm = () => {
         />
       </div>
 
-      <div>
-        <label for="destinationName" class="form-label">Number of people</label>
+      <div :class="{'is-invalid': validationErrors.includes('Number of people must be greater than 0.')}">
+        <label for="numOfPeople" class="form-label">Number of people</label>
         <input
           type="number"
           v-model.trim="numOfPeople"
           class="form-control"
-          id="destinationTravelers"
+          id="numOfPeople"
         />
       </div>
-      <div>
+
+      <div :class="{'is-invalid': validationErrors.includes('Transportation type is required.')}">
         <label for="transportType" class="form-label">Transportation Type</label>
         <select
           class="form-select"
           v-model="transportType"
           id="transportType"
         >
+          <option value="">Select a transportation type</option>
           <option>Plane</option>
           <option>Train</option>
           <option>Car</option>
@@ -97,7 +124,7 @@ const submitForm = () => {
         </select>
       </div>
 
-      <div>
+      <div :class="{'is-invalid': validationErrors.includes('Budget must be a positive number.')}">
         <label for="destinationBudget" class="form-label">Budget</label>
         <input
           type="number"
@@ -107,7 +134,7 @@ const submitForm = () => {
         />
       </div>
 
-      <div class="col-6">
+      <div class="col-6" :class="{'is-invalid': validationErrors.includes('From date is required.')}">
         <label for="fromDate" class="form-label">From</label>
         <input
           type="date"
@@ -117,7 +144,7 @@ const submitForm = () => {
         />
       </div>
 
-      <div class="col-6">
+      <div class="col-6" :class="{'is-invalid': validationErrors.includes('To date is required.')}">
         <label for="toDate" class="form-label">To</label>
         <input
           type="date"
@@ -193,5 +220,19 @@ label {
   font-weight: 400;
   font-size: 1rem;
   margin: 0.5rem 0;
+}
+
+.alert {
+  color: red;
+  margin-bottom: 1rem;
+}
+
+.is-invalid input,
+.is-invalid select {
+  border-color: red;
+}
+
+.is-invalid .form-label {
+  color: red;
 }
 </style>

@@ -1,59 +1,96 @@
 <script setup>
+import { ref, watch, computed } from "vue";
 import { useExpenseStore } from "@/store/expenses";
 import { storeToRefs } from "pinia";
 import { calculateDaysRemaining } from "../../utils/date-conversion";
+
 const expenseStore = useExpenseStore();
-const {} = storeToRefs(expenseStore);
-const { addExpense } = expenseStore;
+const { addExpense } = storeToRefs(expenseStore);
 
-const route = useRoute(); //route object
-
+const route = useRoute(); // route object
 const destId = route.params.destinationID;
 const cityId = route.params.cityID;
 
-// initiate
+// Initiate form fields
 const expense = ref("");
 const category = ref("");
-const cost = ref();
+const cost = ref(null);
 const location = ref("");
 const priority = ref("");
-const date = ref();
-const isCompleted = ref();
-const placeRating = ref();
+const date = ref(null);
+const isCompleted = ref("");
+const placeRating = ref(null);
 const comments = ref("");
-const duration = ref(0); // Store calculated duration
-const daysRemainingForExpense = ref(0); // Store calculated days remaining
-const expectedExpenseDate = ref();
+const duration = ref(0);
+const daysRemainingForExpense = ref(0);
+const expectedExpenseDate = ref(null);
 
+// Validation errors
+const validationErrors = ref({});
 
-const props = defineProps(["cityID"])
+// Validate form before submission
+const validateForm = () => {
+  validationErrors.value = {};
 
-// Watch for changes in startTime and endTime
-// watch(
-//   [startTime, endTime],
-//   () => {
-//     if (startTime.value && endTime.value) {
-//       duration.value = calculateTotalDuration(startTime.value, endTime.value);
-//     }
-//   },
-//   { immediate: true }
-// );
+  if (!expense.value) {
+    validationErrors.value.expense = "Expense name is required.";
+  }
+  if (!cost.value) {
+    validationErrors.value.cost = "Please select a price.";
+  }
 
-// COMPUTED PROPERTIES
+  if (!location.value) {
+    validationErrors.value.location = "Please add a location.";
+  }
+  if (!category.value) {
+    validationErrors.value.category = "Please select a category.";
+  }
+
+  if (category.value && showPrice.value && !cost.value) {
+    validationErrors.value.cost = "Cost is required for this category.";
+  } else if (cost.value && cost.value < 0) {
+    validationErrors.value.cost = "Cost must be a positive number.";
+  }
+
+  if (placeRating.value !== null && (placeRating.value < 0 || placeRating.value > 5)) {
+    validationErrors.value.placeRating = "Rating must be between 0 and 5.";
+  }
+
+  if (!priority.value) {
+    validationErrors.value.priority = "Please select a priority.";
+  }
+
+  if (!expectedExpenseDate.value) {
+    validationErrors.value.expectedExpenseDate = "Please select a booking date.";
+  }
+
+  return Object.keys(validationErrors.value).length === 0;
+};
+
+// Automatically calculate days remaining based on a fixed date
+watch(date, () => {
+  if (date.value) {
+    daysRemainingForExpense.value = calculateDaysRemaining(date.value);
+  }
+}, { immediate: true });
+
 const submitForm = async () => {
+  if (!validateForm()) {
+    return;
+  }
+
   const expenseData = {
     parentCityID: cityId,
     parentDestinationID: destId,
     expense: expense.value,
     category: category.value,
-    // startTime: startTime.value,
     cost: cost.value,
     isExpensePaid: false,
     location: location.value,
     duration: duration.value,
-    isCompleted: isCompleted.value,
+    isCompleted: "Pending",
     daysRemainingForExpense: daysRemainingForExpense.value,
-    placeRating: placeRating.value,
+    placeRating: 0,
     priority: priority.value,
     date: new Date(),
     comments: comments.value,
@@ -64,20 +101,12 @@ const submitForm = async () => {
   navigateTo(`/destinations/${destId}/cities-${cityId}`);
 };
 
-// Automatically calculate days remaining based on a fixed date
-watch(
-  date,
-  () => {
-    daysRemainingForExpense.value = calculateDaysRemaining(date.value);
-  },
-  { immediate: true }
-);
-
 const showPrice = computed(() => {
   return !["N/A", "Landmarks", "Other"].includes(category.value);
 });
-
 </script>
+
+
 <template>
   <div class="form-wrapper">
     <form class="row g-3" @submit.prevent="submitForm">
@@ -85,12 +114,24 @@ const showPrice = computed(() => {
 
       <div>
         <label for="expense" class="form-label">Expense</label>
-        <input v-model="expense" class="form-control" id="expense" />
+        <input
+          v-model="expense"
+          class="form-control"
+          :class="{ 'invalid': validationErrors.expense }"
+          id="expense"
+        />
+      
+        <span v-if="validationErrors.expense" class="error-message">{{ validationErrors.expense }}</span>
       </div>
 
       <div class="col-6">
         <label for="category" class="form-label">Expense Type</label>
-        <select v-model="category" class="form-select" id="category">
+        <select
+          v-model="category"
+          class="form-select"
+          :class="{ 'invalid': validationErrors.category }"
+          id="category"
+        >
           <option></option>
           <option>Food/Drinks</option>
           <option>Attractions</option>
@@ -102,11 +143,21 @@ const showPrice = computed(() => {
           <option>Other</option>
           <option>N/A</option>
         </select>
+     
+        <span v-if="validationErrors.category" class="error-message">{{ validationErrors.category }}</span>
       </div>
 
       <div class="col-6" v-if="showPrice">
         <label for="cost" class="form-label">Price</label>
-        <input type="number" v-model="cost" class="form-control" id="cost" />
+        <input
+          type="number"
+          v-model="cost"
+          class="form-control"
+          :class="{ 'invalid': validationErrors.cost }"
+          id="cost"
+        />
+       
+        <span v-if="validationErrors.cost" class="error-message">{{ validationErrors.cost }}</span>
       </div>
 
       <div class="col-6">
@@ -115,53 +166,80 @@ const showPrice = computed(() => {
           type="number"
           v-model="placeRating"
           class="form-control"
+          :class="{ 'invalid': validationErrors.placeRating }"
           min="0"
           max="5"
           step="0.1"
         />
+       
+        <span v-if="validationErrors.placeRating" class="error-message">{{ validationErrors.placeRating }}</span>
       </div>
 
       <div class="col-6">
         <label for="priority" class="form-label">Visit Priority</label>
-        <select v-model="priority" class="form-select" id="priority">
+        <select
+          v-model="priority"
+          class="form-select"
+          :class="{ 'invalid': validationErrors.priority }"
+          id="priority"
+        >
           <option></option>
           <option>Must visit</option>
           <option>Nice to visit</option>
           <option>Backup options</option>
           <option>Optional</option>
         </select>
+        
+        <span v-if="validationErrors.priority" class="error-message">{{ validationErrors.priority }}</span>
       </div>
+
       <div class="col-6">
-        <label for="priority" class="form-label">Status</label>
-        <select v-model="isCompleted" class="form-select" id="priority">
+        <label for="status" class="form-label">Status</label>
+        <select
+          v-model="isCompleted"
+          class="form-select"
+          id="status"
+        >
           <option value="" disabled selected hidden>Status</option>
           <option>Complete</option>
           <option>In progress</option>
           <option>Pending</option>
-        
         </select>
+     
       </div>
+
       <div class="col-6">
-        <label for="inputPassword4" class="form-label">Date Booked: </label>
+        <label for="date-input" class="form-label">Date Booked:</label>
         <input
           type="date"
           v-model.trim="expectedExpenseDate"
           class="form-control"
+          :class="{ 'invalid': validationErrors.expectedExpenseDate }"
           id="date-input"
         />
+       
+        <span v-if="validationErrors.expectedExpenseDate" class="error-message">{{ validationErrors.expectedExpenseDate }}</span>
       </div>
 
       <div>
         <label for="location" class="form-label">Location</label>
-        <input v-model="location" class="form-control" />
+        <input
+          v-model="location"
+          class="form-control"
+          :class="{ 'invalid': validationErrors.location }"
+        />
+        
+        <span v-if="validationErrors.location" class="error-message">{{ validationErrors.location }}</span>
       </div>
 
       <div>
+        <label for="comments" class="form-label">Comments</label>
         <textarea
           v-model="comments"
           class="form-control"
           placeholder="Comments"
         ></textarea>
+      
       </div>
 
       <div>
@@ -172,8 +250,6 @@ const showPrice = computed(() => {
 </template>
 
 <style scoped>
-
-
 .form-wrapper {
   background-color: white;
   max-width: 32rem;
@@ -183,23 +259,15 @@ const showPrice = computed(() => {
   padding: 2.7rem 1.5rem;
 }
 
+.invalid {
+  border-color: red;
+}
+
 label {
   color: rgb(77, 73, 73);
   font-weight: 400;
   font-size: 1rem;
   margin: 0.5rem 0;
-}
-
-/* 
- */
-.input-container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  border-radius: 8px;
-  background-color: #f9f9f9;
 }
 
 .form-label {
@@ -213,12 +281,8 @@ label {
   margin-bottom: 1rem;
 }
 
-a {
-  color: #0066cc;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
+.error-message {
+  color: red;
+  font-size: 0.875rem;
 }
 </style>
