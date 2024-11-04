@@ -56,7 +56,6 @@ onMounted(() => {
   // Update daysRemainingForExpense every day at midnight
   const interval = setInterval(calculateDaysRemaining, 86400000); // 86400000ms = 24 hours
 
-
   // Cleanup interval on unmount
   onUnmounted(() => {
     clearInterval(interval);
@@ -102,22 +101,14 @@ onMounted(() => {
               <span class="pb-2 title-section">Category </span>
               <h2>{{ props.category }}</h2>
 
-              <span > Price </span>
+              <span> Price </span>
               <h2>
-                $ <span class="highlight">{{ props.cost }} </span>
+                <span class="highlight"
+                  >{{ props.cost === 0 ? "Free" : `$ ${props.cost}` }}
+                </span>
               </h2>
-<!--              <div>-->
-<!--                <span class="pb-2 title-section">Duration </span>-->
-<!--                <h2>-->
-<!--                  <span class="highlight">{{ props.duration }} </span>-->
-<!--                </h2>-->
-<!--              </div>-->
             </div>
             <div class="col section">
-<!--              <span class="title-section pb-2"> Price </span>-->
-<!--              <h2>-->
-<!--                $ <span class="highlight">{{ props.cost }} </span>-->
-<!--              </h2>-->
               <span class="pb-2 title-section"> Reservation Date</span>
               <h2>
                 <span class="highlight"
@@ -126,12 +117,6 @@ onMounted(() => {
               </h2>
             </div>
             <div class="col section">
-              <!-- <span class="pb-2 title-section">Date Planned</span>
-              <h2>{{ formatDate(props.date) }}</h2> -->
-          
-              <!-- <span class="pb-2 title-section">Date Planned</span>
-              <h2>{{ formatDate(props.date) }}</h2> -->
-
               <span class="pb-2 title-section">Rating</span>
               <h2>
                 <span class="highlight">
@@ -156,19 +141,14 @@ onMounted(() => {
                     color="green"
                     >{{ props.placeRating }}</UBadge
                   >
-
                 </span>
-
               </h2>
-
-           
             </div>
             <div class="col mx-auto">
-              <button
-                  class="my-2 details-button"
-                  @click="isOpen = true"
-              >Details</button> </div>
-            
+              <button class="my-2 details-button" @click="isOpen = true">
+                Details
+              </button>
+            </div>
           </div>
           <div>
             <div>
@@ -207,19 +187,16 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
-.details-button{
+.details-button {
   color: black;
   border: #e1e1e1 solid 1px;
   padding: 5px 10px;
   border-radius: 8px;
 }
 
-.details-button:hover{
+.details-button:hover {
   background-color: #dadada;
   transition: 0.3s ease-in-out;
-
-
 }
 .highlight {
   font-weight: 800;

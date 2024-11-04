@@ -99,3 +99,6 @@ onMounted(async () => {
   list-style: none;
 }
 </style>
+
+Rating
+4.8

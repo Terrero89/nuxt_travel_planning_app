@@ -74,7 +74,7 @@ onMounted(async () => {
     </UICard>
 <div>
 
-<!-- {{ filterItemByCity(filterByName).slice(0,3) }} -->
+
 
 
 

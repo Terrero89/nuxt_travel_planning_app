@@ -175,6 +175,41 @@ export const useCityStore = defineStore({
       return citiesBooked;
     },
 
+    cityStats: (state) => {
+      const destination = state.cities;
+      const completedDest = destination.filter(
+        (item) => item.isThisCityVisited === "Visited"
+      );
+      const progressDest = destination.filter(
+        (item) => item.isThisCityVisited === "In Progress"
+      );
+      const pendingDest = destination.filter(
+        (item) => item.isThisCityVisited=== "Not visited"
+      );
+      const nullDest = destination.filter(
+        (item) => item.isThisCityVisited === null || !item.isThisCityVisited
+      );
+      let pendingPercentage =
+        ((pendingDest.length + progressDest.length) /
+          destination.length) *
+          100 ===
+        0
+          ? 100
+          : ((pendingDest.length + progressDest.length) /
+             destination.length) *
+            100;
+      return {
+        arrayLength:destination.length,
+        completed: (completedDest.length),
+        progress: progressDest.length,
+        pending: pendingDest.length,
+        null: nullDest.length,
+        percentage: pendingPercentage,
+        pendingTotals: 100 - pendingPercentage,
+          
+      };
+    },
+
     filteredCitiesStats: (state) => (id, byStatus, byCategory, byBooking) => {
       // Filter cities based on the provided filters
       const filteredCities = state.filtering(

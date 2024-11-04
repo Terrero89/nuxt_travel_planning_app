@@ -108,7 +108,8 @@ onMounted(async () => {
 
     <div class="details-row">
       <span class="detail-label">Cost:</span>
-      <span class="detail-value space">${{ props.cost }}</span>
+      
+      <span class="detail-value space">{{ props.cost === 0 ? "Free" : `$ ${props.cost}` }} </span>
     </div>
 
     <div v-if="props.category === 'Attractions'">
@@ -163,8 +164,9 @@ onMounted(async () => {
     <div>
       <div class="details-row">
         <span class="detail-label">Days Remaining: </span>
+        
         <span class="detail-value space">
-          {{ props.daysRemainingForExpense }} days
+          {{ calculateDaysRemaining(props.expectedExpenseDate ) >= 0 ?  calculateDaysRemaining(props.expectedExpenseDate ) : timeSince(props.expectedExpenseDate)}} days
         </span>
       </div>
     </div>

@@ -106,47 +106,88 @@ export const useDestinationStore = defineStore({
         console.error("Error updating Destination:", error);
       }
     },
-
-  
   },
   getters: {
     destinationsAsArray: (state) => {
       return state.destination;
     },
+
+    destinationsStats: (state) => {
+      const completedDest = state.destination.filter(
+        (item) => item.isTripCompleted === "Completed"
+      );
+      const progressDest = state.destination.filter(
+        (item) => item.isTripCompleted === "In Progress"
+      );
+      const pendingDest = state.destination.filter(
+        (item) => item.isTripCompleted === "Pending"
+      );
+      const nullDest = state.destination.filter(
+        (item) => item.isTripCompleted === null || !item.isTripCompleted
+      );
+      let pendingPercentage =
+        ((pendingDest.length + progressDest.length) /
+          state.destination.length) *
+          100 ===
+        0
+          ? 100
+          : ((pendingDest.length + progressDest.length) /
+              state.destination.length) *
+            100;
+      return {
+        arrayLength: state.destination.length,
+        completed: completedDest.length,
+        progress: progressDest.length,
+        pending: pendingDest.length,
+        null: nullDest.length,
+        percentage: pendingPercentage,
+        pendingTotals: 100 - pendingPercentage,
+          
+      };
+    },
     //? FILTERS DESTINATIONS BASED ON STATUS OF COMPLETION
-    filterByStatusComplete: (state) => state.destination.filter((data)=> data.isTripCompleted === "Completed" ),
-    filterByStatusPending: (state) => state.destination.filter((data)=> data.isTripCompleted === "Pending" ),
-    filterByStatusInProgress: (state) => state.destination.filter((data)=> data.isTripCompleted === "In Progress" ),
+    filterByStatusComplete: (state) =>
+      state.destination.filter((data) => data.isTripCompleted === "Completed"),
+    filterByStatusPending: (state) =>
+      state.destination.filter((data) => data.isTripCompleted === "Pending"),
+    filterByStatusInProgress: (state) =>
+      state.destination.filter(
+        (data) => data.isTripCompleted === "In Progress"
+      ),
     getTotalCosts: (state) => (destID, citiesArray) => {
       // const filteredDestinations = state.destination.filter((p) => p.destinationID);
       const filteredCities = citiesArray.filter((p) => p.parentDestinationID);
-      const filterAll = filteredCities.filter((p) => p.parentDestinationID === destID);
-      const totalCost= filterAll.reduce((sum, city) => sum + city.totalCost, 0)
+      const filterAll = filteredCities.filter(
+        (p) => p.parentDestinationID === destID
+      );
+      const totalCost = filterAll.reduce(
+        (sum, city) => sum + city.totalCost,
+        0
+      );
       // Calculate the sum of ratings
       const totalRating = filterAll.reduce(
         (sum, city) => sum + (city.cityRating || 0),
         0
       );
 
-      
-
       const lengthData = filterAll.length;
       // Calculate the average rating
       const aveRating = totalRating / lengthData;
-   
-      // return totalAccommodationCost;
-      return {totalCost: totalCost, numOfCities: filterAll.length, aveRating: aveRating  }
-      
-    },
 
+      // return totalAccommodationCost;
+      return {
+        totalCost: totalCost,
+        numOfCities: filterAll.length,
+        aveRating: aveRating,
+      };
+    },
 
     // ? will search and item by its name
     filterItemByName: (state) => (filter) => {
       if (!filter) return state.destination; // Return all if no filter
       return state.destination.filter((item) =>
-      item.destination.toLowerCase().includes(filter.toLowerCase())
+        item.destination.toLowerCase().includes(filter.toLowerCase())
       );
     },
-    
   },
 });

@@ -192,44 +192,7 @@ export function formatDate(dateString) {
 
 }
 
-// Example usage:
-// console.log(formatDate(new Date())); // Outputs: "Sep 4, 2024" (for example, depending on the current date)
-// console.log(formatDate('2024-12-30')); // Outputs: "Dec 30, 2024"
 
-
-// export function calculateDuration(startTime: any, endTime:any) {
-//     // Parse the start and end times
-//     const [startHours, startMinutes] = startTime.split(':').map(Number);
-//     const [endHours, endMinutes] = endTime.split(':').map(Number);
-
-//     // Calculate the total minutes for start and end times
-//     const startTotalMinutes = startHours * 60 + startMinutes;
-//     const endTotalMinutes = endHours * 60 + endMinutes;
-
-//     // Calculate the difference in minutes
-//     let diffMinutes = endTotalMinutes - startTotalMinutes;
-
-//     // If the difference is negative, it means the end time is on the next day
-//     if (diffMinutes < 0) {
-//       diffMinutes += 24 * 60;
-//     }
-
-//     // Calculate the duration hours and minutes
-//     const durationHours = Math.floor(diffMinutes / 60);
-//     const durationMinutes = diffMinutes % 60;
-
-//     // Convert the duration to 12-hour format with AM/PM
-//     const durationPeriod = durationHours >= 12 ? 'PM' : 'AM';
-//     const formattedHours = ((durationHours % 12) || 12); // Convert 0 to 12 for 12-hour format
-
-//     return `${formattedHours}:${durationMinutes.toString().padStart(2, '0')} ${durationPeriod}`;
-//   }
-
-// Example usage:
-// const startTime = '14:35';
-// const endTime = '15:47';
-// const duration = calculateDuration(startTime, endTime);
-// console.log(duration); // Output: "1:12 PM"
 
 export function calculateTotalDuration(startTime, endTime) {
   // Assuming startTime and endTime are strings in 'HH:mm' format

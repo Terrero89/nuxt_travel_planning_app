@@ -102,6 +102,39 @@ export const useExpenseStore = defineStore({
     },
   },
   getters: {
+    expensesStats: (state) => {
+      const completedExpenses = state.expenses.filter(
+        (item) => item.isCompleted === "Completed"
+      );
+      const progressExpenses = state.expenses.filter(
+        (item) => item.isCompleted === "In Progress"
+      );
+      const pendingExpenses = state.expenses.filter(
+        (item) => item.isCompleted === "Pending"
+      );
+      const nullExpenses = state.expenses.filter(
+        (item) => item.isCompleted === null || !item.isCompleted
+      );
+      let pendingPercentage =
+        ((pendingExpenses.length + progressExpenses.length) /
+          state.expenses.length) *
+          100 ===
+        0
+          ? 100
+          : ((pendingExpenses.length + progressExpenses.length) /
+              state.expenses.length) *
+            100;
+      return {
+        arrayLength: state.expenses.length,
+        completedExpenses: completedExpenses.length,
+        progressExpenses: progressExpenses.length,
+        pendingExpenses: pendingExpenses.length,
+        nullExpenses: nullExpenses.length,
+        percentage: 100- pendingPercentage,
+        pendingTotals: 100 - pendingPercentage,
+      };
+    },
+
     expensesAsArray: (state) => {
       return state.expenses;
     },
@@ -239,9 +272,5 @@ export const useExpenseStore = defineStore({
         }
         return expense;
       },
-  },
-
-  coding: (state) => {
-    return "coding";
   },
 });
