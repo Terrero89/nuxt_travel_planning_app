@@ -140,7 +140,7 @@ export const useDestinationStore = defineStore({
         progress: progressDest.length,
         pending: pendingDest.length,
         null: nullDest.length,
-        percentage: pendingPercentage,
+        percentage: 100 - pendingPercentage,
         pendingTotals: 100 - pendingPercentage,
           
       };
